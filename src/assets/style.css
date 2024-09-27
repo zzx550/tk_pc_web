@@ -35,7 +35,7 @@ ul,ol {
  list-style: none
 }
 input {
-  padding-left: 8px;
+  padding-left: 10px;
  padding-top: 0;
  padding-bottom: 0;
  font-family: "SimSun","微软雅黑"
@@ -48,7 +48,6 @@ select,input {
  vertical-align: middle
 }
 select,input,textarea {
- font-size: 15px;
  margin: 0
 }
 input[type="text"],input[type="password"],textarea {
@@ -70,13 +69,7 @@ border: 0;
 .pa_3{
 padding: 0 3%;
 }
-.mar_6{
-margin-bottom: 65px;
-}
-.fw8{
-font-size: 17px;
-font-weight: 800;
-}
+
 
 
 
