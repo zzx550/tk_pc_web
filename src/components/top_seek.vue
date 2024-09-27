@@ -1,5 +1,5 @@
 <template>
-  <div class="top">
+  <div class="top_">
     <img class="logo" src="../assets/home/logo.png" />
     <div class="seek">
       <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
@@ -8,6 +8,9 @@
     <div class="right">
       <img class="ts" src="../assets/home/sy.png" />
       <img class="kf" style="margin: 0 25px" src="../assets/home/kf_icon.png" />
+      <div style="margin-right: 25px">
+        <img src="../assets/home/lang.png" alt="" />
+      </div>
       <div class="shop">
         <img src="../assets/home/sp.png" />
         店铺中心
@@ -22,7 +25,7 @@
 </script>
 
 <style scoped lang="less">
-  .top {
+  .top_ {
     height: 60px;
     display: flex;
     justify-content: space-between;

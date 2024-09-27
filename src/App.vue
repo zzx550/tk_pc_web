@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <img class="bac_app" style="width: 100%" src="./assets/home/bac_top.png" />
-    <a-button type="primary">Primary Button</a-button>
+    <!-- <a-button type="primary">Primary Button</a-button> -->
     <router-view class="content" />
   </div>
 </template>
