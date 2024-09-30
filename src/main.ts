@@ -5,12 +5,11 @@ import store from './store'
 const app =createApp(App)
 
 import './assets/style.css'
-
 import 'ant-design-vue/dist/reset.css';
-import { Button } from 'ant-design-vue';
+import Antd from 'ant-design-vue';
 
 import TopSeek from './components/top_seek.vue'
 app.component('TopSeek',TopSeek)
 
-app.use(Button)
+app.use(Antd)
 app.use(store).use(router).mount('#app')

@@ -8,9 +8,49 @@ const routes: Array<RouteRecordRaw> = [
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue')
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login.vue')
+  },
+  {
+    path: '/new_new',
+    name: 'newNew',
+    component: () => import('../views/newDet.vue')
+  },
+  {
+    path: '/user_shop',
+    name: 'userShop',
+    component: () => import('../views/userShop.vue')
+  },
+  {
+    path: '/mine_shop',
+    name: 'mineShop',
+    component: () => import('../views/mineShop.vue')
+  },
+  {
+    path: '/order',
+    name: 'order',
+    component: () => import('../views/order.vue')
+  },
+  {
+    path: '/supplier_det',
+    name: 'supplierDet',
+    component: () => import('../views/supplierDet.vue')
+  },
+  {
+    path: '/withdraw',
+    name: 'withdraw',
+    component: () => import('../views/withdraw.vue')
+  },
+  {
+    path: '/ranking',
+    name: 'ranking',
+    component: () => import('../views/ranking.vue')
+  },
+  {
+    path: '/news',
+    name: 'news',
+    component: () => import('../views/news.vue')
   }
 ]
 
