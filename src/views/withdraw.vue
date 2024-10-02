@@ -49,9 +49,13 @@
           <div class="line">
             地址:<input type="text" :placeholder="'请输入地址'" />
           </div>
-          <div class="line">
+          <div class="line" style="margin-bottom: 35px">
             提现密码:<input type="text" :placeholder="'请输入提现密码'" />
           </div>
+          <div class="line_tip" style="margin-bottom: 20px">
+            *修改提现密码请联系客服
+          </div>
+          <div class="but pr_con">提现</div>
         </div>
       </div>
     </div>
@@ -239,7 +243,7 @@
       }
 
       .conte {
-        padding-top: 80px;
+        padding-top: 50px;
         text-align: center;
         .blu {
           font-size: 20px;
@@ -286,6 +290,13 @@
           position: relative;
           top: -30px;
           color: #8d8e91;
+        }
+        .but {
+          background-color: #0ae2db;
+          width: 180px;
+          border-radius: 4px;
+          color: #fff;
+          padding: 12px;
         }
       }
     }
