@@ -2,7 +2,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-const app =createApp(App)
+const app = createApp(App)
+
+import 'vant/lib/index.css';
+import { CountDown } from 'vant'
+app.use(CountDown)
 
 import './assets/style.css'
 import 'ant-design-vue/dist/reset.css';
