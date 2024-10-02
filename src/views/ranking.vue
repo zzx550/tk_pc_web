@@ -7,7 +7,7 @@
           商铺中心
         </div>
         <div class="line">></div>
-        <div>产品排名</div>
+        <div style="font-weight: 600">产品排名</div>
       </div>
       <div class="txt_Con">
         <div class="list_T">

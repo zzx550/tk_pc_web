@@ -5,7 +5,7 @@
       <div class="title_l">
         <div class="breadcrumb" @click="router.push('/news')">消息中心</div>
         <div class="line">></div>
-        <div>详情</div>
+        <div style="font-weight: 600">详情</div>
       </div>
       <div class="txt_Con">
         <div class="title">表艾克赛德</div>

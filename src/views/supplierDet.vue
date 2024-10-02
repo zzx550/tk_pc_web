@@ -7,7 +7,7 @@
           商铺中心
         </div>
         <div class="line">></div>
-        <div>供应商详情</div>
+        <div style="font-weight: 600">供应商详情</div>
       </div>
       <div class="conte">
         <div class="left_t">

@@ -3,11 +3,18 @@
     <TopSeek :title="'商铺中心'" />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb" @click="router.push('/news')">商铺中心</div>
-        <div class="line">></div>
-        <div>余额提现</div>
+        <div class="box_le">
+          <div class="breadcrumb" @click="router.push('/user_shop')">
+            商铺中心
+          </div>
+          <div class="line">></div>
+          <div style="font-weight: 600">余额提现</div>
+        </div>
+        <div class="jl">提现记录</div>
       </div>
-      <div class="conte"></div>
+      <div class="conte">
+        <div class="blu">当前余额:$34258.00</div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,20 +32,36 @@
         border-bottom: 1px solid rgba(211, 211, 211, 0.5);
         display: flex;
         align-items: center;
-        div {
-          padding: 20px 18px;
-          font-size: 18px;
+        justify-content: space-between;
+        .box_le {
+          display: flex;
+          align-items: center;
+          div {
+            padding: 20px 18px;
+            font-size: 18px;
+          }
+          .breadcrumb {
+            color: #8d8e91;
+          }
+          .line {
+            color: #8d8e91;
+            padding: 0 4px;
+          }
         }
-        .breadcrumb {
-          color: #8d8e91;
-        }
-        .line {
-          color: #8d8e91;
-          padding: 0 4px;
+        .jl {
+          color: #0ae2db;
+          font-size: 16px;
+          margin-right: 20px;
         }
       }
 
       .conte {
+        padding-top: 80px;
+        text-align: center;
+        .blu {
+          font-size: 20px;
+          font-weight: 600;
+        }
       }
     }
   }

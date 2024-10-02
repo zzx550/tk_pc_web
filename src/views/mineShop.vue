@@ -7,7 +7,7 @@
           商铺中心
         </div>
         <div class="line">></div>
-        <div>我的店铺</div>
+        <div style="font-weight: 600">我的店铺</div>
         <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
           <img class="icon" src="../assets/home/seek.png" />
