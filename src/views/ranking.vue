@@ -35,81 +35,89 @@
   </div>
 </template>
 <script setup lang="ts">
-  import router from '@/router'
-  import { ref } from 'vue'
+import router from "@/router";
+import { ref } from "vue";
+import { api_GoodsRanking } from "@/requset/api";
+
+let ranking = ref<any>([]);
+api_GoodsRanking({}).then((res: any) => {
+  if (res.success) {
+    ranking.value.push(...res.data);
+  }
+});
 </script>
 <style lang="less" scoped>
-  #ranking {
-    .con_box {
-      background-color: #fff;
-      border-radius: 12px;
-      .title_l {
-        border-bottom: 1px solid rgba(211, 211, 211, 0.5);
+#ranking {
+  .con_box {
+    background-color: #fff;
+    border-radius: 12px;
+    .title_l {
+      border-bottom: 1px solid rgba(211, 211, 211, 0.5);
+      display: flex;
+      align-items: center;
+      div {
+        padding: 20px 18px;
+        font-size: 18px;
+      }
+      .breadcrumb {
+        color: #8d8e91;
+      }
+      .line {
+        color: #8d8e91;
+        padding: 0 4px;
+      }
+    }
+    .txt_Con {
+      padding: 15px;
+      .list_T {
         display: flex;
         align-items: center;
-        div {
-          padding: 20px 18px;
-          font-size: 18px;
+        justify-content: space-between;
+        text-align: center;
+        background-color: #f6f7f9;
+        padding: 8px 0;
+        border-radius: 4px;
+        .title {
+          flex: 1;
         }
-        .breadcrumb {
-          color: #8d8e91;
+        .time {
+          flex: 8;
         }
-        .line {
-          color: #8d8e91;
-          padding: 0 4px;
+        .txt {
+          flex: 1;
         }
       }
-      .txt_Con {
-        padding: 15px;
-        .list_T {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          text-align: center;
-          background-color: #f6f7f9;
-          padding: 8px 0;
-          border-radius: 4px;
-          .title {
-            flex: 1;
-          }
-          .time {
-            flex: 8;
-          }
-          .txt {
-            flex: 1;
+      .list {
+        background-color: #fff;
+        padding: 15px 0;
+        .title {
+          font-size: 20px;
+          color: #8d8e91;
+          img {
+            margin: 0 auto;
+            width: 50px;
           }
         }
-        .list {
-          background-color: #fff;
-          padding: 15px 0;
-          .title {
-            font-size: 20px;
-            color: #8d8e91;
-            img {
-              margin: 0 auto;
-              width: 50px;
-            }
+        .time {
+          padding: 0 20px;
+          display: flex;
+          align-items: center;
+          .shop_i {
+            border-radius: 8px;
+            width: 56px;
+            height: 56px;
+            margin-right: 10px;
           }
-          .time {
-            padding: 0 20px;
-            display: flex;
-            align-items: center;
-            .shop_i {
-              border-radius: 8px;
-              width: 56px;
-              height: 56px;
-              margin-right: 10px;
-            }
-            div {
-              flex: 1;
-              text-align: left;
-            }
+          div {
+            flex: 1;
+            text-align: left;
           }
-          .txt {
-            font-size: 20px;
-          }
+        }
+        .txt {
+          font-size: 20px;
         }
       }
     }
   }
+}
 </style>

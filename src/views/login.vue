@@ -29,7 +29,7 @@
             <input type="text" :placeholder="'请输入登录密码'" />
           </div>
         </div>
-        <div class="go pr_con">登录</div>
+        <div class="go pr_con" @click="login()">登录</div>
       </div>
       <div class="content" v-else>
         <div class="lang_reg">
@@ -67,94 +67,119 @@
             <input type="text" :placeholder="'请输入开店邀请码'" />
           </div>
         </div>
-        <div class="go pr_con">登录</div>
+        <div class="go pr_con">注册</div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-  import { DownOutlined } from '@ant-design/icons-vue'
-  import type { MenuProps } from 'ant-design-vue'
-  import { api_login } from '@/requset/api'
-  import { ref } from 'vue'
+import { DownOutlined } from "@ant-design/icons-vue";
+import type { MenuProps } from "ant-design-vue";
+import { api_web_login, api_login } from "@/requset/api";
+import { ref } from "vue";
+import router from "@/router";
 
-  let show = ref<boolean>(true)
+let show = ref<boolean>(true);
+let lang = ref<String>("zh");
 
-  const onClick: MenuProps['onClick'] = ({ key }) => {
-    console.log(`点击了 ${key}`)
-  }
+const onClick: MenuProps["onClick"] = ({ key }) => {
+  console.log(`点击了 ${key}`);
+};
 
-  api_login({ tiktok_id: 'lll111', password: 'lll111' }).then((res: any) => {
-    console.log('res :>> ', res)
-  })
+const login = () => {
+  api_web_login({
+    tiktok_id: "lll111",
+    password: "lll111",
+    lang: lang.value,
+  }).then((res: any) => {
+    if (res.code == 200) {
+      if (res.data.data) {
+        let info = JSON.parse(atob(res.data.data));
+        console.log("info = ", info);
+        api_login({ tiktok_id: info.tiktok_id }).then((res1: any) => {
+          sessionStorage.setItem("token", res1.data.token);
+          router.push("/");
+        });
+      } else {
+        console.log("error, data is null");
+      }
+    } else if (res.code == 201) {
+      // showToast(i18n.global.t("h_c_12"));
+    } else if (res.code == 202) {
+      // showToast(i18n.global.t("h_c_13"));
+    } else if (res.message) {
+      // showToast(res.message);
+    }
+  });
+};
 </script>
 <style lang="less" scoped>
-  #login {
-    background: url(../assets/login_bac.png);
-    background-size: 100% 100%;
-    width: 100vw;
-    height: 100vh;
-    position: relative;
-    .box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 16px;
-      border-radius: 10px;
-      background-color: rgba(255, 255, 255, 0.4);
-      width: 485px;
-      .content {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        .lang_reg {
+#login {
+  background: url(../assets/login_bac.png);
+  background-size: 100% 100%;
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  .box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 16px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 485px;
+    .content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      .lang_reg {
+        display: flex;
+        justify-content: space-between;
+        align-self: start;
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+      .logo {
+        border-radius: 50%;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        margin-bottom: 50px;
+        width: 90px;
+      }
+      .from {
+        width: 336px;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        div {
           display: flex;
-          justify-content: space-between;
-          align-self: start;
-          font-size: 14px;
-          margin-bottom: 20px;
-        }
-        .logo {
-          border-radius: 50%;
-          position: relative;
-          left: 50%;
-          transform: translateX(-50%);
-          margin-bottom: 50px;
-          width: 90px;
-        }
-        .from {
-          width: 336px;
-          position: relative;
-          left: 50%;
-          transform: translateX(-50%);
-          div {
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 30px;
-            font-size: 20px;
-            font-weight: 500;
-            input {
-              margin-top: 15px;
-              font-size: 14px;
-              width: 336px;
-              height: 46px;
-              border-radius: 4px;
-              background-color: #f6f7f9;
-            }
+          flex-direction: column;
+          margin-bottom: 30px;
+          font-size: 20px;
+          font-weight: 500;
+          input {
+            margin-top: 15px;
+            font-size: 14px;
+            width: 336px;
+            height: 46px;
+            border-radius: 4px;
+            background-color: #f6f7f9;
           }
         }
-        .go {
-          width: 336px;
-          background-color: #0ae2db;
-          color: #fff;
-          text-align: center;
-          height: 46px;
-          line-height: 46px;
-          border-radius: 4px;
-          margin-bottom: 20px;
-        }
+      }
+      .go {
+        width: 336px;
+        background-color: #0ae2db;
+        color: #fff;
+        text-align: center;
+        height: 46px;
+        line-height: 46px;
+        border-radius: 4px;
+        margin-bottom: 20px;
       }
     }
   }
+}
 </style>
