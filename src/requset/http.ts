@@ -10,12 +10,6 @@ class Request {
     //请求拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        const token = sessionStorage.getItem("token");
-        const lang = sessionStorage.getItem("lang")
-          ? sessionStorage.getItem("lang")
-          : "en";
-        lang && (config.headers.lang = lang);
-        token && (config.headers.token = token);
         return config;
       },
       (error) => {
@@ -51,6 +45,8 @@ class Request {
   }
   // 封装get请求
   get(url: string, data: any) {
+    axios.defaults.headers.post["Content-Type"] =
+    "application/json";
     return new Promise((resolve, reject) => {
       this.instance
         ?.get(url, {
