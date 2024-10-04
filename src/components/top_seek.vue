@@ -7,7 +7,7 @@
     </div>
     <div class="right">
       <div>
-        <a-badge count="5" @click="router.push('./about')">
+        <a-badge count="5" @click="router.push('./news')">
           <img class="ts" src="../assets/home/sy.png" />
         </a-badge>
       </div>
@@ -35,16 +35,28 @@
       {{ props.title }}
     </div>
     <div class="right">
-      <div class="fk_">
+      <div class="fk_ cur_p" @click="modal_fk = true">
         <img class="kf" src="../assets/img/fk_icon.png" />
         反馈
       </div>
-      <div class="shop cur_p" @click="router.push('/user_shop')">
+      <div class="shop cur_p" @click="router.push('/login')">
         <img src="../assets/img/tc_icon.png" />
         退出登录
       </div>
     </div>
   </div>
+
+  <a-modal
+    class="modal_wit"
+    v-model:open="modal_fk"
+    centered
+    :footer="null"
+    width="561px"
+  >
+    <div class="title">反馈您的意见</div>
+    <textarea class="txt"></textarea>
+    <div class="but pr_con">提交</div>
+  </a-modal>
 </template>
 
 <script setup lang="ts">
@@ -59,9 +71,9 @@
       require: false,
     },
   })
-  console.log('props :>> ', props)
 
   const seekValue = ref<string>('')
+  const modal_fk = ref<boolean>(false)
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
     console.log(`点击了 ${key}`)
@@ -147,6 +159,32 @@
           margin-right: 10px;
         }
       }
+    }
+  }
+  .modal_wit {
+    .title {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .txt {
+      width: 513px;
+      height: 317px;
+      background-color: #f6f7f9;
+      border-radius: 8px;
+      border: none;
+      padding: 5px;
+      font-size: 16px;
+      margin-bottom: 40px;
+    }
+    .but {
+      width: 150px;
+      padding: 8px 10px;
+      border-radius: 4px;
+      background-color: #0ae2db;
+      text-align: center;
+      color: #fff;
+      font-size: 14px;
     }
   }
 </style>

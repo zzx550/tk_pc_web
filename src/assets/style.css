@@ -1,5 +1,5 @@
 body{
-    font-family: '微软雅黑';
+  background-image: linear-gradient(#fff,#f5f5f5);
 }
 
 /* 版心 */
@@ -22,7 +22,7 @@ input {
 
 input:focus {
   outline: none;
-  border: 1px solid #ccc; /* 还原边框样式 */
+  border: none; /* 还原边框样式 */
   background: none; /* 去除背景色 */
 }
 
@@ -64,7 +64,7 @@ button ,input{
   text-align: justify;
 }
 
-.cur_p{
+.cur_p ,.but {
   cursor: pointer;
 }
 

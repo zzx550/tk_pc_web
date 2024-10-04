@@ -153,12 +153,7 @@
       <div>未审核</div>
       <div>已审核</div>
       <div>提现失败</div>
-      <img
-        class="close"
-        @click="open = false"
-        src="../assets/img/close.png"
-        alt=""
-      />
+      <img class="close" @click="open = false" src="../assets/img/close.png" />
     </div>
     <div class="list" v-for="x in 3" :key="x">
       <div class="price">

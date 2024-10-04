@@ -2,14 +2,20 @@ import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
 import router from "@/router"; // 引入Vue Router实例
 import QS from "qs";
 
+const token = sessionStorage.getItem("token");
+const lang = sessionStorage.getItem("lang")
+? sessionStorage.getItem("lang")
+: "en";
+console.log('读取的token :>> ', token);
 class Request {
   private instance: AxiosInstance | undefined;
-
   constructor(config: AxiosRequestConfig) {
     this.instance = axios.create(config);
     //请求拦截器
     this.instance.interceptors.request.use(
       (config) => {
+        config.headers.token=sessionStorage.getItem("token")
+        config.headers.lang =lang ? lang : ''
         return config;
       },
       (error) => {
