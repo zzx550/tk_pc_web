@@ -70,6 +70,7 @@
       }
 
       .conte {
+        padding: 20px;
       }
     }
   }

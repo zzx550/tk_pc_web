@@ -17,11 +17,12 @@
           <img class="icon" src="../assets/home/seek.png" />
         </div>
       </div>
-      <div class="conte"></div>
+      <div class="conte">{{ getFloat(600.8971) }}</div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+  import { getFloat } from '@/utils/index'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
   import { ref } from 'vue'
@@ -80,6 +81,7 @@
       }
 
       .conte {
+        padding: 20px;
       }
     }
   }
