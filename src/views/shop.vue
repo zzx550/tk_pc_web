@@ -1,66 +1,49 @@
 <template>
-  <div id="order" class="head_b">
-    <TopSeek :title="'商铺中心'" />
+  <div id="shop" class="head_b">
+    <TopSeek :title="'首页'" />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb" @click="router.push('/user_shop')">
-          商铺中心
-        </div>
+        <div class="breadcrumb cur_p" @click="router.push('/')">首页</div>
         <div class="line">></div>
-        <div style="font-weight: 600">订单管理</div>
+        <div style="font-weight: 600">推荐店铺</div>
         <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
           <img class="icon" src="../assets/home/seek.png" />
         </div>
       </div>
       <div class="conte">
-        <div class="left_t">
-          <div class="check">全部</div>
-          <div>代付款</div>
-          <div>待发货</div>
-          <div>已发货</div>
+        <div class="shopList">
+          <div class="boxList" v-for="x in 10" :key="x">
+            <img class="img_ pr_con" src="../assets/home/lbt.png" />
+            <div class="name">
+              <img class="us_img" src="../assets/home/user_img.png" />
+              <div class="u_right">
+                <div class="dpm">GETVBLK_AI</div>
+                <div class="id">ID:9813311111115482</div>
+                <div class="dj">
+                  <div class="fen">
+                    <img v-for="x in 3" :key="x" src="../assets/home/xin.png" />
+                    3.5分
+                  </div>
+                  三星商户
+                </div>
+                <div class="sp">
+                  当前商品
+                  <p>23</p>
+                  个
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="con_right">
-          <div class="box_he">
-            <div class="list_T">
-              <div class="img_name">商品图片/名称</div>
-              <div class="xx">客户信息</div>
-              <div>售价($)</div>
-              <div>购买价($)</div>
-              <div>状态</div>
-              <div class="gm">操作</div>
-            </div>
-            <div class="list list_T" v-for="x in 8" :key="x">
-              <div class="img_name">
-                <div class="on">商品编号：57485852458</div>
-                <img class="shop_i" src="../assets/logo.png" />
-                <div class="txt_3">
-                  啊可视对讲阿克苏京东卡手机打卡萨阿克苏登记卡手机打卡手机卡四大皆空ajs
-                </div>
-              </div>
-              <div class="xx">asd爱都开始的阿斯顿爱高速费</div>
-              <div>170.00</div>
-              <div>30.00</div>
-              <div class="zt">
-                <div v-if="x == 1">待发货</div>
-                <div class="yjf" v-else-if="x == 2">已交付</div>
-                <div class="dzf" v-else-if="x == 3">
-                  待支付 <van-count-down :time="300000" format="mm:ss" />
-                </div>
-                <div class="yfh" v-else>已发货</div>
-              </div>
-              <div class="gm">详情</div>
-            </div>
-          </div>
-          <div class="bot_fy">
-            <a-pagination
-              v-model:current="current"
-              :total="100"
-              show-less-items
-              :hideOnSinglePage="true"
-              :showSizeChanger="false"
-            />
-          </div>
+        <div class="bot_fy">
+          <a-pagination
+            v-model:current="current"
+            :total="100"
+            show-less-items
+            :hideOnSinglePage="true"
+            :showSizeChanger="false"
+          />
         </div>
       </div>
     </div>
@@ -75,7 +58,7 @@
   const seekValue = ref<string>('')
 </script>
 <style lang="less" scoped>
-  #order {
+  #shop {
     .con_box {
       background-color: #fff;
       border-radius: 12px;
@@ -125,139 +108,83 @@
       }
 
       .conte {
-        display: flex;
-        justify-content: space-between;
-        .left_t {
-          flex: 0 0 200px;
-          padding: 10px;
-          width: 200px;
-          border-right: 1px solid rgba(211, 211, 211, 0.5);
-          div {
-            padding: 8px 15px;
-          }
-          .check {
-            font-weight: 600;
-            position: relative;
-            &:after {
-              content: ' ';
-              position: absolute;
-              height: 60%;
-              width: 2px;
-              left: 8px;
-              top: 50%;
-              transform: translateY(-50%);
-              background-color: #0ae2db;
+        padding: 25px 20px;
+        .shopList {
+          padding: 0;
+          background: #fff !important;
+          flex-wrap: wrap;
+          display: flex;
+          justify-content: space-between;
+          .boxList {
+            width: 256px;
+            border: 1px solid #edeeee;
+            border-radius: 12px;
+            padding: 10px;
+            margin-bottom: 20px;
+            .img_ {
+              width: 226px;
+              height: 226px;
+              border-radius: 8px;
+              margin-bottom: 12px;
             }
-          }
-        }
-
-        .con_right {
-          padding: 15px;
-          flex: 1;
-          .box_he {
-            min-height: 600px;
-            .list_T {
+            .name {
               display: flex;
-              align-items: center;
-              justify-content: space-between;
-              text-align: center;
-              background-color: #f6f7f9;
-              padding: 8px 0;
-              border-radius: 4px;
-              .img_name {
-                flex: 4;
-                text-align: left;
-                margin-left: 20px;
+              align-items: flex-start;
+              .us_img {
+                width: 44px;
+                height: 44px;
+                margin-right: 4px;
               }
-              .xx {
-                flex: 2.3;
-              }
-              div {
-                flex: 1;
-                color: #484950;
-              }
-              .sel {
-                flex: 0.7;
-                color: #000;
-                .anticon {
-                  margin-left: 3px;
-                  font-size: 13px;
-                }
-              }
-            }
-            .list {
-              background-color: #fff;
-              margin-left: 15px;
-              padding: 15px 0;
-              border-bottom: solid 1px rgba(211, 211, 211, 0.5);
-              .img_name {
-                position: relative;
-                margin-left: 0;
+              .u_right {
                 display: flex;
-                align-items: center;
-                padding-top: 28px;
-                .on {
-                  top: 0px;
-                  position: absolute;
-                  left: 0;
+                flex-direction: column;
+                .dpm {
+                  font-weight: 600;
+                  font-size: 18px;
+                  margin-bottom: 5px;
                 }
-                .shop_i {
-                  border-radius: 8px;
-                  width: 56px;
-                  height: 56px;
-                  margin-right: 10px;
-                }
-                div {
-                  color: #4a4b51;
-                  flex: 1;
-                  text-align: left;
-                  padding-right: 8px;
-                }
-              }
-              .xx {
-                flex: 2.3;
-                padding: 0 10px;
-              }
-
-              .zt {
-                div {
-                  color: #0e9bf8;
+                .id {
                   font-size: 14px;
+                  margin-bottom: 7px;
                 }
-                .yfh {
-                  color: #6673ff;
-                }
-                .yjf {
-                  color: #888a8e;
-                }
-                .dzf {
-                  color: #ff6100;
-                  ::v-deep .van-count-down {
-                    color: #ff6100;
+                .dj {
+                  display: flex;
+                  font-size: 12px;
+                  margin-bottom: 7px;
+                  color: #1d1e25;
+                  .fen {
+                    display: flex;
+                    color: #0ae1da;
+                    align-items: center;
                     font-size: 12px;
+                    margin-right: 8px;
+                    img {
+                      width: 12px;
+                      height: 12px;
+                      margin-right: 5px;
+                    }
+                  }
+                }
+                .sp {
+                  font-size: 12px;
+                  display: flex;
+                  align-items: center;
+                  color: #1d1e25;
+                  p {
+                    font-size: 12px;
+                    color: #0ae1da;
+                    margin-bottom: 0;
                   }
                 }
               }
-              .gm {
-                color: #0ae2db;
-              }
-              .sel {
-                div {
-                  font-size: 14px;
-                  padding: 10px 15px;
-                  background-color: #0ae2db;
-                  border-radius: 4px;
-                  color: #fff;
-                }
-              }
             }
           }
-          .bot_fy {
-            padding-top: 30px;
-            text-align: right;
-            margin-bottom: 50px;
-          }
         }
+      }
+      .bot_fy {
+        padding-top: 30px;
+        text-align: right;
+        margin-bottom: 50px;
       }
     }
   }

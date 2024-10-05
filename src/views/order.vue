@@ -3,7 +3,7 @@
     <TopSeek :title="'商铺中心'" />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb" @click="router.push('/user_shop')">
+        <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
           商铺中心
         </div>
         <div class="line">></div>

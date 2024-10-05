@@ -1,11 +1,9 @@
-body{
-  background-image: linear-gradient(#fff,#f5f5f5);
-}
 
 /* 版心 */
 .head_b{
  width: 1400px;
- margin:  0 auto;
+ margin:  0 auto;      position: relative !important;
+ z-index: 3 !important ;
 }
 
 

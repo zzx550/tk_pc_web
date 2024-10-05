@@ -141,7 +141,7 @@
             </div>
           </div>
           <div class="bal">
-            <div class="ls">历史记录</div>
+            <div class="ls cur_p" @click="open = true">历史记录</div>
             <div class="z_bal">
               12256.00
               <div>总资产($)</div>
@@ -165,7 +165,9 @@
         <div class="xji">
           <div class="title_fy">
             <div class="left">下级返佣<img src="../assets/home/wh.png" /></div>
-            <div style="color: #0ae1da">返佣记录</div>
+            <div class="cur_p" style="color: #0ae1da" @click="openFy = true">
+              返佣记录
+            </div>
           </div>
           <div class="data">
             <div class="li">
@@ -196,7 +198,7 @@
         </div>
         <div class="bx_">
           <div>助力好友店铺 获取商品加热</div>
-          <div class="but">朋友助力</div>
+          <div class="but" @click="hyOpen = true">朋友助力</div>
           <img src="../assets/img/bx_icon.png" />
         </div>
       </div>
@@ -205,6 +207,8 @@
 
   <OpenTip :openAdd="addOpen" @changeAdd="addOpen = false" />
   <OpenTip :openCz="czOpen" @changeCz="czOpen = false" />
+  <OpenTip :openHy="hyOpen" @changeHy="hyOpen = false" />
+  <OpenTip :openLlb="llbOpen" @changeHy="llbOpen = false" />
 
   <a-drawer
     v-model:open="open"
@@ -227,6 +231,31 @@
       <div class="red_" :style="x == 1 ? { color: 'red' } : ''">+$68</div>
     </div>
   </a-drawer>
+  <a-drawer
+    v-model:open="openFy"
+    class="custom-class"
+    :closable="false"
+    placement="right"
+  >
+    <div class="check">
+      <div class="check_t">一级返佣</div>
+      <div>二级返佣</div>
+      <div>三级返佣</div>
+      <img
+        class="close"
+        @click="openFy = false"
+        src="../assets/img/close.png"
+      />
+    </div>
+    <div class="list" v-for="x in 3" :key="x">
+      <div>
+        <div class="price">返佣人</div>
+        <div class="kh">返佣编号：6585498</div>
+        <div class="kh">2024-12-10 12:0</div>
+      </div>
+      <div class="red_" :style="x == 1 ? { color: 'red' } : ''">+$68</div>
+    </div>
+  </a-drawer>
 </template>
 <script setup lang="ts">
   import router from '@/router'
@@ -241,8 +270,11 @@
 
   let ranking = ref<Item[]>([])
   const open = ref<boolean>(false)
+  const openFy = ref<boolean>(false)
   const addOpen = ref<boolean>(false)
   const czOpen = ref<boolean>(false)
+  const hyOpen = ref<boolean>(false)
+  const llbOpen = ref<boolean>(true)
 
   api_GoodsRanking({}).then((res: any) => {
     if (res.success) {

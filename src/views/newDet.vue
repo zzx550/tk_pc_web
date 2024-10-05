@@ -3,7 +3,9 @@
     <TopSeek :title="'消息中心'" />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb" @click="router.push('/news')">消息中心</div>
+        <div class="breadcrumb cur_p" @click="router.push('/news')">
+          消息中心
+        </div>
         <div class="line">></div>
         <div style="font-weight: 600">详情</div>
       </div>

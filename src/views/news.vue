@@ -3,7 +3,7 @@
     <TopSeek :title="'消息中心'" />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb">消息中心</div>
+        <div class="breadcrumb cur_p">消息中心</div>
         <div class="right cur_p">全部已读</div>
       </div>
       <div class="conte">

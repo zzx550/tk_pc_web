@@ -1,13 +1,11 @@
 <template>
-  <div id="mineShop" class="head_b">
-    <TopSeek :title="'商铺中心'" />
+  <div id="commodity" class="head_b">
+    <TopSeek :title="'首页'" />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
-          商铺中心
-        </div>
+        <div class="breadcrumb cur_p" @click="router.push('/')">首页</div>
         <div class="line">></div>
-        <div style="font-weight: 600">我的店铺</div>
+        <div style="font-weight: 600">推荐商品</div>
         <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
           <img class="icon" src="../assets/home/seek.png" />
@@ -16,29 +14,28 @@
       <div class="conte">
         <div class="left_t">
           <div class="check">全部</div>
-          <div>展示中</div>
-          <div>已下架</div>
+          <div>口红</div>
+          <div>包包</div>
+          <div>香水</div>
         </div>
         <div class="con_right">
-          <div class="box_he">
-            <div class="list_T">
-              <div class="img_name">商品图片/名称</div>
-              <div class="price">访问量</div>
-              <div class="price">日销量</div>
-              <div class="price">周销量</div>
-              <div class="gm">售价($)</div>
-            </div>
-            <div class="list list_T" v-for="x in 8" :key="x">
-              <div class="img_name">
-                <img class="shop_i" src="../assets/logo.png" />
-                <div class="txt_3">
-                  啊可视对讲阿克苏京东卡手机打卡萨阿克苏登记卡手机打卡手机卡四大皆空ajs
+          <div class="shopList">
+            <div class="boxList" v-for="x in 15" :key="x">
+              <div class="bq_">访问量 75936</div>
+              <img class="pr_con" src="../assets/home/lbt.png" />
+              <div class="ms">
+                <div class="name">
+                  爱看书的急啊看实打实打算公开阿爱神的箭阿三阿达萨卡洛夫阿松大asdasd噶
+                </div>
+                <div class="price">
+                  $200.00
+                  <p>售价:$300</p>
+                </div>
+                <div class="xl">
+                  日销量&nbsp;&nbsp;1244&nbsp;
+                  &nbsp;&nbsp;周销量&nbsp;&nbsp;751356
                 </div>
               </div>
-              <div class="price">170.00</div>
-              <div class="price">30.00</div>
-              <div class="price">30.00</div>
-              <div class="gm">140.00</div>
             </div>
           </div>
           <div class="bot_fy">
@@ -64,7 +61,7 @@
   const seekValue = ref<string>('')
 </script>
 <style lang="less" scoped>
-  #mineShop {
+  #commodity {
     .con_box {
       background-color: #fff;
       border-radius: 12px;
@@ -143,65 +140,72 @@
         .con_right {
           padding: 15px;
           flex: 1;
-          .box_he {
-            min-height: 600px;
-            .list_T {
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              text-align: center;
-              background-color: #f6f7f9;
-              padding: 8px 0;
-              border-radius: 4px;
-              .img_name {
-                flex: 4;
-                text-align: left;
-                margin-left: 20px;
+          .shopList {
+            padding: 5px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            .boxList {
+              width: 215px;
+              position: relative;
+              margin-bottom: 20px;
+              border: 1px solid #e3e4e4;
+              padding: 13px;
+              border-radius: 12px;
+              .bq_ {
+                position: absolute;
+                z-index: 2;
+                top: 0;
+                right: 0;
+                background-color: rgba(0, 0, 0, 0.4);
+                color: #fff;
+                padding: 6px 10px;
+                border-radius: 0 12px 0 12px;
+                font-size: 12px;
               }
-              div {
-                flex: 1;
-                color: #484950;
+              img {
+                width: 185px;
+                height: 185px;
+                border-radius: 8px;
               }
-              .sel {
-                flex: 0.7;
-                color: #000;
-                .anticon {
-                  margin-left: 3px;
-                  font-size: 13px;
-                }
-              }
-            }
-            .list {
-              background-color: #fff;
-              margin-left: 15px;
-              padding: 15px 0;
-              border-bottom: solid 1px rgba(211, 211, 211, 0.5);
-              .img_name {
-                margin-left: 0;
-                display: flex;
-                align-items: center;
-                .shop_i {
-                  border-radius: 8px;
-                  width: 56px;
-                  height: 56px;
-                  margin-right: 10px;
-                }
-                div {
-                  color: #4a4b51;
-                  flex: 1;
-                  text-align: left;
-                }
-              }
-              .gm {
-                color: #f40000;
-              }
-              .sel {
-                div {
+              .ms {
+                padding-top: 10px;
+                .name {
+                  display: -webkit-box;
+                  -webkit-box-orient: vertical;
+                  -webkit-line-clamp: 2;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  text-align: justify;
+                  margin-bottom: 10px;
+                  color: #1d1e25;
+                  font-weight: 600;
+                  line-height: 20px;
+                  height: 40px;
                   font-size: 14px;
-                  padding: 10px 15px;
-                  background-color: #0ae2db;
-                  border-radius: 4px;
-                  color: #fff;
+                }
+                .price {
+                  display: flex;
+                  color: #f40000;
+                  margin-bottom: 10px;
+                  font-size: 18px;
+                  font-weight: 600;
+                  align-items: flex-end;
+                  p {
+                    font-size: 12px;
+                    font-weight: 400;
+                    margin-left: 10px;
+                    color: #1d1e25;
+                    margin-bottom: 0;
+                    opacity: 0.8;
+                  }
+                }
+                .xl {
+                  font-size: 12px;
+                  color: #1d1e25;
+                  opacity: 0.5;
                 }
               }
             }

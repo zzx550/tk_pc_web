@@ -91,10 +91,17 @@
     <div class="tj">
       <div class="title">
         <div class="left">推荐商品</div>
-        <div class="more cur_p">更多<img src="../assets/home/more.png" /></div>
+        <div class="more cur_p" @click="router.push('/commodity')">
+          更多<img src="../assets/home/more.png" />
+        </div>
       </div>
       <div class="shopList">
-        <div class="boxList" v-for="x in 5" :key="x">
+        <div
+          class="boxList"
+          v-for="x in 5"
+          :key="x"
+          @click="router.push('/comm_det')"
+        >
           <div class="bq_">访问量 75936</div>
           <img src="../assets/home/lbt.png" />
           <div class="ms">
@@ -115,10 +122,17 @@
     <div class="tj dp">
       <div class="title">
         <div class="left">推荐店铺</div>
-        <div class="more cur_p">更多<img src="../assets/home/more.png" /></div>
+        <div class="more cur_p" @click="router.push('/shop')">
+          更多<img src="../assets/home/more.png" />
+        </div>
       </div>
       <div class="shopList">
-        <div class="boxList" v-for="x in 10" :key="x">
+        <div
+          class="boxList"
+          v-for="x in 10"
+          :key="x"
+          @click="router.push('/commodity')"
+        >
           <img class="img_" src="../assets/home/lbt.png" />
           <div class="name">
             <img class="us_img" src="../assets/home/user_img.png" />
