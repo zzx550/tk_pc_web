@@ -67,7 +67,7 @@
             </div>
             <div class="gm">
               <div class="but pay" @click="open = true">立即支付</div>
-              <div class="but" @click="openOr">取消订单</div>
+              <div class="but" @click="openOr=true">取消订单</div>
             </div>
           </div>
         </div>
