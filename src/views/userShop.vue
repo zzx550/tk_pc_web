@@ -56,19 +56,19 @@
           <div class="title">我的订单</div>
           <div class="type">
             <div class="li">
-              2
+              {{ ordersNumber.orderStatus_0 }}
               <div>待付款</div>
             </div>
             <div class="li">
-              2
+              {{ ordersNumber.orderStatus_1 }}
               <div>待发货</div>
             </div>
             <div class="li">
-              2
+              {{ ordersNumber.orderStatus_2 }}
               <div>已发货</div>
             </div>
             <div class="li">
-              12
+              {{ ordersNumber.orderStatus_3 }}
               <div>已交付</div>
             </div>
           </div>
@@ -168,6 +168,7 @@
               <div
                 v-if="userInfo.shop_name != null && userInfo.shop_name != ''"
                 class="shop_name"
+                @click="shopNameOpen = userInfo.change_shop_name == 1"
               >
                 店铺名称：{{ userInfo.shop_name }}
               </div>
@@ -207,16 +208,16 @@
           <div class="bal">
             <div class="ls cur_p" @click="open = true">历史记录</div>
             <div class="z_bal">
-              12256.00
+              {{ walletInfo.totalAssets }}
               <div>总资产($)</div>
             </div>
             <div class="two_bal">
               <div class="z_bal">
-                12256.00
+                {{ walletInfo.cloud_balance }}
                 <div>余额($)</div>
               </div>
               <div class="z_bal">
-                12256.00
+                {{ walletInfo.wait_balance }}
                 <div>待结算($)</div>
               </div>
             </div>
@@ -278,6 +279,11 @@
     :llbRule="llbRule"
     :llbHasGet="llbHasGet"
   />
+  <OpenTip
+    :openShopName="shopNameOpen"
+    @changeShopName="changeShopName"
+    :isUpdateShopName="userInfo.shop_name != null && userInfo.shop_name != ''"
+  />
 
   <a-drawer
     v-model:open="open"
@@ -337,7 +343,10 @@ import {
   api_mainStatistics,
   api_uploadImg,
   api_update_shopInfo,
+  api_bind_shopInfo,
   api_rebateInfo,
+  api_getOrderTypeNum,
+  api_wallet,
 } from "@/requset/api";
 import { message } from "ant-design-vue";
 import useClipboard from "vue-clipboard3";
@@ -356,6 +365,7 @@ const openFy = ref<boolean>(false);
 const addOpen = ref<boolean>(false);
 const czOpen = ref<boolean>(false);
 const hyOpen = ref<boolean>(false);
+const shopNameOpen = ref<boolean>(false);
 const llbOpen = ref<boolean>(false);
 const llbRule = ref<string>("");
 const llbHasGet = ref<string>("");
@@ -365,10 +375,22 @@ let statisticsData = ref({
   order_count: "0",
   goods_click: "0",
 });
+let ordersNumber = ref({
+  orderStatus_0: 0,
+  orderStatus_1: 0,
+  orderStatus_2: 0,
+  orderStatus_3: 0,
+});
 const statisticsTab = ref<number>(0);
-let shop_name = ref("");
 const avatarFileList = ref([]);
 const rebateInfo = ref<any>({});
+let walletInfo = ref({
+  totalAssets: 0,
+  cloud_balance: 0,
+  wait_balance: 0,
+  open_cryptocurrency_address: 0,
+  cryptocurrency_address: [{ name: "ERC20", address: "aaa" }],
+});
 
 const changeStatisticsTab = (index: number) => {
   statisticsTab.value = index;
@@ -384,8 +406,6 @@ const getUserInfo = () => {
   api_getInfo({}).then((res: any) => {
     if (res.success) {
       userInfo.value = { ...userInfo.value, ...res.data };
-      // 店铺名称
-      shop_name.value = res.data.shop_name;
       // 是否领取过新手礼包
       llbHasGet.value = res.data.month_gift_pack;
     }
@@ -393,14 +413,35 @@ const getUserInfo = () => {
 };
 getUserInfo();
 
+const getWalletInfo = () => {
+  api_wallet({}).then((res: any) => {
+    if (res.code == 200) {
+      walletInfo.value = { ...walletInfo.value, ...res.data };
+      walletInfo.value.totalAssets =
+        Number(res.data.cloud_balance) + Number(res.data.wait_balance);
+      // if (walletInfo.value.cryptocurrency_address.length > 0) {
+      //   qrCodeValue.value = walletInfo.value.cryptocurrency_address[0].address;
+      //   selectRechargeAddressTab.value =
+      //   walletInfo.value.cryptocurrency_address[0].name;
+      // }
+    }
+  });
+};
+getWalletInfo();
+
 api_rebateInfo({}).then((res: any) => {
   rebateInfo.value = res.data;
+});
+
+api_getOrderTypeNum({}).then((res: any) => {
+  if (res.code == 200) {
+    ordersNumber.value = res.data;
+  }
 });
 
 api_GoodsRanking({}).then((res: any) => {
   if (res.code == 200) {
     ranking.value.push(...res.data);
-    console.log("ranking :>> ", ranking.value);
   }
 });
 
@@ -412,7 +453,8 @@ api_optionDesc({ name: "gift_pack_rules" }).then((res: any) => {
 });
 
 const changeLlb = (change: boolean) => {
-  if (change) {
+  if (change == true) {
+    message.loading("加载中...");
     api_getGiftPack({}).then((res: any) => {
       if (res.code == 200) {
         message.success("领取成功");
@@ -423,6 +465,46 @@ const changeLlb = (change: boolean) => {
     });
   } else {
     llbOpen.value = false;
+  }
+};
+
+const changeShopName = (change: boolean, name: string) => {
+  console.log("change = ", change);
+  console.log("name = ", name);
+  if (change == true) {
+    if (name == "") {
+      message.error("请输入店铺名称");
+      return;
+    }
+    message.loading("加载中...");
+    if (userInfo.value.shop_name != null && userInfo.value.shop_name != "") {
+      api_update_shopInfo({
+        shop_name: name,
+        shop_cover_image: userInfo.value.shop_cover_image,
+      }).then((res: any) => {
+        if (res.code == 200) {
+          shopNameOpen.value = false;
+          message.success("店铺名称修改成功");
+          getUserInfo();
+        } else if (res.message) {
+          message.error(res.message);
+        }
+      });
+    } else {
+      api_bind_shopInfo({
+        shop_name: name,
+      }).then((res: any) => {
+        if (res.code == 200) {
+          shopNameOpen.value = false;
+          message.success("店铺名称添加成功");
+          getUserInfo();
+        } else if (res.message) {
+          message.error(res.message);
+        }
+      });
+    }
+  } else {
+    shopNameOpen.value = false;
   }
 };
 
@@ -441,7 +523,7 @@ const avatarAfterRead = (file: any) => {
     if (res.code == 200) {
       api_update_shopInfo({
         shop_cover_image: res.data.http_url,
-        shop_name: shop_name.value,
+        shop_name: userInfo.value.shop_name,
       }).then((res: any) => {
         if (res.code == 200) {
           message.success;

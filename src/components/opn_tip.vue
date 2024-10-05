@@ -9,8 +9,36 @@
   >
     <div class="title">添加供应商</div>
     <img class="pr_con" src="../assets/home/add.png" />
-    <input type="text " class="pr_con" :placeholder="'请输入供应商编号'" />
-    <div class="but pr_con" @click="$emit('changeAdd', false)">提交</div>
+    <input
+      type="text "
+      class="pr_con"
+      v-model="props.supplier_num"
+      :placeholder="'请输入供应商编号'"
+    />
+    <div class="but pr_con" @click="$emit('changeAdd', true)">提交</div>
+  </a-modal>
+
+  <a-modal
+    class="modal_wit"
+    v-model:open="props.openShopName"
+    centered
+    :footer="null"
+    width="561px"
+    @cancel="$emit('changeShopName', false, '')"
+  >
+    <div class="title">
+      {{ props.isUpdateShopName == true ? "修改" : "添加" }}店铺名称
+    </div>
+    <img class="pr_con" src="../assets/home/add.png" />
+    <input
+      type="text "
+      class="pr_con"
+      v-model="shop_name"
+      :placeholder="'请输入店铺名称'"
+    />
+    <div class="but pr_con" @click="$emit('changeShopName', true, shop_name)">
+      提交
+    </div>
   </a-modal>
 
   <a-modal
@@ -98,7 +126,13 @@
 import router from "@/router";
 import { ref, defineProps, defineEmits, watch } from "vue";
 
-const emit = defineEmits(["changeAdd", "changeCz", "changeHy", "changeLlb"]);
+const emit = defineEmits([
+  "changeAdd",
+  "changeCz",
+  "changeHy",
+  "changeLlb",
+  "changeShopName",
+]);
 
 const props = defineProps({
   openCz: {
@@ -125,8 +159,21 @@ const props = defineProps({
     type: String,
     require: "",
   },
+  supplier_num: {
+    type: String,
+    require: "",
+  },
+  openShopName: {
+    type: Boolean,
+    require: false,
+  },
+  isUpdateShopName: {
+    type: Boolean,
+    require: false,
+  },
 });
 const check = ref<boolean>(true);
+const shop_name = ref<string>("");
 </script>
 
 <style lang="less" scoped>
