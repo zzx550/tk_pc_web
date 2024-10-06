@@ -17,8 +17,9 @@
           <img src="../assets/home/lang.png" @click.prevent />
           <template #overlay>
             <a-menu @click="onClick">
-              <a-menu-item key="1"> 中文简体 </a-menu-item>
-              <a-menu-item key="2"> 中文繁体 </a-menu-item>
+              <a-menu-item v-for="x in state.countryLang" :key="x.lang">
+                {{ x.value }}
+              </a-menu-item>
             </a-menu>
           </template>
         </a-dropdown>
@@ -39,7 +40,7 @@
         <img class="kf" src="../assets/img/fk_icon.png" />
         反馈
       </div>
-      <div class="shop cur_p" @click="router.push('/login')">
+      <div class="shop cur_p" @click="loginOut">
         <img src="../assets/img/tc_icon.png" />
         退出登录
       </div>
@@ -60,6 +61,9 @@
 </template>
 
 <script setup lang="ts">
+  import { useStore } from 'vuex'
+  const { state } = useStore()
+  import { api_logout } from '@/requset/api'
   import router from '@/router'
   import { ref, defineProps } from 'vue'
   import type { MenuProps } from 'ant-design-vue'
@@ -76,7 +80,22 @@
   const modal_fk = ref<boolean>(false)
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
-    console.log(`点击了 ${key}`)
+    state.countryLang.forEach((x: any, y: number) => {
+      if (x.lang == key) {
+        sessionStorage.setItem('lang', key)
+        sessionStorage.setItem('lang_w', x.value)
+        router.go(0)
+      }
+    })
+  }
+
+  const loginOut = () => {
+    api_logout({}).then((res: any) => {
+      if (res.success) {
+        sessionStorage.removeItem('toke')
+        router.push('/login')
+      }
+    })
   }
 </script>
 

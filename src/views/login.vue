@@ -5,12 +5,13 @@
         <div class="lang_reg">
           <a-dropdown placement="bottom">
             <div @click.prevent class="ant-dropdown-link">
-              中文简体 <DownOutlined />
+              {{ lang_w }} <DownOutlined />
             </div>
             <template #overlay>
               <a-menu @click="onClick">
-                <a-menu-item key="1"> 中文简体 </a-menu-item>
-                <a-menu-item key="2"> 中文繁体 </a-menu-item>
+                <a-menu-item v-for="x in state.countryLang" :key="x.lang">
+                  {{ x.value }}
+                </a-menu-item>
               </a-menu>
             </template>
           </a-dropdown>
@@ -31,13 +32,13 @@
           <div class="data" style="margin-bottom: 30px">
             登录密码
             <input
-              type="text"
+              type="password"
               v-model="loginDat.password"
               :placeholder="'请输入登录密码'"
             />
           </div>
         </div>
-        <div class="go pr_con" @click="login()">登录</div>
+        <div class="go pr_con cur_p" @click="login()">登录</div>
       </div>
       <div class="content" v-else>
         <div class="lang_reg">
@@ -60,39 +61,102 @@
         <div class="from">
           <div class="data">
             用户名
-            <input type="text" :placeholder="'请输入用户名'" />
+            <input
+              type="text"
+              v-model="regitser.tk_username"
+              :placeholder="'请输入用户名'"
+            />
           </div>
           <div class="data">
             登录密码
-            <input type="text" :placeholder="'请输入登录密码'" />
+            <input
+              type="password"
+              v-model="regitser.password"
+              :placeholder="'请输入登录密码'"
+            />
           </div>
           <div class="data">
             确认登录密码
-            <input type="text" :placeholder="'再次输入登录密码'" />
+            <input
+              type="password"
+              v-model="password"
+              :placeholder="'再次输入登录密码'"
+            />
           </div>
           <div class="data" style="margin-bottom: 30px">
             开店邀请码
-            <input type="text" :placeholder="'请输入开店邀请码'" />
+            <input
+              type="text"
+              v-model="regitser.code"
+              :placeholder="'请输入开店邀请码'"
+            />
           </div>
         </div>
-        <div class="go pr_con">注册</div>
+        <div class="go pr_con cur_p" @click="UserRegitser">注册</div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+  import { useStore } from 'vuex'
+  const { state } = useStore()
   import { DownOutlined } from '@ant-design/icons-vue'
   import { message } from 'ant-design-vue'
   import type { MenuProps } from 'ant-design-vue'
-  import { api_web_login, api_login } from '@/requset/api'
+  import { api_web_login, api_login, api_web_regitser } from '@/requset/api'
   import { ref, reactive } from 'vue'
   import router from '@/router'
 
+  let lang_w = ref<string | null>('')
   let show = ref<boolean>(true)
-  let loginDat = reactive({ tiktok_id: '', password: '', lang: 'zh' })
+  let password = ref<string>('')
+  let loginDat = reactive({ tiktok_id: '', password: '', lang: '' })
+  let regitser = reactive({ tk_username: '', password: '', code: '' })
+
+  lang_w.value = sessionStorage.getItem('lang_w')
+    ? sessionStorage.getItem('lang_w')
+    : 'English'
+  loginDat.lang = sessionStorage.getItem('lang')
+    ? sessionStorage.getItem('lang')
+    : 'en'
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
-    console.log(`点击了 ${key}`)
+    state.countryLang.forEach((x: any, y: number) => {
+      if (x.lang == key) {
+        lang_w.value = x.value
+        loginDat.lang = key
+        sessionStorage.setItem('lang', key)
+        sessionStorage.setItem('lang_w', x.value)
+      }
+    })
+  }
+  const UserRegitser = () => {
+    if (regitser.tk_username.length < 1) {
+      message.error('请输入账号')
+      return
+    }
+    if (regitser.password.length < 1) {
+      message.error('请输入密码')
+      return
+    }
+    if (regitser.password != password.value) {
+      message.error('两次密码不一致')
+      return
+    }
+    if (regitser.code.length < 1) {
+      message.error('请输入邀请码')
+      return
+    }
+    api_web_regitser({ ...regitser }).then((res: any) => {
+      if (res.success) {
+        message.success('注册成功')
+        loginDat.tiktok_id = regitser.tk_username
+        loginDat.password = regitser.password
+        show.value = true
+      } else {
+        message.error(res.message)
+      }
+    })
   }
 
   const login = () => {
@@ -133,6 +197,7 @@
     width: 100vw;
     height: 100vh;
     position: relative;
+    z-index: 5;
     .box {
       position: absolute;
       top: 50%;

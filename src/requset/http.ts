@@ -7,6 +7,7 @@ const lang = sessionStorage.getItem("lang")
 ? sessionStorage.getItem("lang")
 : "en";
 console.log('读取的token :>> ', token);
+console.log('读取的token :>> ', lang);
 class Request {
   private instance: AxiosInstance | undefined;
   constructor(config: AxiosRequestConfig) {
@@ -14,8 +15,10 @@ class Request {
     //请求拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        config.headers.token=sessionStorage.getItem("token")
-        config.headers.lang =lang ? lang : ''
+        config.headers.token = sessionStorage.getItem("token")
+        config.headers.lang = sessionStorage.getItem("lang")
+        ? sessionStorage.getItem("lang")
+        : "en"
         return config;
       },
       (error) => {

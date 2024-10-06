@@ -40,8 +40,9 @@
           </div>
           <div class="bot_fy">
             <a-pagination
-              v-model:current="current"
-              :total="100"
+              :current="current"
+              :pageSize="15"
+              :total="total"
               show-less-items
               :hideOnSinglePage="true"
               :showSizeChanger="false"
@@ -53,12 +54,29 @@
   </div>
 </template>
 <script setup lang="ts">
+  import { api_getRecommendGoods } from '@/requset/api'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
   import { ref } from 'vue'
 
   const current = ref(1)
+  const page = ref<number>(1)
+  const total = ref<number>(1)
+  const goodsList = ref<object[]>([])
   const seekValue = ref<string>('')
+
+  api_getRecommendGoods({
+    page,
+    pageSize: 15,
+  }).then((res: any) => {
+    if (res.success) {
+      total.value = res.data.total
+      if (page >= res.data.last_page) {
+        goodsList.value = res.data.data
+        console.log('goodsList.value :>> ', goodsList.value)
+      }
+    }
+  })
 </script>
 <style lang="less" scoped>
   #commodity {
