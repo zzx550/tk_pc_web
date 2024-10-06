@@ -36,11 +36,11 @@
           <div class="data">
             <div class="li">
               商品售价($)
-              <div>{{ statisticsData.total_profit }}</div>
+              <div>{{ getFloat(statisticsData.total_profit) }}</div>
             </div>
             <div class="li">
               预期利润($)
-              <div>{{ statisticsData.pure_profit }}</div>
+              <div>{{ getFloat(statisticsData.pure_profit) }}</div>
             </div>
             <div class="li">
               订单数量
@@ -52,22 +52,30 @@
             </div>
           </div>
         </div>
-        <div class="order" @click="router.push('/order')">
-          <div class="title">我的订单</div>
+        <div class="order">
+          <div class="title_">
+            我的订单
+            <div
+              style="color: #0ae1da"
+              @click="router.push('/order?tabIndex=0')"
+            >
+              全部订单
+            </div>
+          </div>
           <div class="type">
-            <div class="li">
+            <div class="li" @click="router.push('./order?tabIndex=1')">
               {{ ordersNumber.orderStatus_0 }}
               <div>待付款</div>
             </div>
-            <div class="li">
+            <div class="li" @click="router.push('./order?tabIndex=2')">
               {{ ordersNumber.orderStatus_1 }}
               <div>待发货</div>
             </div>
-            <div class="li">
+            <div class="li" @click="router.push('./order?tabIndex=3')">
               {{ ordersNumber.orderStatus_2 }}
               <div>已发货</div>
             </div>
-            <div class="li">
+            <div class="li" @click="router.push('./order?tabIndex=4')">
               {{ ordersNumber.orderStatus_3 }}
               <div>已交付</div>
             </div>
@@ -76,20 +84,60 @@
 
         <div class="bottom_b">
           <div class="bot_le">
-            <div class="gys" @click="router.push('/supplier_det')">
+            <div class="gys">
               <div class="title">
                 供应商
                 <div @click.stop="addOpen = true">添加供应商</div>
               </div>
               <div class="box">
-                <img class="but" src="../assets/home/z_icon.png" />
-                <div class="list">
-                  <img class="pr_con" src="../assets/logo.png" />
-                  <div class="ti">供应商名称</div>
-                  <div class="on">编号：1549619645</div>
-                  <div class="txt">送货.供货</div>
+                <img
+                  class="but"
+                  src="../assets/home/z_icon.png"
+                  @click.stop="
+                    currentSupplierItemIndex = currentSupplierItemIndex - 1
+                  "
+                />
+                <div
+                  class="list"
+                  v-if="supplierItem && supplierItem.goods_supplier"
+                >
+                  <img
+                    class="pr_con"
+                    :src="supplierItem.goods_supplier.logo"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  />
+                  <div
+                    class="ti"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  >
+                    编号：{{ supplierItem.goods_supplier.supplier_sn }}
+                  </div>
+                  <div
+                    class="on"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  >
+                    {{ supplierItem.goods_supplier.full_name }}
+                  </div>
+                  <div
+                    class="txt"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  >
+                    {{ supplierItem.goods_supplier.tags }}
+                  </div>
+                  <div
+                    class="go pr_con"
+                    @click="handleAddAll(supplierItem.supplier_id)"
+                  >
+                    一键上架
+                  </div>
                 </div>
-                <img class="but" src="../assets/home/y_icon.png" />
+                <img
+                  class="but"
+                  src="../assets/home/y_icon.png"
+                  @click.stop="
+                    currentSupplierItemIndex = currentSupplierItemIndex + 1
+                  "
+                />
               </div>
             </div>
             <div class="mine_shop" @click="router.push('/mine_shop')">
@@ -208,16 +256,16 @@
           <div class="bal">
             <div class="ls cur_p" @click="open = true">历史记录</div>
             <div class="z_bal">
-              {{ walletInfo.totalAssets }}
+              {{ getFloat(walletInfo.totalAssets) }}
               <div>总资产($)</div>
             </div>
             <div class="two_bal">
               <div class="z_bal">
-                {{ walletInfo.cloud_balance }}
+                {{ getFloat(walletInfo.cloud_balance) }}
                 <div>余额($)</div>
               </div>
               <div class="z_bal">
-                {{ walletInfo.wait_balance }}
+                {{ getFloat(walletInfo.wait_balance) }}
                 <div>待结算($)</div>
               </div>
             </div>
@@ -236,11 +284,11 @@
           </div>
           <div class="data">
             <div class="li">
-              <div>{{ rebateInfo.sale_amount }}</div>
+              <div>{{ getFloat(rebateInfo.sale_amount) }}</div>
               销售总额($)
             </div>
             <div class="li">
-              <div>{{ rebateInfo.total_rebate }}</div>
+              <div>{{ getFloat(rebateInfo.total_rebate) }}</div>
               返佣总额($)
             </div>
             <div class="li">
@@ -334,7 +382,7 @@
 </template>
 <script setup lang="ts">
 import router from "@/router";
-import { reactive, ref } from "vue";
+import { reactive, ref, watch } from "vue";
 import {
   api_getGiftPack,
   api_optionDesc,
@@ -347,10 +395,13 @@ import {
   api_rebateInfo,
   api_getOrderTypeNum,
   api_wallet,
+  api_mySupplier,
+  api_addAllGoods,
 } from "@/requset/api";
 import { message } from "ant-design-vue";
 import useClipboard from "vue-clipboard3";
 const { toClipboard } = useClipboard();
+import { getFloat } from "@/utils";
 
 interface Item {
   id: number;
@@ -370,10 +421,10 @@ const llbOpen = ref<boolean>(false);
 const llbRule = ref<string>("");
 const llbHasGet = ref<string>("");
 let statisticsData = ref({
-  total_profit: "0.00",
-  pure_profit: "0.00",
-  order_count: "0",
-  goods_click: "0",
+  total_profit: 0.0,
+  pure_profit: 0.0,
+  order_count: 0,
+  goods_click: 0,
 });
 let ordersNumber = ref({
   orderStatus_0: 0,
@@ -390,6 +441,21 @@ let walletInfo = ref({
   wait_balance: 0,
   open_cryptocurrency_address: 0,
   cryptocurrency_address: [{ name: "ERC20", address: "aaa" }],
+});
+const supplierList = ref<any>([]);
+let currentSupplierItemIndex = ref<number>(0);
+const supplierItem = ref<any>({});
+
+watch(currentSupplierItemIndex, (newValue, oldValue) => {
+  console.log("newValue = ", newValue);
+  console.log("oldValue = ", oldValue);
+  if (newValue <= 0) {
+    currentSupplierItemIndex.value = 0;
+  } else if (newValue >= supplierList.value.length) {
+    currentSupplierItemIndex.value = supplierList.value.length - 1;
+  } else {
+    supplierItem.value = supplierList.value[newValue];
+  }
 });
 
 const changeStatisticsTab = (index: number) => {
@@ -428,6 +494,43 @@ const getWalletInfo = () => {
   });
 };
 getWalletInfo();
+
+function getSupplierList() {
+  api_mySupplier({}).then((res: any) => {
+    if (res.success) {
+      supplierList.value = res.data;
+      if (supplierList.value.length > 0) {
+        supplierItem.value = supplierList.value[0];
+        // 判断是否需要显示添加店铺名称的弹框
+        api_getInfo({}).then((res: any) => {
+          if (res.success) {
+            shopNameOpen.value =
+              res.data.shop_name == null ||
+              res.data.shop_name == "" ||
+              res.data.custom_type == null ||
+              res.data.custom_type == "";
+          }
+        });
+      }
+    }
+  });
+}
+getSupplierList();
+
+const goSupplierDet = (supplier_id: number) => {
+  router.push("/supplier_det?supplier_id=" + supplier_id);
+};
+
+const handleAddAll = (supplier_id: number) => {
+  api_addAllGoods({ supplier_id }).then((res: any) => {
+    if (res.success) {
+      message.success("添加成功");
+      getSupplierList();
+    } else if (res.message) {
+      message.error(res.message);
+    }
+  });
+};
 
 api_rebateInfo({}).then((res: any) => {
   rebateInfo.value = res.data;
@@ -622,9 +725,16 @@ const avatarAfterRead = (file: any) => {
         border-radius: 12px;
         padding: 25px;
         margin-bottom: 20px;
-        .title {
+        .title_ {
           font-size: 20px;
           font-weight: 600;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          div {
+            font-size: 14px;
+            cursor: pointer;
+          }
         }
         .type {
           display: flex;
@@ -684,7 +794,8 @@ const avatarAfterRead = (file: any) => {
               text-align: center;
               flex: 1;
               img {
-                width: 60px;
+                width: 80px;
+                height: 80px;
                 border-radius: 8px;
               }
               .ti {
@@ -700,6 +811,15 @@ const avatarAfterRead = (file: any) => {
               .txt {
                 font-size: 14px;
                 color: #88898e;
+                padding-bottom: 8px;
+              }
+              .go {
+                background-color: #0ae2db;
+                color: #fff;
+                text-align: center;
+                height: 38px;
+                line-height: 38px;
+                border-radius: 4px;
               }
             }
           }
