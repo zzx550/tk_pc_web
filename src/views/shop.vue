@@ -13,36 +13,65 @@
       </div>
       <div class="conte">
         <div class="shopList">
-          <div class="boxList" v-for="x in 10" :key="x">
-            <img class="img_ pr_con" src="../assets/home/lbt.png" />
+          <div class="boxList" v-for="x in shopList" :key="x.tiktok_id">
+            <div class="img_">
+              <img
+                v-for="item in x.hotGoods"
+                :key="item.cat_id"
+                :src="item.cover_img"
+              />
+            </div>
             <div class="name">
-              <img class="us_img" src="../assets/home/user_img.png" />
+              <img class="us_img" :src="x.shop_cover_image" />
               <div class="u_right">
-                <div class="dpm">GETVBLK_AI</div>
-                <div class="id">ID:9813311111115482</div>
+                <div class="dpm">{{ x.shop_name }}</div>
+                <div class="id">ID:{{ x.tiktok_id }}</div>
                 <div class="dj">
                   <div class="fen">
-                    <img v-for="x in 3" :key="x" src="../assets/home/xin.png" />
-                    3.5分
+                    <img
+                      v-for="item in x.tar_rating"
+                      :key="item"
+                      src="../assets/home/xin.png"
+                    />
+                    {{
+                      x.score_star && x.score_star != '' && x.score_star != '0'
+                        ? x.score_star + '分'
+                        : ''
+                    }}
                   </div>
-                  三星商户
+                  {{
+                    x.star_rating == 1
+                      ? '一星商户'
+                      : x.star_rating == 2
+                      ? '二星商户'
+                      : x.star_rating == 3
+                      ? '三星商户'
+                      : x.star_rating == 4
+                      ? '四星商户'
+                      : x.star_rating == 5
+                      ? '五星商户'
+                      : ''
+                  }}
                 </div>
                 <div class="sp">
                   当前商品
-                  <p>23</p>
+                  <p>{{ x.goodsNum }}</p>
                   个
                 </div>
               </div>
             </div>
           </div>
+          <div style="width: 256px" v-for="x in box" :key="x"></div>
         </div>
         <div class="bot_fy">
           <a-pagination
             v-model:current="current"
-            :total="100"
+            :pageSize="15"
+            :total="total"
             show-less-items
             :hideOnSinglePage="true"
             :showSizeChanger="false"
+            @change="changeList"
           />
         </div>
       </div>
@@ -50,12 +79,32 @@
   </div>
 </template>
 <script setup lang="ts">
+  import { api_getShopList } from '@/requset/api'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
   import { ref } from 'vue'
 
   const current = ref(1)
   const seekValue = ref<string>('')
+  const shopList = ref<any>([])
+  const total = ref<number>(1)
+  const box = ref(0)
+
+  const get = () => {
+    api_getShopList({ page: current.value, pageSize: 15 }).then((res: any) => {
+      if (res.success) {
+        total.value = res.data.total
+        shopList.value = res.data.data
+        box.value = 5 - (total.value % 5)
+      }
+    })
+  }
+  get()
+
+  const changeList = (page: number, pageSize: number) => {
+    current.value = page
+    get()
+  }
 </script>
 <style lang="less" scoped>
   #shop {
@@ -126,6 +175,14 @@
               height: 226px;
               border-radius: 8px;
               margin-bottom: 12px;
+              display: flex;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              align-items: center;
+              img {
+                width: 110px;
+                height: 105px;
+              }
             }
             .name {
               display: flex;

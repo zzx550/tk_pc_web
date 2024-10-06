@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="conte">
-        <div class="left_t">
+        <div class="left_t" v-if="false">
           <div class="check">全部</div>
           <div>口红</div>
           <div>包包</div>
@@ -20,32 +20,38 @@
         </div>
         <div class="con_right">
           <div class="shopList">
-            <div class="boxList" v-for="x in 15" :key="x">
-              <div class="bq_">访问量 75936</div>
-              <img class="pr_con" src="../assets/home/lbt.png" />
+            <div class="boxList" v-for="x in goodsList" :key="x.goods_id">
+              <div class="bq_">访问量 {{ x.goods.visits }}</div>
+              <img :src="x.goods.cover_img" />
               <div class="ms">
                 <div class="name">
-                  爱看书的急啊看实打实打算公开阿爱神的箭阿三阿达萨卡洛夫阿松大asdasd噶
+                  {{ x.goods.goods_name }}
                 </div>
                 <div class="price">
-                  $200.00
-                  <p>售价:$300</p>
+                  ${{ x.goods.goods_price }}
+                  <p>售价:${{ x.goods.goods_profit }}</p>
                 </div>
                 <div class="xl">
-                  日销量&nbsp;&nbsp;1244&nbsp;
-                  &nbsp;&nbsp;周销量&nbsp;&nbsp;751356
+                  日销量&nbsp;&nbsp;{{ x.goods.day_sales_num }}&nbsp;
+                  &nbsp;&nbsp;周销量&nbsp;&nbsp;{{ x.goods.week_sales_num }}
                 </div>
               </div>
             </div>
+            <div style="width: 215px" v-for="x in box" :key="x"></div>
+          </div>
+          <div class="no_data" v-if="goodsList.length < 1">
+            <img src="../assets/img/no_data.png" />
+            <div>无数据</div>
           </div>
           <div class="bot_fy">
             <a-pagination
               :current="current"
-              :pageSize="15"
+              :pageSize="pageSize"
               :total="total"
               show-less-items
               :hideOnSinglePage="true"
               :showSizeChanger="false"
+              @change="changeList"
             />
           </div>
         </div>
@@ -55,28 +61,46 @@
 </template>
 <script setup lang="ts">
   import { api_getRecommendGoods } from '@/requset/api'
-  import { DownOutlined } from '@ant-design/icons-vue'
+  import { useRoute } from 'vue-router'
   import router from '@/router'
   import { ref } from 'vue'
 
+  const route = useRoute()
   const current = ref(1)
-  const page = ref<number>(1)
+  const box = ref(0)
   const total = ref<number>(1)
-  const goodsList = ref<object[]>([])
+  const pageSize = ref<number>(15)
+  const goodsList = ref<any[]>([])
   const seekValue = ref<string>('')
+  const {
+    query: { type },
+  } = route
 
-  api_getRecommendGoods({
-    page,
-    pageSize: 15,
-  }).then((res: any) => {
-    if (res.success) {
-      total.value = res.data.total
-      if (page >= res.data.last_page) {
+  if (type == 1) {
+    pageSize.value = 18
+    box.value = 6 - (total.value % 6)
+  } else {
+    pageSize.value = 15
+    box.value = 5 - (total.value % 5)
+  }
+
+  const changeList = (page: number, pageSize: number) => {
+    current.value = page
+    get()
+  }
+
+  const get = () => {
+    api_getRecommendGoods({
+      page: current.value,
+      pageSize: pageSize.value,
+    }).then((res: any) => {
+      if (res.success) {
+        total.value = res.data.total
         goodsList.value = res.data.data
-        console.log('goodsList.value :>> ', goodsList.value)
       }
-    }
-  })
+    })
+  }
+  get()
 </script>
 <style lang="less" scoped>
   #commodity {
@@ -158,6 +182,7 @@
         .con_right {
           padding: 15px;
           flex: 1;
+          min-height: 700px;
           .shopList {
             padding: 5px;
             border-radius: 12px;

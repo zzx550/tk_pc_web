@@ -5,8 +5,9 @@
       <div class="shopClass">
         <div class="title">商品分类</div>
         <div class="box">
-          <div class="list" v-for="x in 10" :key="x">
-            <img src="../assets/home/icon_01.png" />服装配饰
+          <div class="list cur_p" v-for="x in goodsList" :key="x.cat_id">
+            <!-- <img src="../assets/home/icon_01.png" /> -->
+            {{ x.cat_name }}
           </div>
         </div>
       </div>
@@ -15,31 +16,60 @@
         <div class="name">
           <img class="us_img" src="../assets/home/user_img.png" />
           <div class="u_right">
-            <div class="id">ID:9813311111115482</div>
+            <div
+              v-if="userInfo.shop_name != null && userInfo.shop_name != ''"
+              class="shop_name"
+            >
+              店铺名称：{{ userInfo.shop_name }}
+            </div>
+            <div class="id">ID:{{ userInfo.tiktok_id }}</div>
             <div class="dj">
               <div class="fen">
-                <img v-for="x in 3" :key="x" src="../assets/home/xin.png" />
-                3.5分
+                <img
+                  v-if="userInfo.star_rating"
+                  v-for="x in userInfo.star_rating"
+                  :key="x"
+                  src="../assets/home/xin.png"
+                />
+                {{
+                  userInfo.score_star &&
+                  userInfo.score_star != '' &&
+                  userInfo.score_star != '0'
+                    ? userInfo.score_star + '分'
+                    : ''
+                }}
               </div>
-              三星商户
+              {{
+                userInfo.star_rating == 1
+                  ? '一星商户'
+                  : userInfo.star_rating == 2
+                  ? '二星商户'
+                  : userInfo.star_rating == 3
+                  ? '三星商户'
+                  : userInfo.star_rating == 4
+                  ? '四星商户'
+                  : userInfo.star_rating == 5
+                  ? '五星商户'
+                  : ''
+              }}
             </div>
           </div>
         </div>
         <div class="shuj">
           <div>
-            1
+            {{ ordersNumber.orderStatus_0 }}
             <p>待付款</p>
           </div>
           <div>
-            1
+            {{ ordersNumber.orderStatus_1 }}
             <p>待发货</p>
           </div>
           <div>
-            1
+            {{ ordersNumber.orderStatus_2 }}
             <p>已发货</p>
           </div>
           <div>
-            23
+            {{ ordersNumber.orderStatus_3 }}
             <p>已交付</p>
           </div>
         </div>
@@ -47,42 +77,62 @@
           <div class="title">下级返佣<img src="../assets/home/wh.png" /></div>
           <div class="shuj">
             <div>
-              1
+              {{ getFloat(rebateInfo.sale_amount) }}
               <p>销售总额</p>
             </div>
             <div>
-              1
+              {{ getFloat(rebateInfo.total_rebate) }}
               <p>返佣总额</p>
             </div>
             <div style="color: #0ae2db">
-              10%
+              {{ rebateInfo.max_rate * 100 }}%
               <p>返佣比例</p>
             </div>
           </div>
         </div>
         <div class="data">
           <div class="checkbox">
-            <div class="check">本日</div>
-            <div>本周</div>
-            <div>本月</div>
-            <div>整年</div>
+            <div
+              :class="statisticsTab == 0 ? 'check' : ''"
+              @click="changeStatisticsTab(0)"
+            >
+              本日
+            </div>
+            <div
+              :class="statisticsTab == 1 ? 'check' : ''"
+              @click="changeStatisticsTab(1)"
+            >
+              本周
+            </div>
+            <div
+              :class="statisticsTab == 2 ? 'check' : ''"
+              @click="changeStatisticsTab(2)"
+            >
+              本月
+            </div>
+            <div
+              :class="statisticsTab == 3 ? 'check' : ''"
+              @click="changeStatisticsTab(3)"
+            >
+              整年
+            </div>
           </div>
           <div class="img_data">
             <div style="margin-bottom: 8px">
               <p>销售价格</p>
-              15953.00
+              {{ getFloat(statisticsData.total_profit) }}
             </div>
             <div style="margin-bottom: 8px">
               <p>预期利润</p>
-              165.00
+              {{ getFloat(statisticsData.pure_profit) }}
             </div>
             <div>
               <p>订单数量</p>
-              12
+              {{ statisticsData.order_count }}
             </div>
             <div>
               <p>访问量</p>
-              1895
+              {{ statisticsData.goods_click }}
             </div>
           </div>
         </div>
@@ -91,29 +141,30 @@
     <div class="tj">
       <div class="title">
         <div class="left">推荐商品</div>
-        <div class="more cur_p" @click="router.push('/commodity')">
+        <div class="more cur_p" @click="router.push('/commodity?type=1')">
           更多<img src="../assets/home/more.png" />
         </div>
       </div>
       <div class="shopList">
         <div
           class="boxList"
-          v-for="x in 5"
-          :key="x"
+          v-for="x in tjList"
+          :key="x.goods_id"
           @click="router.push('/comm_det')"
         >
-          <div class="bq_">访问量 75936</div>
-          <img src="../assets/home/lbt.png" />
+          <div class="bq_">访问量 {{ x.goods.visits }}</div>
+          <img :src="x.goods.cover_img" />
           <div class="ms">
             <div class="name">
-              爱看书的急啊看实打实打算公开阿爱神的箭阿三阿达萨卡洛夫阿松大asdasd噶
+              {{ x.goods.goods_name }}
             </div>
             <div class="price">
-              $200.00
-              <p>售价:$300</p>
+              ${{ x.goods.goods_price }}
+              <p>售价:${{ x.goods.goods_profit }}</p>
             </div>
             <div class="xl">
-              日销量&nbsp;&nbsp;1244&nbsp; &nbsp;&nbsp;周销量&nbsp;&nbsp;751356
+              日销量&nbsp;&nbsp;{{ x.goods.day_sales_num }}&nbsp;
+              &nbsp;&nbsp;周销量&nbsp;&nbsp;{{ x.goods.week_sales_num }}
             </div>
           </div>
         </div>
@@ -127,28 +178,49 @@
         </div>
       </div>
       <div class="shopList">
-        <div
-          class="boxList"
-          v-for="x in 10"
-          :key="x"
-          @click="router.push('/commodity')"
-        >
-          <img class="img_" src="../assets/home/lbt.png" />
+        <div class="boxList" v-for="x in shopList" :key="x.tiktok_id">
+          <div class="img_">
+            <img
+              v-for="item in x.hotGoods"
+              :key="item.cat_id"
+              :src="item.cover_img"
+            />
+          </div>
           <div class="name">
-            <img class="us_img" src="../assets/home/user_img.png" />
+            <img class="us_img" :src="x.shop_cover_image" />
             <div class="u_right">
-              <div class="dpm">GETVBLK_AI</div>
-              <div class="id">ID:9813311111115482</div>
+              <div class="dpm">{{ x.shop_name }}</div>
+              <div class="id">ID:{{ x.tiktok_id }}</div>
               <div class="dj">
                 <div class="fen">
-                  <img v-for="x in 3" :key="x" src="../assets/home/xin.png" />
-                  3.5分
+                  <img
+                    v-for="item in x.tar_rating"
+                    :key="item"
+                    src="../assets/home/xin.png"
+                  />
+                  {{
+                    x.score_star && x.score_star != '' && x.score_star != '0'
+                      ? x.score_star + '分'
+                      : ''
+                  }}
                 </div>
-                三星商户
+                {{
+                  x.star_rating == 1
+                    ? '一星商户'
+                    : x.star_rating == 2
+                    ? '二星商户'
+                    : x.star_rating == 3
+                    ? '三星商户'
+                    : x.star_rating == 4
+                    ? '四星商户'
+                    : x.star_rating == 5
+                    ? '五星商户'
+                    : ''
+                }}
               </div>
               <div class="sp">
                 当前商品
-                <p>23</p>
+                <p>{{ x.goodsNum }}</p>
                 个
               </div>
             </div>
@@ -161,8 +233,84 @@
 </template>
 
 <script setup lang="ts">
+  import {
+    api_goodsCategory,
+    api_getRecommendGoods,
+    api_mainStatistics,
+    api_getInfo,
+    api_getOrderTypeNum,
+    api_rebateInfo,
+    api_getShopList,
+  } from '@/requset/api'
+  import { getFloat } from '@/utils'
+  import { goods_fl, goods_tj } from '@/base/index'
   import router from '@/router'
   import { ref } from 'vue'
+
+  let goodsList = ref<goods_fl[]>([])
+  let tjList = ref<goods_tj[]>([])
+  const statisticsTab = ref<number>(0)
+  let statisticsData = ref({
+    total_profit: 0.0,
+    pure_profit: 0.0,
+    order_count: 0,
+    goods_click: 0,
+  })
+  let ordersNumber = ref({
+    orderStatus_0: 0,
+    orderStatus_1: 0,
+    orderStatus_2: 0,
+    orderStatus_3: 0,
+  })
+  const userInfo = ref<any>({})
+  const rebateInfo = ref<any>({})
+  const shopList = ref<any>([])
+
+  api_rebateInfo({}).then((res: any) => {
+    rebateInfo.value = res.data
+  })
+
+  api_goodsCategory({}).then((res: any) => {
+    if (res.success) {
+      goodsList.value = res.data
+    }
+  })
+
+  api_getShopList({ page: 1, pageSize: 10 }).then((res: any) => {
+    if (res.success) {
+      shopList.value = res.data.data
+    }
+  })
+
+  api_getOrderTypeNum({}).then((res: any) => {
+    if (res.success) {
+      ordersNumber.value = res.data
+    }
+  })
+
+  api_getRecommendGoods({ page: 1, pageSize: 5 }).then((res: any) => {
+    if (res.success) {
+      tjList.value = res.data.data
+    }
+  })
+
+  api_getInfo({}).then((res: any) => {
+    if (res.success) {
+      userInfo.value = { ...userInfo.value, ...res.data }
+      // 是否领取过新手礼包
+    }
+  })
+
+  // 切换
+  const changeStatisticsTab = (index: number) => {
+    statisticsTab.value = index
+    api_mainStatistics({ type: index }).then((res: any) => {
+      if (res.success) {
+        statisticsData.value = res.data
+      }
+    })
+  }
+  changeStatisticsTab(0)
 </script>
 
 <style lang="less" scoped>
@@ -214,6 +362,10 @@
           .u_right {
             display: flex;
             flex-direction: column;
+            .shop_name {
+              font-size: 14px;
+              margin-bottom: 4px;
+            }
             .id {
               font-weight: 600;
               margin-bottom: 5px;
@@ -290,6 +442,7 @@
             div {
               font-size: 12px;
               color: #aaaaad;
+              cursor: pointer;
             }
             .check {
               font-weight: 600;
@@ -375,6 +528,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        min-height: 400px;
         .boxList {
           width: 254px;
           position: relative;
@@ -436,6 +590,7 @@
     .dp {
       margin-bottom: 80px;
       .shopList {
+        min-height: 710px;
         padding: 0;
         background: #fff !important;
         flex-wrap: wrap;
@@ -450,6 +605,14 @@
             height: 234px;
             border-radius: 8px;
             margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+            img {
+              width: 110px;
+              height: 105px;
+            }
           }
           .name {
             display: flex;
