@@ -87,7 +87,7 @@
             <div class="gys">
               <div class="title">
                 供应商
-                <div @click.stop="addOpen = true">添加供应商</div>
+                <div @click.stop="supplierOpen = true">添加供应商</div>
               </div>
               <div class="box">
                 <img
@@ -140,55 +140,67 @@
                 />
               </div>
             </div>
-            <div class="mine_shop" @click="router.push('/mine_shop')">
+            <div class="mine_shop">
               <div class="title">
                 我的店铺
-                <div>更多</div>
+                <div @click="router.push('/mine_shop')">更多</div>
               </div>
-              <div class="list">
+              <div
+                class="list"
+                v-for="(item, index) in goodShowcaseList"
+                :key="index"
+                :v-if="item.goods"
+              >
                 <div class="shop_t">
-                  <img src="../assets/logo.png" />
+                  <img :src="item.goods.cover_img" />
                   <div class="txt_3">
-                    ask大可视对讲卡视角打asd
-                    撒打算卡手机啊可视对讲卡卡贷款阿九久啊上课的
+                    {{ item.goods.goods_name }}
                   </div>
                 </div>
                 <div class="price">
-                  产品进价:
-                  <p style="margin-bottom: 0; color: red">$100.00</p>
-                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 产品售价:
-                  <p style="margin-bottom: 0; color: #000">$100.00</p>
+                  商品进价:
+                  <p style="margin-bottom: 0; color: red">
+                    ${{ item.goods.goods_price }}
+                  </p>
+                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 商品售价:
+                  <p style="margin-bottom: 0; color: #000">
+                    ${{ item.goods.goods_profit }}
+                  </p>
                 </div>
                 <div class="txt">
-                  日销量:120&nbsp;&nbsp;周销量:1200&nbsp;&nbsp;访问量:15233
+                  日销量:{{ item.goods.day_sales_num }}&nbsp;&nbsp;周销量:{{
+                    item.goods.week_sales_num
+                  }}&nbsp;&nbsp;访问量:{{ item.goods.visits }}
                 </div>
               </div>
             </div>
           </div>
           <div class="bot_ri">
-            <div class="title_">
-              产品排名
-              <div style="color: #0ae1da" @click="router.push('/ranking')">
-                更多
+            <div class="bot_ri_content">
+              <div class="title_">
+                产品排名
+                <div style="color: #0ae1da" @click="router.push('/ranking')">
+                  更多
+                </div>
               </div>
-            </div>
-            <div class="list_T">
-              <div class="title">排名</div>
-              <div class="time">商品</div>
-              <div class="txt">热度</div>
-            </div>
-            <div class="list list_T" v-for="(x, y) in ranking" :key="x.id">
-              <div class="title">
-                <img v-if="y == 0" src="../assets/img/1.png" />
-                <img v-else-if="y == 1" src="../assets/img/2.png" />
-                <img v-else-if="y == 2" src="../assets/img/3.png" />
-                <div v-else>{{ y + 1 }}</div>
+              <div class="list_T">
+                <div class="title">排名</div>
+                <div class="time">商品</div>
+                <div class="txt">热度</div>
               </div>
-              <div class="time">
-                <img class="shop_i" src="../assets/logo.png" />
-                <div>{{ x.goods_names }}</div>
+              <div class="list list_T" v-for="(x, y) in ranking" :key="x.id">
+                <div class="title">
+                  <img v-if="y == 0" src="../assets/img/1.png" />
+                  <img v-else-if="y == 1" src="../assets/img/2.png" />
+                  <img v-else-if="y == 2" src="../assets/img/3.png" />
+                  <div v-else>{{ y + 1 }}</div>
+                </div>
+                <div class="time">
+                  <img class="shop_i" src="../assets/logo.png" />
+                  <div>{{ x.goods_names }}</div>
+                </div>
+                <div class="txt">{{ x.ranking_value }}</div>
               </div>
-              <div class="txt">{{ x.ranking_value }}</div>
             </div>
           </div>
         </div>
@@ -220,7 +232,7 @@
               >
                 店铺名称：{{ userInfo.shop_name }}
               </div>
-              <div class="id" @click="copyID">ID：{{ userInfo.tiktok_id }}</div>
+              <div class="id">ID：{{ userInfo.tiktok_id }}</div>
               <div class="dj">
                 <div class="fen">
                   <img
@@ -254,7 +266,7 @@
             </div>
           </div>
           <div class="bal">
-            <div class="ls cur_p" @click="open = true">历史记录</div>
+            <div class="ls cur_p" @click="openAssets = true">历史记录</div>
             <div class="z_bal">
               {{ getFloat(walletInfo.totalAssets) }}
               <div>总资产($)</div>
@@ -318,9 +330,8 @@
     </div>
   </div>
 
-  <OpenTip :openAdd="addOpen" @changeAdd="addOpen = false" />
+  <OpenTip :openAdd="supplierOpen" @changeAdd="addSupplier" />
   <OpenTip :openCz="czOpen" @changeCz="czOpen = false" />
-  <OpenTip :openHy="hyOpen" @changeHy="hyOpen = false" />
   <OpenTip
     :openLlb="llbOpen"
     @changeLlb="changeLlb"
@@ -333,26 +344,135 @@
     :isUpdateShopName="userInfo.shop_name != null && userInfo.shop_name != ''"
   />
 
+  <a-modal
+    class="modal_wit"
+    v-model:open="hyOpen"
+    centered
+    :footer="null"
+    width="561px"
+    @cancel="hyOpen = false"
+  >
+    <div class="title">好友助力</div>
+    <img class="pr_con" src="../assets/img/hyzl.png" />
+    <div class="pr_con yqm">
+      我的邀请码
+      <div class="img">
+        {{ userInfo.invite_code }}
+        <img
+          src="../assets/img/copy.png"
+          @click="copyValue(userInfo.invite_code)"
+        />
+      </div>
+    </div>
+    <input
+      type="text"
+      v-model="inputInviteCode"
+      class="pr_con"
+      :placeholder="'请输入助力好友邀请码'"
+    />
+    <div class="but pr_con" @click="bindInviteCode">提交</div>
+
+    <div class="box_rec">
+      <div class="title">
+        <div
+          :class="inviteCheckTab == 1 ? 'check' : ''"
+          @click="changeInviteTab(1)"
+        >
+          助力明细
+        </div>
+        <div
+          :class="inviteCheckTab == 2 ? 'check' : ''"
+          @click="changeInviteTab(2)"
+        >
+          被助力明细
+        </div>
+        <div
+          :class="inviteCheckTab == 3 ? 'check' : ''"
+          @click="changeInviteTab(3)"
+        >
+          团队列表
+        </div>
+        <div
+          :class="inviteCheckTab == 4 ? 'check' : ''"
+          @click="changeInviteTab(4)"
+        >
+          活动规则
+        </div>
+      </div>
+      <div class="content_">
+        <template v-if="inviteCheckTab != 4">
+          <van-list
+            v-model="inviteLoading"
+            :finished="inviteFinished"
+            finished-text="没有更多了"
+            :immediate-check="false"
+            loading-text="加载中..."
+            @load="onInviteLoad"
+          >
+            <div class="list" v-for="(item, index) in inviteList" :key="index">
+              <div class="left">
+                <div>{{ item.username }}</div>
+                <div>ID: {{ item.tiktok_id }}</div>
+              </div>
+              <div>{{ item.create_time }}</div>
+            </div>
+          </van-list>
+        </template>
+        <template v-else>
+          <div v-html="inviteRule"></div>
+        </template>
+      </div>
+    </div>
+  </a-modal>
+
   <a-drawer
-    v-model:open="open"
+    v-model:open="openAssets"
     class="custom-class"
     :closable="false"
     placement="right"
   >
     <div class="check">
-      <div class="check_t">收支明细</div>
+      <!-- <div class="check_t">收支明细</div>
       <div>收入</div>
-      <div>支出</div>
-      <img class="close" @click="open = false" src="../assets/img/close.png" />
+      <div>支出</div> -->
+      <img
+        class="close"
+        @click="openAssets = false"
+        src="../assets/img/close.png"
+      />
     </div>
-    <div class="list" v-for="x in 3" :key="x">
-      <div>
-        <div class="price">注册礼品</div>
-        <div class="kh">编号：6585498</div>
-        <div class="kh">2024-12-10 12:0</div>
+    <van-list
+      v-model="assetsLoading"
+      :finished="assetsFinished"
+      finished-text="没有更多了"
+      :immediate-check="false"
+      loading-text="加载中..."
+      @load="onAssetsLoad"
+    >
+      <div class="list" v-for="x in assetsList" :key="x.id">
+        <div>
+          <div class="price">{{ getAssetsTypeTxt(x.type) }}</div>
+          <div class="kh" v-if="x.json">
+            编号：{{
+              x.json.order_sn
+                ? x.json.order_sn
+                : x.json.goods_id
+                ? x.json.goods_id
+                : x.id
+            }}
+          </div>
+          <div class="kh">{{ x.create_time }}</div>
+        </div>
+        <div class="red_" :style="x.trade_type == 0 ? { color: 'red' } : ''">
+          {{ x.trade_type == 0 ? "+" : "-" }}
+          ${{
+            x.amount.substr(0, 1) !== "-"
+              ? getFloat(x.amount)
+              : getFloat(x.amount.substr(1))
+          }}
+        </div>
       </div>
-      <div class="red_" :style="x == 1 ? { color: 'red' } : ''">+$68</div>
-    </div>
+    </van-list>
   </a-drawer>
   <a-drawer
     v-model:open="openFy"
@@ -361,23 +481,49 @@
     placement="right"
   >
     <div class="check">
-      <div class="check_t">一级返佣</div>
-      <div>二级返佣</div>
-      <div>三级返佣</div>
+      <div
+        :class="rebateType == 1 ? 'check_t' : ''"
+        @click="changeRebateTab(1)"
+      >
+        一级返佣
+      </div>
+      <div
+        :class="rebateType == 2 ? 'check_t' : ''"
+        @click="changeRebateTab(2)"
+      >
+        二级返佣
+      </div>
+      <div
+        :class="rebateType == 3 ? 'check_t' : ''"
+        @click="changeRebateTab(3)"
+      >
+        三级返佣
+      </div>
       <img
         class="close"
         @click="openFy = false"
         src="../assets/img/close.png"
       />
     </div>
-    <div class="list" v-for="x in 3" :key="x">
-      <div>
-        <div class="price">返佣人</div>
-        <div class="kh">返佣编号：6585498</div>
-        <div class="kh">2024-12-10 12:0</div>
+    <van-list
+      v-model="rebateLoading"
+      :finished="rebateFinished"
+      finished-text="没有更多了"
+      :immediate-check="false"
+      loading-text="加载中..."
+      @load="onRebateLoad"
+    >
+      <div class="list" v-for="x in rebateList" :key="x">
+        <div>
+          <div class="price">ID：{{ x.tiktok_id }}</div>
+          <div class="kh">销售金额：${{ getFloat(x.sale_amount) }}</div>
+          <div class="kh">{{ x.create_time }}</div>
+        </div>
+        <div class="red_" :style="{ color: 'red' }">
+          + ${{ getFloat(x.commission_amount) }}
+        </div>
       </div>
-      <div class="red_" :style="x == 1 ? { color: 'red' } : ''">+$68</div>
-    </div>
+    </van-list>
   </a-drawer>
 </template>
 <script setup lang="ts">
@@ -396,7 +542,14 @@ import {
   api_getOrderTypeNum,
   api_wallet,
   api_mySupplier,
+  api_bindSupplier,
   api_addAllGoods,
+  api_myGoods,
+  api_transferLog,
+  api_rateList,
+  api_bind_invite_code,
+  api_team_list,
+  api_helpLog,
 } from "@/requset/api";
 import { message } from "ant-design-vue";
 import useClipboard from "vue-clipboard3";
@@ -411,9 +564,9 @@ interface Item {
 
 const userInfo = ref<any>({});
 let ranking = ref<Item[]>([]);
-const open = ref<boolean>(false);
+const openAssets = ref<boolean>(false);
 const openFy = ref<boolean>(false);
-const addOpen = ref<boolean>(false);
+const supplierOpen = ref<boolean>(false);
 const czOpen = ref<boolean>(false);
 const hyOpen = ref<boolean>(false);
 const shopNameOpen = ref<boolean>(false);
@@ -445,6 +598,29 @@ let walletInfo = ref({
 const supplierList = ref<any>([]);
 let currentSupplierItemIndex = ref<number>(0);
 const supplierItem = ref<any>({});
+const goodShowcaseList = ref<any>([]);
+
+let assetsPage = ref<number>(1);
+let assetsLoading = ref<boolean>(false);
+let assetsFinished = ref<boolean>(false);
+const assetsList = ref<any>([]);
+let assetsFlag = ref<boolean>(false);
+
+let rebateType = ref<number>(1);
+let rebatePage = ref<number>(1);
+let rebateLoading = ref<boolean>(false);
+let rebateFinished = ref<boolean>(false);
+let rebateFlag = ref<boolean>(false);
+const rebateList = ref<any>([]);
+
+const inputInviteCode = ref<string>("");
+const inviteCheckTab = ref<number>(1);
+let invitePage = ref<number>(1);
+let inviteLoading = ref<boolean>(false);
+let inviteFinished = ref<boolean>(false);
+let inviteFlag = ref<boolean>(false);
+const inviteList = ref<any>([]);
+const inviteRule = ref<string>("");
 
 watch(currentSupplierItemIndex, (newValue, oldValue) => {
   console.log("newValue = ", newValue);
@@ -517,6 +693,17 @@ function getSupplierList() {
 }
 getSupplierList();
 
+// 这里只展示上架中的第一页前五条记录
+api_myGoods({
+  status: 0,
+  page: 1,
+  pageSize: 5,
+}).then((res: any) => {
+  if (res.success) {
+    goodShowcaseList.value = res.data.data;
+  }
+});
+
 const goSupplierDet = (supplier_id: number) => {
   router.push("/supplier_det?supplier_id=" + supplier_id);
 };
@@ -544,7 +731,11 @@ api_getOrderTypeNum({}).then((res: any) => {
 
 api_GoodsRanking({}).then((res: any) => {
   if (res.code == 200) {
-    ranking.value.push(...res.data);
+    ranking.value = res.data;
+    // 这里排行榜只取前三条
+    if (ranking.value.length > 3) {
+      ranking.value = ranking.value.slice(0, 3);
+    }
   }
 });
 
@@ -554,6 +745,16 @@ api_optionDesc({ name: "gift_pack_rules" }).then((res: any) => {
     llbRule.value = res.data;
   }
 });
+
+const getInviteRule = () => {
+  api_optionDesc({ name: "recommend_level" }).then((res: any) => {
+    if (res.code == 200) {
+      // 好友助力规则
+      inviteRule.value = res.data;
+    }
+  });
+};
+getInviteRule();
 
 const changeLlb = (change: boolean) => {
   if (change == true) {
@@ -572,8 +773,6 @@ const changeLlb = (change: boolean) => {
 };
 
 const changeShopName = (change: boolean, name: string) => {
-  console.log("change = ", change);
-  console.log("name = ", name);
   if (change == true) {
     if (name == "") {
       message.error("请输入店铺名称");
@@ -611,14 +810,30 @@ const changeShopName = (change: boolean, name: string) => {
   }
 };
 
-async function copyID() {
-  try {
-    await toClipboard(userInfo.value.tiktok_id);
-    message.success("复制成功");
-  } catch (e) {
-    message.error("复制失败");
+const addSupplier = (change: boolean, num: string) => {
+  if (change == true) {
+    if (num == "") {
+      message.error("请输入供货商编号");
+      return;
+    }
+    message.loading("加载中...");
+    api_bindSupplier({ supplier_sn: num }).then((res: any) => {
+      if (res.code == 200) {
+        supplierOpen.value = false;
+        message.success("添加成功");
+        getSupplierList();
+      } else if (res.code == 201) {
+        message.error("供货商编号有误");
+      } else if (res.code == 202) {
+        message.error("供货商编号已绑定");
+      } else if (res.message) {
+        message.error(res.message);
+      }
+    });
+  } else {
+    supplierOpen.value = false;
   }
-}
+};
 
 const avatarAfterRead = (file: any) => {
   message.loading("加载中...");
@@ -639,6 +854,206 @@ const avatarAfterRead = (file: any) => {
       message.error(res.message);
     }
   });
+};
+
+const getAssetsList = () => {
+  assetsFlag.value = true;
+  api_transferLog({
+    page: assetsPage.value,
+    pageSize: 20,
+  }).then((res: any) => {
+    if (res.success) {
+      if (assetsPage.value >= res.data.last_page) {
+        assetsFinished.value = true;
+      }
+      assetsList.value.push(...res.data.data);
+      assetsFlag.value = false;
+      assetsLoading.value = false;
+    }
+  });
+};
+getAssetsList();
+
+const onAssetsLoad = () => {
+  if (assetsFlag.value) return;
+  assetsPage.value = assetsPage.value + 1;
+  getAssetsList();
+};
+
+const getAssetsTypeTxt = (type: number) => {
+  switch (type) {
+    case 1:
+      return "充值申请";
+    case 2:
+      return "提现申请";
+    case 3:
+      return "支付货款";
+    case 4:
+      return "系统扣款";
+    case 5:
+      return "利润收入";
+    case 6:
+      return "付款扣除";
+    case 7:
+      return "投放消耗";
+    case 8:
+      return "推广收益";
+    case 9:
+      return "助力奖励";
+    case 10:
+      return "注册赠送";
+    case 11:
+      return "营业额奖励";
+    case 12:
+      return "提现驳回";
+    default:
+      return "";
+  }
+};
+
+function getRebateList() {
+  rebateFlag.value = true;
+  api_rateList({
+    type: rebateType.value,
+    page: rebatePage.value,
+    pageSize: 20,
+  }).then((res: any) => {
+    if (res.success) {
+      if (rebatePage.value >= res.data.last_page) {
+        rebateFinished.value = true;
+      }
+      rebateList.value.push(...res.data.data);
+      rebateFlag.value = false;
+      rebateLoading.value = false;
+      if (res.data.data.length == 0) {
+        rebateFinished.value = false;
+      }
+    }
+  });
+}
+getRebateList();
+
+const onRebateLoad = () => {
+  if (rebateFlag.value) return;
+  rebatePage.value = rebatePage.value + 1;
+  getRebateList();
+};
+
+const rebateReset = () => {
+  rebatePage.value = 1;
+  rebateList.value = [];
+  rebateFinished.value = false;
+};
+
+const changeRebateTab = (index: number) => {
+  rebateType.value = index;
+  rebateReset();
+  getRebateList();
+};
+
+const bindInviteCode = () => {
+  if (inputInviteCode.value == "") {
+    message.error("请输入助力好友邀请码");
+    return;
+  }
+  const now = new Date();
+  const hours = now.getHours().toString().padStart(2, "0");
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  const seconds = now.getSeconds().toString().padStart(2, "0");
+  let currentTime = `${now.getFullYear()}-${(now.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${now
+    .getDate()
+    .toString()
+    .padStart(2, "0")} ${hours}:${minutes}:${seconds}`;
+
+  message.loading("加载中...");
+  api_bind_invite_code({
+    invite_code: inputInviteCode.value,
+    time: currentTime,
+  }).then((res: any) => {
+    if (res.code == 200) {
+      hyOpen.value = false;
+      message.success("助力成功");
+      inputInviteCode.value = "";
+    } else if (res.code == 202) {
+      message.error("助力邀请码错误");
+    } else if (res.code == 203) {
+      message.error("助力邀请码不能绑定自已");
+    } else if (res.code == 205) {
+      message.error("已达助力最大数量，不可再助力");
+    } else if (res.code == 206) {
+      message.error("当前好友已助力过，不能再次助力");
+    } else if (res.message) {
+      message.error(res.message);
+    }
+  });
+};
+
+const getInviteList = () => {
+  if (inviteCheckTab.value == 4) return;
+  inviteFlag.value = true;
+  let param =
+    inviteCheckTab.value == 3
+      ? {
+          page: invitePage.value,
+          pageSize: 20,
+        }
+      : {
+          page: invitePage.value,
+          pageSize: 20,
+          type: inviteCheckTab.value,
+        };
+  let promise =
+    inviteCheckTab.value == 3 ? api_team_list(param) : api_helpLog(param);
+  promise.then((res: any) => {
+    if (res.success) {
+      if (invitePage.value >= res.data.last_page) {
+        inviteFinished.value = true;
+      }
+      inviteList.value.push(...res.data.data);
+      inviteFlag.value = false;
+      inviteLoading.value = false;
+      if (res.data.data.length == 0) {
+        inviteFinished.value = false;
+      }
+    }
+  });
+};
+getInviteList();
+
+const onInviteLoad = () => {
+  if (inviteFlag.value) return;
+  invitePage.value = invitePage.value + 1;
+  getInviteList();
+};
+
+const inviteReset = () => {
+  invitePage.value = 1;
+  inviteList.value = [];
+  inviteFinished.value = false;
+};
+
+const changeInviteTab = (index: number) => {
+  inviteCheckTab.value = index;
+  if (index != 4) {
+    inviteReset();
+    getInviteList();
+  } else {
+    getInviteRule();
+  }
+};
+
+const copyValue = (value: any) => {
+  if (value == "") {
+    return;
+  }
+  try {
+    toClipboard(value);
+    message.success("复制成功");
+  } catch (e) {
+    message.error("复制失败");
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -842,6 +1257,7 @@ const avatarAfterRead = (file: any) => {
               }
             }
             .list {
+              margin-bottom: 15px;
               .shop_t {
                 padding: 10px 0;
                 display: flex;
@@ -875,66 +1291,68 @@ const avatarAfterRead = (file: any) => {
         }
         .bot_ri {
           width: 595px;
-          background-color: #fff;
-          border-radius: 12px;
-          padding: 20px;
-          .title_ {
-            font-size: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            div {
-              font-size: 14px;
-              cursor: pointer;
-            }
-          }
-          .list_T {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            text-align: center;
-            padding: 8px 0;
-            border-radius: 4px;
-            .title {
-              flex: 1;
-            }
-            .time {
-              flex: 8;
-            }
-            .txt {
-              flex: 1;
-            }
-          }
-          .list {
+          .bot_ri_content {
+            padding: 20px;
             background-color: #fff;
-            padding: 15px 0;
-            .title {
+            border-radius: 12px;
+            .title_ {
               font-size: 20px;
-              color: #8d8e91;
-              img {
-                margin: 0 auto;
-                width: 50px;
-              }
-            }
-            .time {
-              padding: 0 20px;
+              font-weight: 600;
               display: flex;
               align-items: center;
-              .shop_i {
-                border-radius: 8px;
-                width: 56px;
-                height: 56px;
-                margin-right: 10px;
-              }
+              justify-content: space-between;
+              margin-bottom: 15px;
               div {
-                flex: 1;
-                text-align: left;
+                font-size: 14px;
+                cursor: pointer;
               }
             }
-            .txt {
-              font-size: 20px;
+            .list_T {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              text-align: center;
+              padding: 8px 0;
+              border-radius: 4px;
+              .title {
+                flex: 1;
+              }
+              .time {
+                flex: 8;
+              }
+              .txt {
+                flex: 1;
+              }
+            }
+            .list {
+              background-color: #fff;
+              padding: 15px 0;
+              .title {
+                font-size: 20px;
+                color: #8d8e91;
+                img {
+                  margin: 0 auto;
+                  width: 50px;
+                }
+              }
+              .time {
+                padding: 0 20px;
+                display: flex;
+                align-items: center;
+                .shop_i {
+                  border-radius: 8px;
+                  width: 56px;
+                  height: 56px;
+                  margin-right: 10px;
+                }
+                div {
+                  flex: 1;
+                  text-align: left;
+                }
+              }
+              .txt {
+                font-size: 20px;
+              }
             }
           }
         }
@@ -1151,9 +1569,9 @@ const avatarAfterRead = (file: any) => {
   .check {
     display: flex;
     padding-bottom: 12px;
-    border-bottom: 1px solid #cfcfcf;
+    // border-bottom: 1px solid #cfcfcf;
     div {
-      padding: 0 10px;
+      padding: 10px;
       color: #9e9ea1;
     }
     .check_t {
@@ -1204,7 +1622,106 @@ const avatarAfterRead = (file: any) => {
       padding: 5px 0;
     }
     .red_ {
-      font-size: 20px;
+      font-size: 18px;
+    }
+  }
+}
+
+.modal_wit {
+  .title {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  img {
+    width: 120px;
+  }
+  input {
+    background-color: #f6f7f9 !important;
+    height: 42px !important;
+    width: 333px !important;
+    border-radius: 4px !important;
+    margin-left: 20px !important;
+    margin: 20px 0 35px;
+  }
+  .yqm {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    text-align: center;
+    div {
+      padding: 5px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      img {
+        width: 15px;
+        margin-left: 5px;
+      }
+    }
+  }
+  .llb {
+    text-align: center;
+    font-size: 18px;
+    padding-top: 10px;
+    margin-bottom: 20px;
+  }
+  .txt {
+    margin: 20px 0 35px;
+    text-align: center;
+  }
+  .but {
+    width: 150px;
+    padding: 8px 10px;
+    border-radius: 4px;
+    background-color: #0ae2db;
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+  }
+  .box_rec {
+    padding-top: 40px;
+    .title {
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+      div {
+        padding: 10px 16px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .check {
+        font-weight: 600;
+        position: relative;
+        &:after {
+          content: " ";
+          position: absolute;
+          height: 2px;
+          width: 50%;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: #000;
+          bottom: 0;
+        }
+      }
+    }
+    .content_ {
+      max-height: 200px;
+      overflow: auto;
+      .list {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        .left {
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+        }
+      }
     }
   }
 }

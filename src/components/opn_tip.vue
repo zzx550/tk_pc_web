@@ -5,17 +5,19 @@
     centered
     :footer="null"
     width="561px"
-    @cancel="$emit('changeAdd', false)"
+    @cancel="$emit('changeAdd', false, '')"
   >
     <div class="title">添加供应商</div>
     <img class="pr_con" src="../assets/home/add.png" />
     <input
-      type="text "
+      type="text"
       class="pr_con"
-      v-model="props.supplier_num"
+      v-model="supplier_num"
       :placeholder="'请输入供应商编号'"
     />
-    <div class="but pr_con" @click="$emit('changeAdd', true)">提交</div>
+    <div class="but pr_con" @click="$emit('changeAdd', true, supplier_num)">
+      提交
+    </div>
   </a-modal>
 
   <a-modal
@@ -31,7 +33,7 @@
     </div>
     <img class="pr_con" src="../assets/home/add.png" />
     <input
-      type="text "
+      type="text"
       class="pr_con"
       v-model="shop_name"
       :placeholder="'请输入店铺名称'"
@@ -55,41 +57,6 @@
     <div style="width: 180px" class="but pr_con">联系客服</div>
   </a-modal>
 
-  <a-modal
-    class="modal_wit"
-    v-model:open="props.openHy"
-    centered
-    :footer="null"
-    width="561px"
-    @cancel="$emit('changeHy', false)"
-  >
-    <div class="title">好友助力</div>
-    <img class="pr_con" src="../assets/img/hyzl.png" />
-    <div class="pr_con yqm">
-      我的邀请码
-      <div class="img">4489ag8Ks <img src="../assets/img/copy.png" /></div>
-    </div>
-    <input type="text " class="pr_con" :placeholder="'请输入助力好友邀请码'" />
-    <div class="but pr_con">提交</div>
-
-    <div class="box_rec">
-      <div class="title">
-        <div :class="check ? 'check' : ''" @click="check = true">助力明细</div>
-        <div :class="!check ? 'check' : ''" @click="check = false">
-          活动规则
-        </div>
-      </div>
-      <div class="content_">
-        <div class="list" v-if="check" v-for="x in 8" :key="x">
-          张大大
-          <div>2014-02-15 14:00</div>
-        </div>
-        <div v-else>
-          啊实打实大卡司阿帆阿是阿德奥德赛阿嘎奥古斯丁噶拉个艾克赛德爱哭鬼
-        </div>
-      </div>
-    </div>
-  </a-modal>
   <a-modal
     class="modal_wit"
     v-model:open="props.openLlb"
@@ -143,10 +110,6 @@ const props = defineProps({
     type: Boolean,
     require: false,
   },
-  openHy: {
-    type: Boolean,
-    require: false,
-  },
   openLlb: {
     type: Boolean,
     require: false,
@@ -159,10 +122,6 @@ const props = defineProps({
     type: String,
     require: "",
   },
-  supplier_num: {
-    type: String,
-    require: "",
-  },
   openShopName: {
     type: Boolean,
     require: false,
@@ -172,8 +131,8 @@ const props = defineProps({
     require: false,
   },
 });
-const check = ref<boolean>(true);
 const shop_name = ref<string>("");
+const supplier_num = ref<string>("");
 </script>
 
 <style lang="less" scoped>
