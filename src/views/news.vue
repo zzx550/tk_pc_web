@@ -8,30 +8,36 @@
       </div>
       <div class="conte">
         <div class="left_t">
-          <div class="check">全部</div>
-          <div>风险警告</div>
-          <div>系统公告</div>
+          <!-- <div >全部</div> -->
+          <div :class="type == 1 ? 'check' : ''" @click="changeType(1)">
+            风险警告
+          </div>
+          <div :class="type == 2 ? 'check' : ''" @click="changeType(2)">
+            系统公告
+          </div>
         </div>
         <div class="con_right">
-          <div class="list" v-for="x in 3" :key="x">
+          <div class="list" v-for="x in noticeList" :key="x">
             <img v-if="x != 2" src="../assets/img/xx_icon.png" />
             <img v-else src="../assets/img/xx_icon_f.png" />
             <div class="txt">
               <div class="t_top">
-                <div>您板顶的手机</div>
-                <div class="time">2024/12/5</div>
+                <div>{{ x.title }}</div>
+                <div class="time">{{ x.create_time }}</div>
               </div>
-              <div class="txt_p txt_3">
-                sssssssssssssssssssssssssssssssaksjkajs阿克苏积分卡角色打开阿珂教工卡教工卡司法局阿卡挂
-              </div>
+              <div class="txt_p txt_3" v-html="x.content"></div>
             </div>
             <div
               class="but"
-              :style="x == 2 ? { 'background-color': '#e3e4e4' } : ''"
+              :style="x.is_read == 1 ? { 'background-color': '#e3e4e4' } : ''"
             >
-              <div v-if="x == 2">已读</div>
-              <div v-else @click="router.push('/new_new')">查看</div>
+              <div v-if="x.is_read == 1">已读</div>
+              <div v-else @click="goDet(x.id)">查看</div>
             </div>
+          </div>
+          <div class="no_data" v-if="noticeList.length < 1">
+            <img style="width: 20%" src="../assets/img/no_data.png" />
+            <div>无数据</div>
           </div>
         </div>
       </div>
@@ -39,8 +45,34 @@
   </div>
 </template>
 <script setup lang="ts">
+  import { api_newsList, api_updateNewsStatus } from '@/requset/api'
   import router from '@/router'
   import { ref } from 'vue'
+
+  let type = ref<number>(1) //  1-风控提示 2-系统公告
+  const noticeList = ref<any[]>([])
+
+  function changeType(index: number) {
+    type.value = index
+    getList()
+  }
+
+  function goDet(id: number) {
+    api_updateNewsStatus({ id }).then((res: any) => {
+      if (res.success) {
+        router.push(`/new_det?id=${id}`)
+      }
+    })
+  }
+
+  function getList() {
+    api_newsList({ type: type.value }).then((res: any) => {
+      if (res.success) {
+        noticeList.value = res.data
+      }
+    })
+  }
+  getList()
 </script>
 <style lang="less" scoped>
   #news {
@@ -75,6 +107,7 @@
           border-right: 1px solid rgba(211, 211, 211, 0.5);
           div {
             padding: 8px 15px;
+            cursor: pointer;
           }
           .check {
             font-weight: 600;

@@ -9,15 +9,21 @@
         <div class="line">></div>
         <div style="font-weight: 600">我的店铺</div>
         <div class="seek">
-          <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
+          <input type="text" v-model="seekValue" placeholder="请输入好友ID" />
           <img class="icon" src="../assets/home/seek.png" />
         </div>
       </div>
       <div class="conte">
         <div class="left_t">
-          <div class="check">全部</div>
-          <div>展示中</div>
-          <div>已下架</div>
+          <div :class="status == 3 ? 'check' : ''" @click="changeStatus(3)">
+            全部
+          </div>
+          <div :class="status == 0 ? 'check' : ''" @click="changeStatus(0)">
+            展示中
+          </div>
+          <div :class="status == 1 ? 'check' : ''" @click="changeStatus(1)">
+            已下架
+          </div>
         </div>
         <div class="con_right">
           <div class="box_he">
@@ -28,26 +34,35 @@
               <div class="price">周销量</div>
               <div class="gm">售价($)</div>
             </div>
-            <div class="list list_T" v-for="x in 8" :key="x">
+            <div
+              class="list list_T"
+              v-for="item in goodShowcaseList"
+              :key="item.id"
+            >
               <div class="img_name">
-                <img class="shop_i" src="../assets/logo.png" />
+                <img class="shop_i" :src="item.goods.cover_img" />
                 <div class="txt_3">
-                  啊可视对讲阿克苏京东卡手机打卡萨阿克苏登记卡手机打卡手机卡四大皆空ajs
+                  {{ item.goods.goods_name }}
                 </div>
               </div>
-              <div class="price">170.00</div>
-              <div class="price">30.00</div>
-              <div class="price">30.00</div>
-              <div class="gm">140.00</div>
+              <div class="price">{{ item.goods.visits }}</div>
+              <div class="price">{{ item.goods.day_sales_num }}</div>
+              <div class="price">{{ item.goods.week_sales_num }}</div>
+              <div class="gm">{{ item.goods.goods_profit }}</div>
+            </div>
+            <div class="no_data" v-if="goodShowcaseList.length < 1">
+              <img src="../assets/img/no_data.png" />
+              <div>无数据</div>
             </div>
           </div>
           <div class="bot_fy">
             <a-pagination
               v-model:current="current"
-              :total="100"
+              :total="total"
               show-less-items
               :hideOnSinglePage="true"
               :showSizeChanger="false"
+              @change="changeList"
             />
           </div>
         </div>
@@ -56,12 +71,40 @@
   </div>
 </template>
 <script setup lang="ts">
+  import { api_myGoods } from '@/requset/api'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
 
   const current = ref(1)
+  const status = ref<string | number>(3)
+  const total = ref(0)
   const seekValue = ref<string>('')
+  const goodShowcaseList = ref<any>([])
+
+  const changeList = (page: number, pageSize: number) => {
+    current.value = page
+    get()
+  }
+
+  function changeStatus(index: number) {
+    status.value = index
+    get()
+  }
+
+  const get = () => {
+    api_myGoods({
+      status: status.value,
+      page: current.value,
+      pageSize: 10,
+    }).then((res: any) => {
+      if (res.success) {
+        total.value = res.data.total
+        goodShowcaseList.value = res.data.data
+      }
+    })
+  }
+  get()
 </script>
 <style lang="less" scoped>
   #mineShop {
@@ -123,6 +166,7 @@
           border-right: 1px solid rgba(211, 211, 211, 0.5);
           div {
             padding: 8px 15px;
+            cursor: pointer;
           }
           .check {
             font-weight: 600;

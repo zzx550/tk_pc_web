@@ -10,19 +10,29 @@
         <div style="font-weight: 600">详情</div>
       </div>
       <div class="txt_Con">
-        <div class="title">表艾克赛德</div>
-        <div class="time">2024-12-05 12:26:00</div>
-        <div class="txt">
-          阿加莎德哈卡汕德卡十九大阿斯卡大家啊上课了登记卡手机打卡机苏卡达久啊立卡手打卡萨丁久啊上课的啊可视对讲啊可视角度立卡时间段lkd
-          阿加莎德哈卡汕德卡十九大阿斯卡大家啊上课了登记卡手机打卡机苏卡达久啊立卡手打卡萨丁久啊上课的啊可视对讲啊可视角度立卡时间段lkd
-        </div>
+        <div class="title">{{ txt.title }}</div>
+        <div class="time">{{ txt.update_time }}</div>
+        <div class="txt" v-html="txt.html"></div>
       </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+  import { api_newsDetail } from '@/requset/api'
   import router from '@/router'
+  import { useRoute } from 'vue-router'
   import { ref } from 'vue'
+
+  const route = useRoute()
+  const {
+    query: { id },
+  } = route
+  const txt = ref<any>([])
+
+  // router.currentRoute.value.query.id
+  api_newsDetail({ id }).then((res: any) => {
+    txt.value = res.data
+  })
 </script>
 <style lang="less" scoped>
   #newDet {

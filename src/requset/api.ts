@@ -45,7 +45,7 @@ export const api_addGoods = (p: any) => axios.post("goods/addGoods", p);
 export const api_getOption = (p: any) => axios.post("option/list", p);
 
 // 文章列表
-export const api_newsList = (p: any) => axios.postForm("option/newsList", p);
+export const api_newsList = (p: any) => axios.post("option/newsList", p);
 
 // 文章详情
 export const api_newsDetail = (p: any) => axios.post("option/newsDetail", p);
