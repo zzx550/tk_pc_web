@@ -7,7 +7,7 @@
 }
 html {
   -ms-overflow-style: none;
-  overflow: -moz-scrollbars-none;
+  overflow: -moz-scrollbars-none;          font-family: 'PingFang SC';
 }
 
 html::-webkit-scrollbar {

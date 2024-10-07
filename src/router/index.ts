@@ -13,8 +13,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/login.vue')
   },
   {
-    path: '/new_new',
-    name: 'newNew',
+    path: '/new_det',
+    name: 'newDet',
     component: () => import('../views/newDet.vue')
   },
   {

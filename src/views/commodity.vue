@@ -19,21 +19,61 @@
           <div>香水</div>
         </div>
         <div class="con_right">
+          <div class="box_t" v-if="route.query.id">
+            <img class="logo" src="../assets/logo.png" />
+            <div class="name">{{ data.shop_name }}</div>
+            <div class="id">ID:{{ data.tiktok_id }}</div>
+            <div class="fen">
+              <img
+                v-for="item in data.star_rating"
+                :key="item"
+                src="../assets/home/xin.png"
+              />
+              <div>
+                {{
+                  data.score_star &&
+                  data.score_star != '' &&
+                  data.score_star != '0'
+                    ? data.score_star + '分'
+                    : ''
+                }}
+              </div>
+            </div>
+            <div class="sp">
+              当前商品
+              <p>{{ data.goodsNum }}</p>
+              个
+            </div>
+          </div>
           <div class="shopList">
-            <div class="boxList" v-for="x in goodsList" :key="x.goods_id">
-              <div class="bq_">访问量 {{ x.goods.visits }}</div>
-              <img :src="x.goods.cover_img" />
+            <div
+              class="boxList"
+              v-for="x in goodsList"
+              :key="x.goods_id"
+              @click="router.push(`/comm_det?id=${x.goods_id}`)"
+            >
+              <div class="bq_">
+                访问量 {{ route.query.id ? x.visits : x.goods.visits }}
+              </div>
+              <img :src="route.query.id ? x.cover_img : x.goods.cover_img" />
               <div class="ms">
                 <div class="name">
-                  {{ x.goods.goods_name }}
+                  {{ route.query.id ? x.goods_name : x.goods.goods_name }}
                 </div>
                 <div class="price">
-                  ${{ x.goods.goods_price }}
-                  <p>售价:${{ x.goods.goods_profit }}</p>
+                  ${{ route.query.id ? x.goods_price : x.goods.goods_price }}
+                  <p>
+                    售价:${{
+                      route.query.id ? x.goods_profit : x.goods.goods_profit
+                    }}
+                  </p>
                 </div>
                 <div class="xl">
-                  日销量&nbsp;&nbsp;{{ x.goods.day_sales_num }}&nbsp;
-                  &nbsp;&nbsp;周销量&nbsp;&nbsp;{{ x.goods.week_sales_num }}
+                  日销量&nbsp;&nbsp;{{
+                    route.query.id ? x.day_sales_num : x.goods.day_sales_num
+                  }}&nbsp; &nbsp;&nbsp;周销量&nbsp;&nbsp;{{
+                    route.query.id ? x.week_sales_num : x.goods.week_sales_num
+                  }}
                 </div>
               </div>
             </div>
@@ -60,7 +100,7 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { api_getRecommendGoods } from '@/requset/api'
+  import { api_getRecommendGoods, api_getShopGoodsList } from '@/requset/api'
   import { useRoute } from 'vue-router'
   import router from '@/router'
   import { ref } from 'vue'
@@ -71,24 +111,31 @@
   const total = ref<number>(1)
   const pageSize = ref<number>(15)
   const goodsList = ref<any[]>([])
+  const data = ref<any>({})
   const seekValue = ref<string>('')
-  const {
-    query: { type },
-  } = route
-
-  if (type == 1) {
-    pageSize.value = 18
-    box.value = 6 - (total.value % 6)
-  } else {
-    pageSize.value = 15
-    box.value = 5 - (total.value % 5)
-  }
 
   const changeList = (page: number, pageSize: number) => {
     current.value = page
-    get()
+    if (route.query.id) {
+      getDp()
+    } else {
+      get()
+    }
   }
+  data.value = JSON.parse(sessionStorage.getItem('data'))
 
+  const getDp = () => {
+    api_getShopGoodsList({
+      id: route.query.id,
+      page: current.value,
+      pageSize: pageSize.value,
+    }).then((res: any) => {
+      if (res.success) {
+        total.value = res.data.total
+        goodsList.value = res.data.data
+      }
+    })
+  }
   const get = () => {
     api_getRecommendGoods({
       page: current.value,
@@ -100,7 +147,19 @@
       }
     })
   }
-  get()
+
+  if (route.query.type == 1) {
+    pageSize.value = 18
+    box.value = 6 - (total.value % 6)
+    if (route.query.id) {
+      getDp()
+    } else {
+      get()
+    }
+  } else {
+    pageSize.value = 15
+    box.value = 5 - (total.value % 5)
+  }
 </script>
 <style lang="less" scoped>
   #commodity {
@@ -183,6 +242,60 @@
           padding: 15px;
           flex: 1;
           min-height: 700px;
+          .box_t {
+            display: flex;
+            background-color: #f6f7f9;
+            border-radius: 6px;
+            padding: 15px 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            .logo {
+              width: 36px;
+              height: 36px;
+              margin-right: 15px;
+              border-radius: 4px;
+            }
+            .name {
+              font-weight: 600;
+              padding: 0 8px;
+            }
+            .id {
+              font-size: 12px;
+              margin-right: 15px;
+            }
+            .fen {
+              display: flex;
+              align-items: center;
+
+              img {
+                width: 12px;
+                height: 12px;
+                position: relative;
+                top: -2px;
+              }
+              div {
+                font-size: 12px;
+                margin-left: 5px;
+              }
+            }
+            .sp {
+              position: absolute;
+              font-size: 12px;
+              display: flex;
+              align-items: center;
+              color: #1d1e25;
+              right: 20px;
+              top: 43%;
+              transform: translateX(-50%);
+              p {
+                font-size: 12px;
+                color: #0ae1da;
+                margin-bottom: 0;
+              }
+            }
+          }
           .shopList {
             padding: 5px;
             border-radius: 12px;
