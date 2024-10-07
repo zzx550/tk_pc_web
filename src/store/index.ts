@@ -1,4 +1,4 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 
 export default createStore({
   state: {
@@ -14,6 +14,9 @@ export default createStore({
       { lang: "de", value: "Deutsch" },
       { lang: "fr", value: "Français" },
       { lang: "russian", value: "Русский" },
+      { lang: "bl", value: "Polski" },
+      { lang: "teq", value: "Türkçe" },
+      { lang: "ydl", value: "Italiano" },
     ],
     currencyUnit: [
       { lang: "zh", unit: "RMB" },
@@ -27,14 +30,30 @@ export default createStore({
       { lang: "russian", unit: "SUR" },
       { lang: "ko", unit: "KRW" },
       { lang: "vi", unit: "VND" },
+      { lang: "bl", unit: "PLN" },
+      { lang: "teq", unit: "TL" },
+      { lang: "ydl", unit: "EUR" },
+    ],
+    countryName: [
+      { lang: "zh", country: "中国" },
+      { lang: "id", country: "Indonesia" },
+      { lang: "th", country: "ประเทศไทย" },
+      { lang: "fr", country: "France" },
+      { lang: "de", country: "Deutschland" },
+      { lang: "en", country: "America" },
+      { lang: "hk", country: "中國台湾" }, // 后台那边的key，地区相关hk=台湾
+      { lang: "zh-hk", country: "中國香港" }, // 后台那边的key，地区相关zh-hk=香港
+      { lang: "ja", country: "日本" },
+      { lang: "russian", country: "Россия" },
+      { lang: "ko", country: "대한민국" },
+      { lang: "vi", country: "Việt Nam" },
+      { lang: "bl", country: "Polska" },
+      { lang: "teq", country: "Türkiye" },
+      { lang: "ydl", country: "Italia" },
     ],
   },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+  getters: {},
+  mutations: {},
+  actions: {},
+  modules: {},
+});

@@ -283,14 +283,20 @@
             </div>
             <div class="but">
               <div @click="czOpen = true">充值</div>
-              <div class="tx" @click="router.push('/withdraw')">提现</div>
+              <div class="tx" @click="goWithdraw">提现</div>
             </div>
           </div>
         </div>
         <div class="xji">
           <div class="title_fy">
-            <div class="left">下级返佣<img src="../assets/home/wh.png" /></div>
-            <div class="cur_p" style="color: #0ae1da" @click="openFy = true">
+            <div class="left" @click.stop="fyRuleOpen = true">
+              下级返佣<img src="../assets/home/wh.png" />
+            </div>
+            <div
+              class="cur_p"
+              style="color: #0ae1da"
+              @click.stop="openFy = true"
+            >
               返佣记录
             </div>
           </div>
@@ -331,7 +337,7 @@
   </div>
 
   <OpenTip :openAdd="supplierOpen" @changeAdd="addSupplier" />
-  <OpenTip :openCz="czOpen" @changeCz="czOpen = false" />
+  <OpenTip :openCz="czOpen" @changeCz="changeCz" />
   <OpenTip
     :openLlb="llbOpen"
     @changeLlb="changeLlb"
@@ -342,6 +348,17 @@
     :openShopName="shopNameOpen"
     @changeShopName="changeShopName"
     :isUpdateShopName="userInfo.shop_name != null && userInfo.shop_name != ''"
+  />
+  <OpenTip
+    :openFyRule="fyRuleOpen"
+    @changeFyRule="fyRuleOpen = false"
+    :fyRule="rebateInfo.rules_desc"
+  />
+
+  <OpenTip
+    :openSetPassword="setPasswordOpen"
+    @changePassword="changePassword"
+    :isWithdraw="true"
   />
 
   <a-modal
@@ -550,6 +567,8 @@ import {
   api_bind_invite_code,
   api_team_list,
   api_helpLog,
+  api_getOption,
+  api_setPwd,
 } from "@/requset/api";
 import { message } from "ant-design-vue";
 import useClipboard from "vue-clipboard3";
@@ -566,6 +585,7 @@ const userInfo = ref<any>({});
 let ranking = ref<Item[]>([]);
 const openAssets = ref<boolean>(false);
 const openFy = ref<boolean>(false);
+const fyRuleOpen = ref<boolean>(false);
 const supplierOpen = ref<boolean>(false);
 const czOpen = ref<boolean>(false);
 const hyOpen = ref<boolean>(false);
@@ -621,6 +641,8 @@ let inviteFinished = ref<boolean>(false);
 let inviteFlag = ref<boolean>(false);
 const inviteList = ref<any>([]);
 const inviteRule = ref<string>("");
+
+const setPasswordOpen = ref<boolean>(false);
 
 watch(currentSupplierItemIndex, (newValue, oldValue) => {
   console.log("newValue = ", newValue);
@@ -1041,6 +1063,59 @@ const changeInviteTab = (index: number) => {
     getInviteList();
   } else {
     getInviteRule();
+  }
+};
+
+const changeCz = () => {
+  api_getOption({}).then((res: any) => {
+    if (res.code == 200) {
+      czOpen.value = false;
+      let serviceUrl = res.data.recharge_service_link;
+      if (serviceUrl != "" && serviceUrl != null) {
+        window.open(serviceUrl);
+      } else {
+        message.error("客服链接未配置~");
+      }
+    }
+  });
+};
+
+const goWithdraw = () => {
+  // 是否设置了安全密码
+  if (userInfo.value.payword == null || userInfo.value.payword == "") {
+    setPasswordOpen.value = true;
+  } else {
+    router.push("/withdraw");
+  }
+};
+
+const changePassword = (change: boolean, pwd: string, repeat_pwd: string) => {
+  if (change == true) {
+    if (pwd == "" || pwd.length < 6) {
+      message.error("请输入提现密码");
+      return;
+    }
+    if (repeat_pwd == "" || repeat_pwd.length < 6) {
+      message.error("请再次输入提现密码");
+      return;
+    }
+    if (pwd != repeat_pwd) {
+      message.error("2次提现密码不一致");
+      return;
+    }
+
+    message.loading("加载中...");
+    api_setPwd({ password: repeat_pwd }).then((res: any) => {
+      if (res.code == 200) {
+        setPasswordOpen.value = false;
+        message.success("提交成功");
+        getUserInfo();
+      } else if (res.message) {
+        message.error(res.message);
+      }
+    });
+  } else {
+    setPasswordOpen.value = false;
   }
 };
 
@@ -1718,7 +1793,7 @@ const copyValue = (value: any) => {
         padding: 10px;
         .left {
           display: flex;
-          align-items: center;
+          // align-items: center;
           flex-direction: column;
         }
       }

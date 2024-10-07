@@ -54,7 +54,13 @@
     <div class="title">充值提示</div>
     <img class="pr_con" src="../assets/home/cz.png" />
     <div class="txt">由于各国家商户承销币种问题，目前充值需联系客服</div>
-    <div style="width: 180px" class="but pr_con">联系客服</div>
+    <div
+      style="width: 180px"
+      class="but pr_con"
+      @click="$emit('changeCz', true)"
+    >
+      联系客服
+    </div>
   </a-modal>
 
   <a-modal
@@ -87,6 +93,56 @@
       <div class="content_" v-html="props.llbRule"></div>
     </div>
   </a-modal>
+
+  <a-modal
+    class="modal_wit"
+    v-model:open="props.openFyRule"
+    centered
+    :footer="null"
+    width="561px"
+    @cancel="$emit('changeFyRule', false)"
+  >
+    <div class="title">返佣规则</div>
+    <div class="txt" v-html="props.fyRule"></div>
+  </a-modal>
+
+  <a-modal
+    class="modal_wit"
+    v-model:open="props.openSetPassword"
+    centered
+    :footer="null"
+    width="561px"
+    @cancel="$emit('changePassword', false, '', '')"
+  >
+    <div class="title">
+      设置{{ props.isWithdraw == true ? "提现" : "安全" }}密码
+    </div>
+    <img class="pr_con" src="../assets/home/add.png" />
+    <input
+      type="password"
+      class="pr_con"
+      :style="{ marginTop: '35px', marginBottom: '20px' }"
+      v-model="pwd"
+      :placeholder="
+        '请输入' + (props.isWithdraw == true ? '提现' : '安全') + '密码'
+      "
+    />
+    <input
+      type="password"
+      class="pr_con"
+      :style="{ marginTop: 0 }"
+      v-model="repeat_pwd"
+      :placeholder="
+        '请再次输入' + (props.isWithdraw == true ? '提现' : '安全') + '密码'
+      "
+    />
+    <div
+      class="but pr_con"
+      @click="$emit('changePassword', true, pwd, repeat_pwd)"
+    >
+      提交
+    </div>
+  </a-modal>
 </template>
 
 <script setup lang="ts">
@@ -99,6 +155,8 @@ const emit = defineEmits([
   "changeHy",
   "changeLlb",
   "changeShopName",
+  "changeFyRule",
+  "changePassword",
 ]);
 
 const props = defineProps({
@@ -130,9 +188,27 @@ const props = defineProps({
     type: Boolean,
     require: false,
   },
+  openFyRule: {
+    type: Boolean,
+    require: false,
+  },
+  fyRule: {
+    type: String,
+    require: "",
+  },
+  openSetPassword: {
+    type: Boolean,
+    require: false,
+  },
+  isWithdraw: {
+    type: Boolean,
+    require: false,
+  },
 });
 const shop_name = ref<string>("");
 const supplier_num = ref<string>("");
+const pwd = ref<string>("");
+const repeat_pwd = ref<string>("");
 </script>
 
 <style lang="less" scoped>
