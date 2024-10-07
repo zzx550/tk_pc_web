@@ -71,6 +71,26 @@ const routes: Array<RouteRecordRaw> = [
     path: '/news',
     name: 'news',
     component: () => import('../views/news.vue')
+  },
+  {
+    path: '/mjzc',
+    name: 'mjzc',
+    component: () => import('../views/mjzc.vue')
+  },
+  {
+    path: '/thxy',
+    name: 'thxy',
+    component: () => import('../views/thxy.vue')
+  },
+  {
+    path: '/shqh',
+    name: 'shqh',
+    component: () => import('../views/shqh.vue')
+  },
+  {
+    path: '/yszc',
+    name: 'yszc',
+    component: () => import('../views/yszc.vue')
   }
 ]
 
