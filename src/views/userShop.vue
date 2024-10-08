@@ -283,7 +283,7 @@
             </div>
             <div class="but">
               <div @click="czOpen = true">充值</div>
-              <div class="tx" @click="goWithdraw">提现</div>
+              <div class="tx" @click="router.push('./withdraw')">提现</div>
             </div>
           </div>
         </div>
@@ -353,12 +353,6 @@
     :openFyRule="fyRuleOpen"
     @changeFyRule="fyRuleOpen = false"
     :fyRule="rebateInfo.rules_desc"
-  />
-
-  <OpenTip
-    :openSetPassword="setPasswordOpen"
-    @changePassword="changePassword"
-    :isWithdraw="true"
   />
 
   <a-modal
@@ -641,8 +635,6 @@ let inviteFinished = ref<boolean>(false);
 let inviteFlag = ref<boolean>(false);
 const inviteList = ref<any>([]);
 const inviteRule = ref<string>("");
-
-const setPasswordOpen = ref<boolean>(false);
 
 watch(currentSupplierItemIndex, (newValue, oldValue) => {
   console.log("newValue = ", newValue);
@@ -1066,57 +1058,24 @@ const changeInviteTab = (index: number) => {
   }
 };
 
-const changeCz = () => {
+const changeCz = (change: boolean) => {
+  if (change == false) {
+    czOpen.value = false;
+    return;
+  }
   api_getOption({}).then((res: any) => {
     if (res.code == 200) {
       czOpen.value = false;
       let serviceUrl = res.data.recharge_service_link;
       if (serviceUrl != "" && serviceUrl != null) {
-        window.open(serviceUrl);
+        setTimeout(() => {
+          window.open(serviceUrl);
+        }, 1000);
       } else {
         message.error("客服链接未配置~");
       }
     }
   });
-};
-
-const goWithdraw = () => {
-  // 是否设置了安全密码
-  if (userInfo.value.payword == null || userInfo.value.payword == "") {
-    setPasswordOpen.value = true;
-  } else {
-    router.push("/withdraw");
-  }
-};
-
-const changePassword = (change: boolean, pwd: string, repeat_pwd: string) => {
-  if (change == true) {
-    if (pwd == "" || pwd.length < 6) {
-      message.error("请输入提现密码");
-      return;
-    }
-    if (repeat_pwd == "" || repeat_pwd.length < 6) {
-      message.error("请再次输入提现密码");
-      return;
-    }
-    if (pwd != repeat_pwd) {
-      message.error("2次提现密码不一致");
-      return;
-    }
-
-    message.loading("加载中...");
-    api_setPwd({ password: repeat_pwd }).then((res: any) => {
-      if (res.code == 200) {
-        setPasswordOpen.value = false;
-        message.success("提交成功");
-        getUserInfo();
-      } else if (res.message) {
-        message.error(res.message);
-      }
-    });
-  } else {
-    setPasswordOpen.value = false;
-  }
 };
 
 const copyValue = (value: any) => {
