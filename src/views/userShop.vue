@@ -562,7 +562,6 @@ import {
   api_team_list,
   api_helpLog,
   api_getOption,
-  api_setPwd,
 } from "@/requset/api";
 import { message } from "ant-design-vue";
 import useClipboard from "vue-clipboard3";
