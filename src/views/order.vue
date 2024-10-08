@@ -43,24 +43,33 @@
             </div>
             <div class="list list_T" v-for="x in orderList" :key="x">
               <div class="img_name">
-                <div class="on">商品编号：57485852458</div>
-                <img class="shop_i" src="../assets/logo.png" />
-                <div class="txt_3">
-                  啊可视对讲阿克苏京东卡手机打卡萨阿克苏登记卡手机打卡手机卡四大皆空ajs
+                <div class="on">商品编号：{{ x.order_sn }}</div>
+                <div
+                  class="goods_info"
+                  v-for="item in x.goods_info"
+                  :key="item.goods_id"
+                >
+                  <img class="shop_i" :src="item.cover_img" />
+                  <div class="txt_3">{{ item.goods_name }}</div>
                 </div>
               </div>
-              <div class="xx">asd爱都开始的阿斯顿爱高速费</div>
-              <div>170.00</div>
-              <div>30.00</div>
+              <div class="xx">{{ x.address_info.address }}</div>
+              <div>{{ x.total_profit }}</div>
+              <div>{{ x.total_price }}</div>
               <div class="zt">
-                <div v-if="x == 1">待发货</div>
-                <div class="yjf" v-else-if="x == 2">已交付</div>
-                <div class="dzf" v-else-if="x == 3">
+                <div v-if="x.order_status === 1">待发货</div>
+                <div class="yjf" v-if="x.order_status == 5">已交付</div>
+                <div class="dzf" v-if="x.order_status == 0">
                   待支付 <van-count-down :time="300000" format="mm:ss" />
                 </div>
-                <div class="yfh" v-else>已发货</div>
+                <div class="yfh" v-if="x.order_status == 2">已发货</div>
               </div>
-              <div class="gm">详情</div>
+              <div
+                class="gm"
+                @click="router.push(`/order_det?id=${x.order_id}`)"
+              >
+                详情
+              </div>
             </div>
             <div class="no_data" v-if="orderList.length < 1">
               <img style="width: 20%" src="../assets/img/no_data.png" />
@@ -110,7 +119,7 @@
 
   function get() {
     api_orderList({
-      order_status: tabIndex.value,
+      order_status: tabIndex.value == 0 ? '' : tabIndex.value - 1,
       page: current.value,
       pageSize: 10,
     }).then((res: any) => {
@@ -255,6 +264,10 @@
                   top: 0px;
                   position: absolute;
                   left: 0;
+                }
+                .goods_info {
+                  display: flex;
+                  align-items: center;
                 }
                 .shop_i {
                   border-radius: 8px;

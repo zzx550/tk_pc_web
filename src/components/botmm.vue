@@ -166,6 +166,7 @@
         padding-top: 30px;
         border: none;
         align-items: flex-start;
+        margin-bottom: 0;
       }
       .footer-title {
         margin-right: 150px;

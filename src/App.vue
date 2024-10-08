@@ -19,6 +19,7 @@
     />
     <router-view class="content" />
   </div>
+  <div class="kf_x"><img src="./assets/img/kf.png" alt="" /></div>
 </template>
 <script setup lang="ts">
   import { ref, watch, getCurrentInstance } from 'vue'
@@ -59,5 +60,13 @@
     .content {
       padding-top: 10px;
     }
+  }
+  .kf_x {
+    z-index: 99;
+    position: absolute;
+    right: 15%;
+    bottom: 20%;
+    background-color: #fff;
+    border-radius: 50%;
   }
 </style>

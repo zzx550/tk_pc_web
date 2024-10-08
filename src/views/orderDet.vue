@@ -12,30 +12,35 @@
         </div>
         <div class="line">></div>
         <div style="font-weight: 600">详情</div>
-        <div class="seek">
+        <!-- <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
           <img class="icon" src="../assets/home/seek.png" />
-        </div>
+        </div> -->
       </div>
       <div class="conte">
         <div class="on">
-          商品编号：234599451119859884&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：2020-152
-          -44 45:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;供应商：亚马逊
+          商品编号：{{
+            order.order_sn
+          }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：{{
+            order.create_time
+          }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;供应商：{{
+            order.supplier_name
+          }}
           <div><img src="../assets/img/kf.png" alt="" />联系买家</div>
         </div>
         <div class="zt">
           <div class="left_con">
             <div class="title">当前商品待发货</div>
-            <div class="det">
-              <div>收货人：迪丽热巴</div>
-              <div>联系方式：1888888888888</div>
+            <div class="det" v-if="order.address_info">
+              <div>收货人：{{ order.address_info.full_name }}</div>
+              <div>联系方式：{{ order.address_info.phone }}</div>
               <div class="ts">
-                收货地址：迪丽热巴阿萨德卡积分卡安抚巾款式分卡安抚巾款式大方
+                {{ order.address_info.address }}
               </div>
             </div>
           </div>
           <div class="right_con">
-            <a-steps :current="1" :items="arr"></a-steps>
+            <a-steps :current="current" :items="arr"></a-steps>
           </div>
         </div>
         <div class="shop_l">
@@ -47,27 +52,33 @@
             <div>状态</div>
             <div class="gm">操作</div>
           </div>
-          <div class="list list_T" v-for="x in 2" :key="x">
+          <div class="list list_T" v-for="x in order.goods_info" :key="x">
             <div class="img_name">
-              <img class="shop_i" src="../assets/logo.png" />
+              <img class="shop_i" :src="x.cover_img" />
               <div class="txt_3">
-                啊可视对讲阿克苏京东卡手机打卡萨阿克苏登记卡手机打卡手机卡四大皆空ajs
+                {{ x.goods_name }}
               </div>
             </div>
-            <div>170.00</div>
-            <div>170.00</div>
-            <div>30.00</div>
+            <div>{{ x.goods_num }}</div>
+            <div>{{ x.goods_profit }}</div>
+            <div>{{ x.goods_price }}</div>
             <div class="zt_">
-              <div v-if="x == 1">待发货</div>
-              <div class="yjf" v-else-if="x == 2">已交付</div>
-              <div class="dzf" v-else-if="x == 3">
+              <div v-if="order.order_status === 1">待发货</div>
+              <div class="yjf" v-if="order.order_status == 5">已交付</div>
+              <div class="dzf" v-if="order.order_status == 0">
                 待支付 <van-count-down :time="300000" format="mm:ss" />
               </div>
-              <div class="yfh" v-else>已发货</div>
+              <div class="yfh" v-if="order.order_status == 2">已发货</div>
             </div>
             <div class="gm">
-              <div class="but pay" @click="open = true">立即支付</div>
-              <div class="but" @click="openOr=true">取消订单</div>
+              <div
+                class="but pay"
+                @click="open = true"
+                v-if="order.order_status == 0"
+              >
+                立即支付
+              </div>
+              <div class="but" @click="openOr = true">取消订单</div>
             </div>
           </div>
         </div>
@@ -117,47 +128,87 @@
     <div class="title">提示</div>
     <p class="tip">是否确定取消订单</p>
     <div class="but_">
-      <div>确认</div>
-      <div>取消</div>
+      <div @click="cancelOrder">确认</div>
+      <div @click="openOr = false">取消</div>
     </div>
   </a-modal>
 </template>
 <script setup lang="ts">
+  import { api_orderDetail, api_cancelOrder } from '@/requset/api'
   import { getFloat } from '@/utils/index'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
+  import { useRoute } from 'vue-router'
   import { ref } from 'vue'
+  import { message } from 'ant-design-vue'
 
-  const current = ref(1)
+  const route = useRoute()
+  const current = ref<string | number>('')
   const seekValue = ref<string>('')
   const open = ref<boolean>(false)
   const openOr = ref<boolean>(false)
-  const arr = [
-    {
-      title: '船运',
-      description: '00:00:08',
-    },
-    {
-      title: '匹配国际货物仓库',
-      description: '00:00:08',
-    },
-    {
-      title: '快递',
-      description: '00:00:08',
-    },
-    {
-      title: '快递',
-      description: '00:00:08',
-    },
-    {
-      title: '快递',
-      description: '00:00:08',
-    },
-    {
-      title: '运输',
-      description: '00:00:08',
-    },
-  ]
+  const order = ref<any>([])
+  const arr = ref<any>([
+    { id: 1, title: '已发货', description: '' },
+    { id: 2, title: '匹配国际货品仓库', description: '' },
+    { id: 3, title: '快递收揽中', description: '' },
+    { id: 4, title: '运输中', description: '' },
+    { id: 5, title: '配送中', description: '' },
+    { id: 6, title: '已签收', description: '' },
+  ])
+  let isShowLogi = ref<boolean>(false)
+
+  function cancelOrder() {
+    api_cancelOrder({ order_id: route.query.id }).then((res: any) => {
+      if (res.success) {
+        message.success('订单取消成功')
+        setTimeout(() => {
+          router.push('/order')
+        }, 2000)
+      }
+    })
+  }
+
+  api_orderDetail({ order_id: route.query.id }).then((res: any) => {
+    if (res.success) {
+      order.value = res.data
+      // 0 待付款 1 准备发货 2 运输中 3 已到达 4 待结算 5 已结算  6 已取消 7-退货中 8-已退货
+      isShowLogi.value =
+        order.value.order_status >= 2 && order.value.order_status <= 5
+      Array.from(arr.value).forEach((item: any) => {
+        if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 4) {
+          item.description = order.value.ship_time
+        } else if (item.id == 6) {
+          item.description = order.value.arrival_time
+        }
+
+        if (isShowLogi.value == true) {
+          if (order.value.order_status == 1) {
+            current.value = 1
+          }
+          if (order.value.order_status == 2) {
+            current.value = 4
+          }
+          if (order.value.arrival_time && order.value.order_status > 2) {
+            current.value = 6
+          }
+        }
+        // if (isShowLogi.value == true) {
+        //   if (order.value.order_status == 2) {
+        //     if (item.id == 1 || item.id == 2 || item.id == 3 || item.id == 4) {
+        //       item.select = true
+        //     } else {
+        //       item.select = false
+        //     }
+        //   } else if (order.value.order_status > 2) {
+        //     if (order.value.arrival_time) {
+        //       item.select = true
+        //     }
+        //   }
+        // }
+      })
+    }
+  })
 </script>
 <style lang="less" scoped>
   #orderDet {
