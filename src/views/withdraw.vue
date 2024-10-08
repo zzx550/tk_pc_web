@@ -538,6 +538,8 @@ const goWithdraw = () => {
         message.error("当前用户星级无法提现，请提升星级");
       } else if (res.code == 208) {
         message.error("当前用户星级今日提现已达最大提现次数");
+      } else if (res.code == 209) {
+        message.error("商户交易已冻结，请联系客服");
       } else if (res.code == 400) {
         message.error("提现申请异常");
       } else if (res.message) {
