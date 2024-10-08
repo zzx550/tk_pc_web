@@ -159,7 +159,7 @@
           class="boxList"
           v-for="x in tjList"
           :key="x.goods_id"
-          @click="router.push('/comm_det')"
+          @click="router.push(`/comm_det?id=${x.goods_id}`)"
         >
           <div class="bq_">访问量 {{ x.goods.visits }}</div>
           <img :src="x.goods.cover_img" />
@@ -187,7 +187,12 @@
         </div>
       </div>
       <div class="shopList">
-        <div class="boxList" v-for="x in shopList" :key="x.tiktok_id">
+        <div
+          class="boxList"
+          v-for="x in shopList"
+          :key="x.tiktok_id"
+          @click="changeLoc(x)"
+        >
           <div class="img_">
             <img
               v-for="item in x.hotGoods"
@@ -243,7 +248,7 @@
       </div>
     </div>
   </div>
-  <div class="fs">某某某公司</div>
+  <BotBase />
 </template>
 
 <script setup lang="ts">
@@ -279,6 +284,11 @@
   const userInfo = ref<any>({})
   const rebateInfo = ref<any>({})
   const shopList = ref<any>([])
+
+  function changeLoc(x: any) {
+    sessionStorage.setItem('data', JSON.stringify(x))
+    router.push(`/commodity?type=1&id=${x.id}`)
+  }
 
   api_rebateInfo({}).then((res: any) => {
     rebateInfo.value = res.data

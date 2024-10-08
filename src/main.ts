@@ -16,8 +16,10 @@ import Antd from "ant-design-vue";
 
 import TopSeek from "./components/top_seek.vue";
 import OpenTip from "./components/opn_tip.vue";
+import BotBase from "./components/botmm.vue";
 app.component("TopSeek", TopSeek);
 app.component("OpenTip", OpenTip);
+app.component("BotBase", BotBase);
 
 app.use(Antd);
 app.use(store).use(router).mount("#app");

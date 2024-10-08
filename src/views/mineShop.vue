@@ -9,7 +9,12 @@
         <div class="line">></div>
         <div style="font-weight: 600">我的店铺</div>
         <div class="seek">
-          <input type="text" v-model="seekValue" placeholder="请输入好友ID" />
+          <input
+            type="text"
+            v-model="seekValue"
+            placeholder="请输入好友ID"
+            @change="changeStatus(3)"
+          />
           <img class="icon" src="../assets/home/seek.png" />
         </div>
       </div>
@@ -51,7 +56,7 @@
               <div class="gm">{{ item.goods.goods_profit }}</div>
             </div>
             <div class="no_data" v-if="goodShowcaseList.length < 1">
-              <img src="../assets/img/no_data.png" />
+              <img style="width: 20%" src="../assets/img/no_data.png" />
               <div>无数据</div>
             </div>
           </div>
@@ -77,8 +82,8 @@
   import { ref, watch } from 'vue'
 
   const current = ref(1)
-  const status = ref<string | number>(3)
   const total = ref(0)
+  const status = ref<string | number>(3)
   const seekValue = ref<string>('')
   const goodShowcaseList = ref<any>([])
 
@@ -94,6 +99,7 @@
 
   const get = () => {
     api_myGoods({
+      tiktok_id: seekValue.value,
       status: status.value,
       page: current.value,
       pageSize: 10,

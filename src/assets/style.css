@@ -5,9 +5,14 @@
  margin:  0 auto;      position: relative !important;
  z-index: 3 !important ;
 }
+.head_b_{
+ width: 1200px;
+ margin:  0 auto;      position: relative !important;
+ z-index: 3 !important ;
+}
 html {
   -ms-overflow-style: none;
-  overflow: -moz-scrollbars-none;
+  overflow: -moz-scrollbars-none;          font-family: 'PingFang SC';
 }
 
 html::-webkit-scrollbar {
@@ -101,4 +106,7 @@ button ,input{
   transform: translateX(-50%);
 }
 
+h2{
+  padding-top: 40px;
+}
 
