@@ -13,7 +13,12 @@
       </div>
       <div class="conte">
         <div class="shopList">
-          <div class="boxList" v-for="x in shopList" :key="x.tiktok_id">
+          <div
+            class="boxList"
+            @click="changeLoc(x)"
+            v-for="x in shopList"
+            :key="x.tiktok_id"
+          >
             <div class="img_">
               <img
                 v-for="item in x.hotGoods"
@@ -89,6 +94,11 @@
   const shopList = ref<any>([])
   const total = ref<number>(1)
   const box = ref(0)
+
+  function changeLoc(x: any) {
+    sessionStorage.setItem('data', JSON.stringify(x))
+    router.push(`/commodity?type=1&id=${x.id}`)
+  }
 
   const get = () => {
     api_getShopList({ page: current.value, pageSize: 15 }).then((res: any) => {

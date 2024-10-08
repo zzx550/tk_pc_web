@@ -2,16 +2,20 @@
   <div id="home" class="head_b">
     <TopSeek />
     <div class="top">
-      <div class="shopClass">
+      <!-- <div class="shopClass">
         <div class="title">商品分类</div>
         <div class="box">
-          <div class="list cur_p" v-for="x in goodsList" :key="x.cat_id">
-            <!-- <img src="../assets/home/icon_01.png" /> -->
+          <div
+            @click="router.push(`/commodity?cat_id=${x.cat_id}`)"
+            class="list cur_p"
+            v-for="x in goodsList"
+            :key="x.cat_id"
+          >
             {{ x.cat_name }}
           </div>
         </div>
-      </div>
-      <img src="../assets/home/lbt.png" width="880px" height="420px" />
+      </div> -->
+      <img src="../assets/home/lbt.png" width="1080px" height="420px" />
       <div class="user">
         <div class="name">
           <img
@@ -83,7 +87,9 @@
           </div>
         </div>
         <div class="yj">
-          <div class="title">下级返佣<img src="../assets/home/wh.png" /></div>
+          <div class="title" @click.stop="fyRuleOpen = true">
+            下级返佣<img src="../assets/home/wh.png" />
+          </div>
           <div class="shuj">
             <div>
               {{ getFloat(rebateInfo.sale_amount) }}
@@ -249,6 +255,12 @@
     </div>
   </div>
   <BotBase />
+
+  <OpenTip
+    :openFyRule="fyRuleOpen"
+    @changeFyRule="fyRuleOpen = false"
+    :fyRule="rebateInfo.rules_desc"
+  />
 </template>
 
 <script setup lang="ts">
@@ -266,6 +278,7 @@
   import router from '@/router'
   import { ref } from 'vue'
 
+  const fyRuleOpen = ref<boolean>(false)
   let goodsList = ref<goods_fl[]>([])
   let tjList = ref<goods_tj[]>([])
   const statisticsTab = ref<number>(0)
@@ -362,6 +375,9 @@
           padding: 9.5px 0;
           display: flex;
           font-size: 14px;
+          &:hover {
+            color: #0ae1da;
+          }
           img {
             margin-right: 15px;
             width: 17px;

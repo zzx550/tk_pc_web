@@ -5,19 +5,28 @@
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/')">首页</div>
         <div class="line">></div>
-        <div style="font-weight: 600">推荐商品</div>
-        <div class="seek">
+        <div style="font-weight: 600">
+          {{ route.query.id ? '推荐店铺商品' : '推荐商品' }}
+        </div>
+        <!-- <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
           <img class="icon" src="../assets/home/seek.png" />
-        </div>
+        </div> -->
       </div>
       <div class="conte">
-        <div class="left_t" v-if="false">
-          <div class="check">全部</div>
-          <div>口红</div>
-          <div>包包</div>
-          <div>香水</div>
-        </div>
+        <!-- <div class="left_t" v-if="!route.query.type">
+          <div :class="active == '' ? 'check' : ''" @click="changeCat('')">
+            全部
+          </div>
+          <div
+            :class="active == x.cat_id ? 'check' : ''"
+            @click="changeCat(x.cat_id)"
+            v-for="x in goodCat"
+            :key="x.cat_id"
+          >
+            {{ x.cat_name }}
+          </div>
+        </div> -->
         <div class="con_right">
           <div class="box_t" v-if="route.query.id">
             <img class="logo" src="../assets/logo.png" />
@@ -80,7 +89,7 @@
             <div style="width: 215px" v-for="x in box" :key="x"></div>
           </div>
           <div class="no_data" v-if="goodsList.length < 1">
-            <img src="../assets/img/no_data.png" />
+            <img style="width: 20%" src="../assets/img/no_data.png" />
             <div>无数据</div>
           </div>
           <div class="bot_fy">
@@ -100,7 +109,11 @@
   </div>
 </template>
 <script setup lang="ts">
-  import { api_getRecommendGoods, api_getShopGoodsList } from '@/requset/api'
+  import {
+    api_getRecommendGoods,
+    api_getShopGoodsList,
+    api_goodsCategory,
+  } from '@/requset/api'
   import { useRoute } from 'vue-router'
   import router from '@/router'
   import { ref } from 'vue'
@@ -113,6 +126,20 @@
   const goodsList = ref<any[]>([])
   const data = ref<any>({})
   const seekValue = ref<string>('')
+  let goodCat = ref<any[]>([])
+  const active = ref<string | number>('')
+
+  api_goodsCategory({}).then((res: any) => {
+    if (res.success) {
+      goodCat.value = res.data
+    }
+  })
+
+  function changeCat(id: string | number) {
+    active.value = id
+    current.value = 1
+    get()
+  }
 
   const changeList = (page: number, pageSize: number) => {
     current.value = page
@@ -136,8 +163,10 @@
       }
     })
   }
+
   const get = () => {
     api_getRecommendGoods({
+      cat_id: active.value,
       page: current.value,
       pageSize: pageSize.value,
     }).then((res: any) => {
@@ -157,6 +186,7 @@
       get()
     }
   } else {
+    active.value = route.query.cat_id
     pageSize.value = 15
     box.value = 5 - (total.value % 5)
   }
@@ -221,6 +251,8 @@
           border-right: 1px solid rgba(211, 211, 211, 0.5);
           div {
             padding: 8px 15px;
+            font-size: 15px;
+            cursor: pointer;
           }
           .check {
             font-weight: 600;

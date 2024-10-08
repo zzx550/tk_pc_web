@@ -11,69 +11,182 @@
       </div>
       <div class="conte">
         <div class="left_t">
-          <div class="check">全部</div>
-          <div>积木</div>
-          <div>配件</div>
-          <div>电脑与消耗品</div>
+          <div :class="active == '' ? 'check' : ''" @click="changeCat('')">
+            全部
+          </div>
+          <div
+            :class="active == x.cat_id ? 'check' : ''"
+            @click="changeCat(x.cat_id)"
+            v-for="x in cateList"
+            :key="x.id"
+          >
+            {{ x.cat_name }}
+          </div>
         </div>
         <div class="con_right">
           <div class="box_he">
             <div class="list_T">
               <div class="img_name">商品图片/名称</div>
               <div class="price">售价($)</div>
-              <div class="price">利润($)</div>
               <div class="gm">购买价($)</div>
+              <div class="price">利润($)</div>
               <div class="sel">
                 <a-dropdown placement="bottom">
                   <div @click.prevent class="ant-dropdown-link">
-                    状态<DownOutlined />
+                    状态
+                    <!-- <DownOutlined /> -->
                   </div>
-                  <template #overlay>
+                  <!-- <template #overlay>
                     <a-menu @click="onClick">
                       <a-menu-item key="1"> 展示中 </a-menu-item>
                       <a-menu-item key="2"> 已下架 </a-menu-item>
                     </a-menu>
-                  </template>
+                  </template> -->
                 </a-dropdown>
               </div>
             </div>
-            <div class="list list_T" v-for="x in 3" :key="x">
+            <div class="list list_T" v-for="x in goodsList" :key="x">
               <div class="img_name">
-                <img class="shop_i" src="../assets/logo.png" />
+                <img class="shop_i" :src="x.cover_img" />
                 <div class="txt_3">
-                  啊可视对讲阿克苏京东卡手机打卡萨阿克苏登记卡手机打卡手机卡四大皆空ajs
+                  {{ x.goods_name }}
                 </div>
               </div>
-              <div class="price">170.00</div>
-              <div class="price">30.00</div>
-              <div class="gm">140.00</div>
+              <div class="price">{{ x.goods_profit }}</div>
+              <div class="price">{{ x.goods_price }}</div>
+              <div class="gm">
+                {{ getFloat(x.goods_profit - x.goods_price) }}
+              </div>
               <div class="sel">
-                <div v-if="x != 2">展示中</div>
+                <div
+                  v-if="x.ug_status != null && x.ug_status == 0"
+                  @click="changeOpen(x)"
+                >
+                  展示中
+                </div>
                 <div v-else style="background-color: #e3e4e4">已下架</div>
               </div>
             </div>
+            <div class="no_data" v-if="goodsList.length < 1">
+              <img style="width: 20%" src="../assets/img/no_data.png" />
+              <div>无数据</div>
+            </div>
           </div>
+
           <div class="bot_fy">
             <a-pagination
               v-model:current="current"
-              :total="100"
+              :total="total"
+              :pageSize="15"
               show-less-items
               :hideOnSinglePage="true"
               :showSizeChanger="false"
+              @change="changeList"
             />
           </div>
         </div>
       </div>
     </div>
   </div>
+  <a-modal
+    class="modal_wit"
+    v-model:open="openOr"
+    centered
+    :footer="null"
+    width="338px"
+  >
+    <div class="title">提示</div>
+    <p class="tip">是否确定退货</p>
+    <div class="but_">
+      <div @click="handleRemove()">确认</div>
+      <div @click="openOr = false">取消</div>
+    </div>
+  </a-modal>
 </template>
 <script setup lang="ts">
+  import {
+    api_goodsList,
+    api_goodsCategory,
+    api_removeGood,
+    api_getOption,
+  } from '@/requset/api'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
-  import type { MenuProps } from 'ant-design-vue'
+  import { message, type MenuProps } from 'ant-design-vue'
   import { ref } from 'vue'
+  import { useRouter, useRoute } from 'vue-router'
+  import { get } from 'vant/lib/utils'
+  import { getFloat } from '@/utils'
+  const route = useRoute()
 
   const current = ref(1)
+  const active = ref<string | number>('')
+  const cateList = ref<any>([])
+  const goodsList = ref<any>([])
+  const total = ref(0)
+  const isOpenRemove = ref(true)
+  const openOr = ref(false)
+
+  api_getOption({}).then((res: any) => {
+    isOpenRemove.value = res.data.open_user_delist_goods == 1
+  })
+
+  api_goodsCategory({}).then((res: any) => {
+    if (res.success) {
+      cateList.value = res.data
+      active.value = ''
+      getList()
+    }
+  })
+
+  let data = ref<any>({})
+  function changeOpen(x: any) {
+    data.value = x
+    openOr.value = true
+  }
+
+  function handleRemove() {
+    if (isOpenRemove.value == false) {
+      message.error('禁止下架')
+      openOr.value = false
+      return
+    }
+    if (data.value.is_delist_goods == false) {
+      return
+    }
+    api_removeGood({ goods_id: data.value.goods_id }).then((res: any) => {
+      if (res.success) {
+        message.success('下架成功')
+        getList()
+        openOr.value = false
+      }
+    })
+  }
+
+  const changeList = (page: number, pageSize: number) => {
+    current.value = page
+    getList()
+  }
+
+  function changeCat(id: string | number) {
+    active.value = id
+    current.value = 1
+    getList()
+  }
+
+  function getList() {
+    api_goodsList({
+      supplier_id: route.query.supplier_id,
+      cat_id: active.value,
+      page: current.value,
+      pageSize: 15,
+    }).then((res: any) => {
+      if (res.success) {
+        total.value = res.data.total
+        goodsList.value = res.data.data
+      }
+    })
+  }
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
     console.log(`点击了 ${key}`)
@@ -111,6 +224,8 @@
           border-right: 1px solid rgba(211, 211, 211, 0.5);
           div {
             padding: 8px 15px;
+            font-size: 15px;
+            cursor: pointer;
           }
           .check {
             font-weight: 600;
@@ -153,6 +268,7 @@
               .sel {
                 flex: 0.7;
                 color: #000;
+                cursor: pointer;
                 .anticon {
                   margin-left: 3px;
                   font-size: 13px;
@@ -199,6 +315,103 @@
             text-align: right;
             margin-bottom: 50px;
           }
+        }
+      }
+    }
+  }
+  .modal_wit {
+    .title {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .dz {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid rgba(29, 30, 37, 0.08);
+      margin-bottom: 20px;
+      background: #fff;
+      img {
+        width: 26px;
+        margin-right: 15px;
+      }
+      .adds {
+        flex: 1;
+        font-weight: 600;
+        font-size: 16px;
+        div {
+          font-size: 14px;
+          color: #8d8e91;
+        }
+      }
+    }
+    .li {
+      display: flex;
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      div {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        color: #1d1e25;
+        img {
+          width: 20px;
+          margin-right: 5px;
+        }
+      }
+    }
+    .hj {
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+      .price {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+        p {
+          margin-bottom: 0;
+          font-size: 26px;
+          color: red;
+        }
+      }
+      .but {
+        background-color: #0ae2db;
+        color: #fff;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 4px;
+      }
+    }
+    .tip {
+      text-align: center;
+      font-weight: 600;
+      padding: 10px 30px;
+      margin-bottom: 30px;
+    }
+    .but_ {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      div {
+        border-radius: 4px;
+        padding: 8px 20px;
+        cursor: pointer;
+        &:nth-child(1) {
+          border: 1px solid #eee;
+        }
+        &:nth-child(2) {
+          border: 1px solid #0ae2db;
+          background-color: #0ae2db;
+          color: #fff;
         }
       }
     }

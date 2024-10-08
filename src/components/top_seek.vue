@@ -12,7 +12,7 @@
         </a-badge>
       </div>
       <img
-        @click="changeCz"
+        @click="router.push('./inquiry')"
         class="kf"
         style="margin: 0 25px"
         src="../assets/home/kf_icon.png"
@@ -86,7 +86,6 @@
   const feebackContent = ref<string>('')
 
   const changeCz = () => {
-    console.log('111 :>> ', 111)
     api_getOption({}).then((res: any) => {
       if (res.success) {
         let serviceUrl = res.data.recharge_service_link
