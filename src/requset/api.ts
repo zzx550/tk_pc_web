@@ -245,3 +245,27 @@ export const api_getAllNotPayOrder = (p: any) =>
 
 // 订单全部支付
 export const api_payAll = (p: any) => axios.post("order/payAll", p);
+
+// 推荐商品(未登录时)
+export const api_getRecommendGoods_notLogin = (p: any) =>
+  axios.post("store/getRecommendGoods", p);
+
+// 商户店铺列表(未登录时)
+export const api_getShopList_notLogin = (p: any) =>
+  axios.post("store/getShopList", p);
+
+// 商户店铺商品列表(未登录时)
+export const api_getShopGoodsList_notLogin = (p: any) =>
+  axios.post("store/getShopGoodsList", p);
+
+// 商户店铺详情(未登录时)
+export const api_getShopDetail_notLogin = (p: any) =>
+  axios.post("store/getShopDetail", p);
+
+// 获取当前平台未使用的激活码
+export const api_getNotUsedAuthCode = (p: any) =>
+  axios.post("login/getNotUsedAuthCode", p);
+
+// 商家入驻申请
+export const api_createJoinInApply = (p: any) =>
+  axios.post("user/createJoinInApply", p);
