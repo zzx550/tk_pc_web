@@ -18,10 +18,12 @@ import TopSeek from "./components/top_seek.vue";
 import OpenTip from "./components/opn_tip.vue";
 import BotBase from "./components/botmm.vue";
 import globalFloatingIcon from "./components/globalFloatingIcon.vue";
+import Captcha from "./components/Captcha.vue";
 app.component("TopSeek", TopSeek);
 app.component("OpenTip", OpenTip);
 app.component("BotBase", BotBase);
 app.component("globalFloatingIcon", globalFloatingIcon);
+app.component("Captcha", Captcha);
 
 app.use(Antd);
 app.use(store).use(router).mount("#app");

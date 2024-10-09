@@ -120,7 +120,7 @@ const loginOut = () => {
   api_logout({}).then((res: any) => {
     if (res.success) {
       sessionStorage.removeItem("token");
-      router.push("/login");
+      router.push("./");
     }
   });
 };
