@@ -918,27 +918,27 @@
     return isJpgOrPng && isLt2M
   }
 
-  const avatarAfterRead = (file: any) => {
-    message.loading('加载中...')
-    console.log('file :>> ', file)
-    // api_uploadImg(file).then((res: any) => {
-    //   if (res.code == 200) {
-    //     api_update_shopInfo({
-    //       shop_cover_image: res.data.http_url,
-    //       shop_name: userInfo.value.shop_name,
-    //     }).then((res: any) => {
-    //       if (res.code == 200) {
-    //         message.success
-    //         getUserInfo()
-    //       } else {
-    //         message.error(res.message)
-    //       }
-    //     })
-    //   } else if (res.message) {
-    //     message.error(res.message)
-    //   }
-    // })
-  }
+  // const avatarAfterRead = (file: any) => {
+  //   message.loading('加载中...')
+  //   console.log('file :>> ', file)
+  //   // api_uploadImg(file).then((res: any) => {
+  //   //   if (res.code == 200) {
+  //   //     api_update_shopInfo({
+  //   //       shop_cover_image: res.data.http_url,
+  //   //       shop_name: userInfo.value.shop_name,
+  //   //     }).then((res: any) => {
+  //   //       if (res.code == 200) {
+  //   //         message.success
+  //   //         getUserInfo()
+  //   //       } else {
+  //   //         message.error(res.message)
+  //   //       }
+  //   //     })
+  //   //   } else if (res.message) {
+  //   //     message.error(res.message)
+  //   //   }
+  //   // })
+  // }
 
   const getAssetsList = () => {
     assetsFlag.value = true
