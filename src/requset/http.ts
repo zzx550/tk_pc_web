@@ -9,10 +9,10 @@ class Request {
     //请求拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        config.headers.token = sessionStorage.getItem("token")
+        config.headers.token = sessionStorage.getItem("token");
         config.headers.lang = sessionStorage.getItem("lang")
-        ? sessionStorage.getItem("lang")
-        : "en"
+          ? sessionStorage.getItem("lang")
+          : "en";
         return config;
       },
       (error) => {
@@ -48,8 +48,7 @@ class Request {
   }
   // 封装get请求
   get(url: string, data: any) {
-    axios.defaults.headers.post["Content-Type"] =
-    "application/json";
+    axios.defaults.headers.post["Content-Type"] = "application/json";
     return new Promise((resolve, reject) => {
       this.instance
         ?.get(url, {
