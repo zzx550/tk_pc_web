@@ -68,7 +68,7 @@
 <script setup lang="ts">
   import { useStore } from 'vuex'
   const { state } = useStore()
-  import { api_logout, api_problemFeedback, api_getOption } from '@/requset/api'
+  import { api_logout, api_problemFeedback } from '@/requset/api'
   import router from '@/router'
   import { ref, defineProps } from 'vue'
   import { message, type MenuProps } from 'ant-design-vue'
@@ -84,19 +84,6 @@
   const seekValue = ref<string>('')
   const modal_fk = ref<boolean>(false)
   const feebackContent = ref<string>('')
-
-  const changeCz = () => {
-    api_getOption({}).then((res: any) => {
-      if (res.success) {
-        let serviceUrl = res.data.recharge_service_link
-        if (serviceUrl != '' && serviceUrl != null) {
-          window.open(serviceUrl)
-        } else {
-          message.error('客服链接未配置~')
-        }
-      }
-    })
-  }
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
     state.countryLang.forEach((x: any, y: number) => {

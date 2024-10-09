@@ -9,7 +9,7 @@
       </div>
       <div class="conte">
         <div class="js_goods">
-          <img class="yt" :src="goodsDet.cover_img" alt="" />
+          <img class="yt" :src="goodsDet.cover_img" />
           <div class="right_con">
             <div class="name">{{ goodsDet.goods_name }}</div>
             <div class="price">

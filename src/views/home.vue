@@ -25,7 +25,6 @@
             "
             class="us_img"
             :src="userInfo.shop_cover_image"
-            alt=""
           />
           <img v-else class="us_img" src="../assets/home/user_img.png" />
           <div class="u_right">

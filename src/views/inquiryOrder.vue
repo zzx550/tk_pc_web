@@ -42,7 +42,7 @@
       <div class="title">专属客服</div>
       <div class="kf_bac">
         <div class="lef">
-          <img class="tx" src="../assets/logo.png" alt="" />
+          <img class="tx" src="../assets/logo.png" />
           <div>dnasifajdaksd afkasdman阿卡莎开始</div>
         </div>
         <div class="rig">
@@ -57,7 +57,15 @@
           auto-size
         />
         <div class="but">
-          <img src="../assets/img/up_img.png" alt="" />
+          <a-upload
+            list-type="picture-card"
+            class="avatar-uploader"
+            :show-upload-list="false"
+            action="https://tkg-api.zale.mobi/api/upload/uploadImg"
+            @change="handleChangeUp"
+          >
+            <img src="../assets/img/up_img.png" />
+          </a-upload>
           <div>发送</div>
         </div>
       </div>
@@ -65,17 +73,23 @@
   </a-modal>
 </template>
 <script setup lang="ts">
+  import type { UploadChangeParam } from 'ant-design-vue'
+  import { message } from 'ant-design-vue'
   import { api_getConsultMsgList, api_getConsultMsgDetail } from '@/requset/api'
-  import { DownOutlined } from '@ant-design/icons-vue'
-  import router from '@/router'
   import { ref } from 'vue'
-  import { useRouter, useRoute } from 'vue-router'
-  import { getFloat } from '@/utils'
 
   let value1 = ref<any>('')
+  let imageUrl = ref<any>('')
   let order = ref<any>([])
   let messageChatList = ref<any>([])
   let modal_fk = ref<boolean>(true)
+
+  const handleChangeUp = (info: UploadChangeParam) => {
+    if (info.file.status === 'done') {
+      message.success('发送成功')
+      imageUrl.value = info.file.response.data.http_url
+    }
+  }
 
   function getList() {
     api_getConsultMsgList({}).then((res: any) => {
@@ -285,9 +299,21 @@
         .but {
           display: flex;
           align-items: center;
+          .ant-upload-wrapper {
+            margin: 0 15px 0 30px;
+          }
+          ::v-deep .ant-upload {
+            width: 40px !important;
+            height: 40px !important;
+            border-radius: 4px;
+            border: none;
+            height: 156px;
+          }
+          ::v-deep .ant-upload-wrapper {
+            width: 40px !important;
+          }
           img {
             width: 40px;
-            margin: 0 15px 0 25px;
           }
           div {
             width: 100px;
