@@ -19,7 +19,7 @@
     />
     <router-view class="content" />
   </div>
-  <globalFloatingIcon />
+  <globalFloatingIcon v-if="login" />
 </template>
 <script setup lang="ts">
   import { ref, watch, getCurrentInstance } from 'vue'
@@ -30,6 +30,7 @@
   // const route = useRoute()
   // const { proxy } = getCurrentInstance()
   const show = ref<Boolean>(true)
+  const login = ref<Boolean>(true)
 
   //监听当前路由
   watch(
@@ -38,6 +39,11 @@
       //获取所有路由
       // var allroute = proxy.$router.options.routes
       // console.log('newValue :>> ', newValue)
+      if (newValue == '/login') {
+        login.value = false
+      } else {
+        login.value = true
+      }
       if (newValue == '/') {
         show.value = true
       } else {
