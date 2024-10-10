@@ -55,9 +55,7 @@
 
   window.addEventListener('resize', function () {
     if (window.innerWidth < 800) {
-      // 窗口宽度小于800时执行的代码
       window.location.href = 'https://www.mysshopvipb.net/app/#/'
-      console.log('窗口宽度小于800像素')
     }
   })
 
