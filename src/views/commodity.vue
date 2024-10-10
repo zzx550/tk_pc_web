@@ -3,10 +3,12 @@
     <TopSeek />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb cur_p" @click="router.push('/')">首页</div>
+        <div class="breadcrumb cur_p" @click="router.push('/')">
+          {{ $t('co_01') }}
+        </div>
         <div class="line">></div>
         <div style="font-weight: 600">
-          {{ route.query.id ? '推荐店铺商品' : '推荐商品' }}
+          {{ route.query.id ? $t('co_d_01') : $t('co_d_02') }}
         </div>
         <!-- <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
@@ -49,9 +51,9 @@
               </div>
             </div>
             <div class="sp">
-              当前商品
+              {{ $t('co_d_03') }}
               <p>{{ data.goodsNum }}</p>
-              个
+              {{ $t('co_d_04') }}
             </div>
           </div>
           <div class="shopList">
@@ -66,27 +68,31 @@
               "
             >
               <div class="bq_">
-                访问量 {{ route.query.id ? x.visits : x.goods.visits }}
+                {{ $t('co_d_05') }}
+                {{ route.query.id ? x.visits : x.goods.visits }}
               </div>
               <img :src="route.query.id ? x.cover_img : x.goods.cover_img" />
               <div class="ms">
+                <div class="xl">
+                  <p>
+                    {{ $t('co_d_07') }}&nbsp;&nbsp;{{
+                      route.query.id ? x.day_sales_num : x.goods.day_sales_num
+                    }}
+                  </p>
+                  <!-- <p>周销量{{
+                    route.query.id ? x.week_sales_num : x.goods.week_sales_num
+                  }}</p> -->
+                </div>
                 <div class="name">
                   {{ route.query.id ? x.goods_name : x.goods.goods_name }}
                 </div>
                 <div class="price">
                   ${{ route.query.id ? x.goods_price : x.goods.goods_price }}
                   <p>
-                    售价:${{
+                    {{ $t('co_d_06') }}:${{
                       route.query.id ? x.goods_profit : x.goods.goods_profit
                     }}
                   </p>
-                </div>
-                <div class="xl">
-                  日销量&nbsp;&nbsp;{{
-                    route.query.id ? x.day_sales_num : x.goods.day_sales_num
-                  }}&nbsp; &nbsp;&nbsp;周销量&nbsp;&nbsp;{{
-                    route.query.id ? x.week_sales_num : x.goods.week_sales_num
-                  }}
                 </div>
               </div>
             </div>
@@ -94,7 +100,7 @@
           </div>
           <div class="no_data" v-if="goodsList.length < 1">
             <img style="width: 20%" src="../assets/img/no_data.png" />
-            <div>无数据</div>
+            <div>{{ $t('co_d_08') }}</div>
           </div>
           <div class="bot_fy">
             <a-pagination
@@ -131,7 +137,7 @@
   const pageSize = ref<number>(15)
   const goodsList = ref<any[]>([])
   const data = ref<any>({})
-  const seekValue = ref<string>('')
+  // const seekValue = ref<string>('')
   // let goodCat = ref<any[]>([])
   const active = ref<string | number>('')
 
@@ -404,9 +410,9 @@
                 }
                 .price {
                   display: flex;
+                  justify-content: space-between;
                   color: #f40000;
-                  margin-bottom: 10px;
-                  font-size: 18px;
+                  font-size: 22px;
                   font-weight: 600;
                   align-items: flex-end;
                   p {
@@ -419,9 +425,12 @@
                   }
                 }
                 .xl {
-                  font-size: 12px;
-                  color: #1d1e25;
-                  opacity: 0.5;
+                  p {
+                    opacity: 0.5 !important;
+                    color: #1d1e25 !important;
+                    font-size: 12px !important;
+                    margin-bottom: 5px !important;
+                  }
                 }
               }
             }

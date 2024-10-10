@@ -2,9 +2,9 @@
   <div class="top_" v-if="!props.title">
     <img class="logo" @click="router.push('/')" src="../assets/home/logo.png" />
     <div class="seek">
-      <input type="text" v-model="seekValue" placeholder="供应商/店铺" />
+      <input type="text" v-model="seekValue" :placeholder="$t('to_01')" />
       <img class="icon" src="../assets/home/seek.png" />
-      <button @click="sou">搜索</button>
+      <button @click="sou">{{ $t('to_02') }}</button>
     </div>
     <div class="right" v-if="isLogin == true">
       <div>
@@ -31,15 +31,15 @@
       </div>
       <div class="shop cur_p" @click="router.push('/user_shop')">
         <img src="../assets/home/sp.png" />
-        商铺中心
+        {{ $t('to_03') }}
       </div>
     </div>
     <div v-else class="right cur_p" style="justify-content: right">
       <div class="loginAnd">
-        <div @click="router.push('./login')">登录</div>
-        或
+        <div @click="router.push('./login')">{{ $t('to_04') }}</div>
+        {{ $t('to_05') }}
         <div @click="router.push('./login?type=1')" style="padding-left: 10px">
-          注册
+          {{ $t('to_06') }}
         </div>
       </div>
     </div>
@@ -50,13 +50,25 @@
       {{ props.title }}
     </div>
     <div class="right">
+      <div>
+        <a-dropdown placement="bottom">
+          <img src="../assets/home/lang.png" @click.prevent />
+          <template #overlay>
+            <a-menu @click="onClick">
+              <a-menu-item v-for="x in state.countryLang" :key="x.lang">
+                {{ x.value }}
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </div>
       <div class="fk_ cur_p" @click="modal_fk = true">
         <img class="kf" src="../assets/img/fk_icon.png" />
-        反馈
+        {{ $t('to_07') }}
       </div>
       <div class="shop cur_p" @click="loginOut">
         <img src="../assets/img/tc_icon.png" />
-        退出登录
+        {{ $t('to_08') }}
       </div>
     </div>
   </div>
@@ -68,13 +80,14 @@
     :footer="null"
     width="561px"
   >
-    <div class="title">反馈您的意见</div>
+    <div class="title">{{ $t('to_09') }}</div>
     <textarea class="txt" v-model="feebackContent"></textarea>
-    <div class="but pr_con" @click="feedBackSubmit">提交</div>
+    <div class="but pr_con" @click="feedBackSubmit">{{ $t('to_10') }}</div>
   </a-modal>
 </template>
 
 <script setup lang="ts">
+  import i18n from '@/lang'
   import { useStore } from 'vuex'
   const { state } = useStore()
   import { api_logout, api_problemFeedback, api_getInfo } from '@/requset/api'
@@ -137,7 +150,7 @@
     }).then((res: any) => {
       if (res.code == 200) {
         modal_fk.value = false
-        message.success('提交成功')
+        message.success(i18n.global.t('to_11'))
         feebackContent.value = ''
       } else if (res.message) {
         message.error(res.message)
@@ -254,7 +267,7 @@
       font-weight: 600;
     }
     .right {
-      padding-left: 110px;
+      padding-left: 50px;
       .fk_ {
         font-size: 14px;
         display: flex;

@@ -7,20 +7,20 @@
             <img src="../assets/logo.png" />
             MaCys Shop
           </div>
-          <p>获得您更多的优惠券</p>
+          <p>{{ $t('bo_01') }}</p>
           <div class="el-input">
             <!----><input
               v-model="yx"
-              placeholder="您的电子邮箱"
+              :placeholder="$t('bo_02')"
             /><!----><!----><!----><!---->
           </div>
-          <div class="sub cur_p" @click="changeDy">订阅</div>
+          <div class="sub cur_p" @click="changeDy">{{ $t('bo_03') }}</div>
         </div>
         <div class="footer-nav">
           <div class="footer-nav-item">
-            <span>客户服务</span>
+            <span>{{ $t('bo_04') }}</span>
             <ul>
-              <li class="el-tooltip" @click="changeCz">在线客服</li>
+              <li class="el-tooltip" @click="changeCz">{{ $t('bo_05') }}</li>
               <!-- <li class="el-tooltip">联系我们</li> -->
               <li class="el-tooltip"></li>
               <li class="el-tooltip"></li>
@@ -28,38 +28,44 @@
             </ul>
           </div>
           <div class="footer-nav-item">
-            <span>退货和换货</span>
+            <span>{{ $t('bo_06') }}</span>
             <ul>
-              <li class="el-tooltip" @click="router.push('/yszc')">隐私政策</li>
-              <li class="el-tooltip" @click="router.push('/thxy')">退货政策</li>
-              <li class="el-tooltip" @click="router.push('/shqh')">
-                送货及取货
+              <li class="el-tooltip" @click="router.push('/yszc')">
+                {{ $t('bo_07') }}
               </li>
-              <li class="el-tooltip" @click="router.push('/mjzc')">卖家政策</li>
+              <li class="el-tooltip" @click="router.push('/thxy')">
+                {{ $t('bo_08') }}
+              </li>
+              <li class="el-tooltip" @click="router.push('/shqh')">
+                {{ $t('bo_09') }}
+              </li>
+              <li class="el-tooltip" @click="router.push('/mjzc')">
+                {{ $t('bo_10') }}
+              </li>
             </ul>
           </div>
           <div class="footer-nav-item">
-            <span>用户中心</span>
+            <span>{{ $t('bo_11') }}</span>
             <ul>
               <li class="el-tooltip" @click="router.push('/login?type=1')">
-                用户注册
+                {{ $t('bo_12') }}
               </li>
               <li class="el-tooltip" @click="router.push('/order')">
-                订单查询
+                {{ $t('bo_13') }}
               </li>
               <li class="el-tooltip" @click="router.push('/user_shop')">
-                我的钱包
+                {{ $t('bo_14') }}
               </li>
             </ul>
           </div>
           <div class="footer-nav-item">
-            <span>关于我们</span>
+            <span>{{ $t('bo_15') }}</span>
             <ul>
               <li
                 class="el-tooltip"
                 @click="open('https://www.shopify.com/ph')"
               >
-                关于我们
+                {{ $t('bo_15') }}
               </li>
             </ul>
           </div>
@@ -67,7 +73,7 @@
       </div>
       <div class="footer-wrapper">
         <div class="payment">
-          <div class="title-f">支付方式</div>
+          <div class="title-f">{{ $t('bo_16') }}</div>
           <div class="payment-methods">
             <div class="pay" @click="open('https://www.binance.com/')">
               <img
@@ -114,7 +120,7 @@
         <div class="argos">
           <div class="title">MaCys-Wholesale</div>
           <div class="dec">
-            MaCys-Wholesale全球站的用户来自全球112个国家，使用USDT/ETH/BTC进行结算。USDT/ETH/BTC是一种无国界的交易方式，可以在全球范围内实现即时低成本交易，无需等待，没有国际费用。
+            {{ $t('bo_17') }}
           </div>
         </div>
       </div>
@@ -131,6 +137,7 @@
 </template>
 
 <script setup lang="ts">
+  import i18n from '@/lang'
   import { api_getOption } from '@/requset/api'
   import { message } from 'ant-design-vue'
   import router from '@/router'
@@ -149,7 +156,7 @@
         if (serviceUrl != '' && serviceUrl != null) {
           window.open(serviceUrl)
         } else {
-          message.error('客服链接未配置~')
+          message.error(i18n.global.t('bo_18'))
         }
       }
     })
@@ -158,10 +165,10 @@
   function changeDy() {
     var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
     if (!emailRegex.test(yx.value)) {
-      message.error('请输入正确邮箱')
+      message.error(i18n.global.t('bo_19'))
       return
     }
-    message.success('订阅成功')
+    message.success(i18n.global.t('bo_20'))
   }
 </script>
 

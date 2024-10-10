@@ -3,9 +3,11 @@
     <TopSeek />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb cur_p" @click="router.push('/')">首页</div>
+        <div class="breadcrumb cur_p" @click="router.push('/')">
+          {{ $t('co_01') }}
+        </div>
         <div class="line">></div>
-        <div style="font-weight: 600">推荐店铺</div>
+        <div style="font-weight: 600">{{ $t('sh_01') }}</div>
         <!-- <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索店铺" />
           <img @click="get()" class="icon" src="../assets/home/seek.png" />
@@ -46,22 +48,22 @@
                   </div>
                   {{
                     x.star_rating == 1
-                      ? '一星商户'
+                      ? $t('ho_02')
                       : x.star_rating == 2
-                      ? '二星商户'
+                      ? $t('ho_03')
                       : x.star_rating == 3
-                      ? '三星商户'
+                      ? $t('ho_04')
                       : x.star_rating == 4
-                      ? '四星商户'
+                      ? $t('ho_05')
                       : x.star_rating == 5
-                      ? '五星商户'
+                      ? $t('ho_06')
                       : ''
                   }}
                 </div>
                 <div class="sp">
-                  当前商品
+                  {{ $t('co_d_03') }}
                   <p>{{ x.goodsNum }}</p>
-                  个
+                  {{ $t('co_d_04') }}
                 </div>
               </div>
             </div>

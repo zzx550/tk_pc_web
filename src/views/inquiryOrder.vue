@@ -1,14 +1,14 @@
 <template>
   <div id="inquiryOrder" class="head_b">
-    <TopSeek :title="'询单列表'" />
+    <TopSeek :title="$t('in_01')" />
     <div class="con">
       <div class="shop_l">
         <div class="list_T">
-          <div class="img_name">商品图片/名称</div>
-          <div class="two">客户信息</div>
+          <div class="img_name">{{ $t('in_02') }}</div>
+          <div class="two">{{ $t('in_03') }}</div>
           <div>IP</div>
-          <div>购买时间</div>
-          <div class="gm">操作</div>
+          <div>{{ $t('in_04') }}</div>
+          <div class="gm">{{ $t('in_05') }}</div>
         </div>
         <div class="list list_T" v-for="x in order" :key="x">
           <div class="img_name">
@@ -24,7 +24,9 @@
           <div>{{ x.ip }}</div>
           <div>{{ x.create_time }}</div>
           <div class="gm">
-            <div class="but pay" @click="getKF(x.consult_order_id)">联系</div>
+            <div class="but pay" @click="getKF(x.consult_order_id)">
+              {{ $t('in_06') }}
+            </div>
           </div>
         </div>
       </div>
@@ -39,7 +41,7 @@
     width="800px"
   >
     <div class="kf">
-      <div class="title">专属客服</div>
+      <div class="title">{{ $t('in_07') }}</div>
       <div class="consult_list">
         <div
           class="item"
@@ -152,7 +154,11 @@
               :class="x.type == 1 ? 'content1' : 'content2'"
               :style="{ color: '#fe2c55', fontSize: '16px' }"
               >{{
-                x.mtype == 1 ? '已签收' : x.mtype == 2 ? '已支付' : '待付款'
+                x.mtype == 1
+                  ? $t('in_08')
+                  : x.mtype == 2
+                  ? $t('in_09')
+                  : $t('in_10')
               }}
               <span
                 v-if="
@@ -165,19 +171,19 @@
               v-if="x.content.pay_time"
               class="content3"
               :class="x.type == 1 ? 'content1' : 'content2'"
-              >支付时间: {{ x.content.pay_time }}</span
+              >{{ $t('in_11') }}: {{ x.content.pay_time }}</span
             >
             <span
               v-if="x.content.arrival_time"
               class="content3"
               :class="x.type == 1 ? 'content1' : 'content2'"
-              >签收时间: {{ x.content.arrival_time }}</span
+              >{{ $t('in_12') }}: {{ x.content.arrival_time }}</span
             >
             <span
               v-if="x.content.order_sn"
               class="content3"
               :class="x.type == 1 ? 'content1' : 'content2'"
-              >订单编号: {{ x.content.order_sn }}</span
+              >{{ $t('in_13') }}: {{ x.content.order_sn }}</span
             >
             <span
               v-if="x.content.full_name"
@@ -190,7 +196,7 @@
               v-if="x.content.address"
               class="content3"
               :class="x.type == 1 ? 'content1' : 'content2'"
-              >地址:
+              >{{ $t('in_14') }}:
               {{
                 x.content.country
                   ? getCountryName(x.content.country) + '-'
@@ -200,7 +206,7 @@
           </div>
 
           <div class="bottom_text" v-if="x.type == 0 && x.consult_user.country">
-            地区: {{ getCountryName(x.consult_user.country) }}
+            {{ $t('in_15') }}: {{ getCountryName(x.consult_user.country) }}
           </div>
           <div class="bottom_text" v-if="x.type == 0 && x.consult_user.ip">
             IP: {{ x.consult_user.ip }}
@@ -212,7 +218,7 @@
       <div class="fs_info">
         <a-textarea
           v-model:value="value1"
-          :placeholder="'请输入发送内容'"
+          :placeholder="$t('in_16')"
           auto-size
         />
         <div class="but">
@@ -226,13 +232,14 @@
           >
             <img src="../assets/img/up_img.png" />
           </a-upload>
-          <div @click="replyMsg">发送</div>
+          <div @click="replyMsg">{{ $t('in_17') }}</div>
         </div>
       </div>
     </div>
   </a-modal>
 </template>
 <script setup lang="ts">
+  import i18n from '@/lang'
   import { useStore } from 'vuex'
   const { state } = useStore()
   import type { UploadChangeParam, UploadProps } from 'ant-design-vue'
@@ -273,7 +280,7 @@
       }).then((res: any) => {
         if (res.success) {
           setTimeout(() => {
-            message.success('发送成功')
+            message.success(i18n.global.t('in_18'))
             getKF(co_id.value)
           }, 1000)
         } else {
@@ -285,18 +292,18 @@
   const beforeUpload = (file: UploadProps['fileList'][number]) => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
     if (!isJpgOrPng) {
-      message.error('你只能上传JPG或者PNG文件!')
+      message.error(i18n.global.t('in_19') + '!')
     }
     const isLt2M = file.size / 1024 / 1024 < 2
     if (!isLt2M) {
-      message.error('图片超过2MB')
+      message.error(i18n.global.t('in_20'))
     }
     return isJpgOrPng && isLt2M
   }
 
   function replyMsg() {
     if (value1.value == '') {
-      message.warning('请输入内容')
+      message.warning(i18n.global.t('in_21'))
       return
     }
     api_replyConsultMsg({ co_id: co_id.value, content: value1.value }).then(
@@ -304,7 +311,7 @@
         if (res.success) {
           value1.value = ''
           setTimeout(() => {
-            message.success('发送成功')
+            message.success(i18n.global.t('in_18'))
             getKF(co_id.value)
           }, 1000)
         } else {

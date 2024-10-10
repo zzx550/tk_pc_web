@@ -52,7 +52,7 @@
               v-if="userInfo.shop_name != null && userInfo.shop_name != ''"
               class="shop_name"
             >
-              店铺名称：{{ userInfo.shop_name }}
+              {{ $t('ho_01') }}：{{ userInfo.shop_name }}
             </div>
             <div class="id">ID:{{ userInfo.tiktok_id }}</div>
             <div class="dj">
@@ -67,21 +67,21 @@
                   userInfo.score_star &&
                   userInfo.score_star != '' &&
                   userInfo.score_star != '0'
-                    ? userInfo.score_star + '分'
+                    ? userInfo.score_star + $t('ho_26')
                     : ''
                 }}
               </div>
               {{
                 userInfo.star_rating == 1
-                  ? '一星商户'
+                  ? $t('ho_02')
                   : userInfo.star_rating == 2
-                  ? '二星商户'
+                  ? $t('ho_03')
                   : userInfo.star_rating == 3
-                  ? '三星商户'
+                  ? $t('ho_04')
                   : userInfo.star_rating == 4
-                  ? '四星商户'
+                  ? $t('ho_05')
                   : userInfo.star_rating == 5
-                  ? '五星商户'
+                  ? $t('ho_06')
                   : ''
               }}
             </div>
@@ -90,37 +90,37 @@
         <div class="shuj">
           <div>
             {{ ordersNumber.orderStatus_0 }}
-            <p>待付款</p>
+            <p>{{ $t('ho_07') }}</p>
           </div>
           <div>
             {{ ordersNumber.orderStatus_1 }}
-            <p>待发货</p>
+            <p>{{ $t('ho_08') }}</p>
           </div>
           <div>
             {{ ordersNumber.orderStatus_2 }}
-            <p>已发货</p>
+            <p>{{ $t('ho_09') }}</p>
           </div>
           <div>
             {{ ordersNumber.orderStatus_3 }}
-            <p>已交付</p>
+            <p>{{ $t('ho_10') }}</p>
           </div>
         </div>
         <div class="yj">
           <div class="title" @click.stop="fyRuleOpen = true">
-            下级返佣<img src="../assets/home/wh.png" />
+            {{ $t('ho_11') }}<img src="../assets/home/wh.png" />
           </div>
           <div class="shuj">
             <div>
               {{ getFloat(rebateInfo.sale_amount) }}
-              <p>销售总额</p>
+              <p>{{ $t('ho_12') }}</p>
             </div>
             <div>
               {{ getFloat(rebateInfo.total_rebate) }}
-              <p>返佣总额</p>
+              <p>{{ $t('ho_13') }}</p>
             </div>
             <div style="color: #0ae2db">
               {{ rebateInfo.max_rate * 100 }}%
-              <p>返佣比例</p>
+              <p>{{ $t('ho_14') }}</p>
             </div>
           </div>
         </div>
@@ -130,42 +130,42 @@
               :class="statisticsTab == 0 ? 'check' : ''"
               @click="changeStatisticsTab(0)"
             >
-              本日
+              {{ $t('ho_15') }}
             </div>
             <div
               :class="statisticsTab == 1 ? 'check' : ''"
               @click="changeStatisticsTab(1)"
             >
-              本周
+              {{ $t('ho_16') }}
             </div>
             <div
               :class="statisticsTab == 2 ? 'check' : ''"
               @click="changeStatisticsTab(2)"
             >
-              本月
+              {{ $t('ho_17') }}
             </div>
             <div
               :class="statisticsTab == 3 ? 'check' : ''"
               @click="changeStatisticsTab(3)"
             >
-              整年
+              {{ $t('ho_18') }}
             </div>
           </div>
           <div class="img_data">
             <div style="margin-bottom: 8px">
-              <p>销售价格</p>
+              <p>{{ $t('ho_19') }}</p>
               {{ getFloat(statisticsData.total_profit) }}
             </div>
             <div style="margin-bottom: 8px">
-              <p>预期利润</p>
+              <p>{{ $t('ho_20') }}</p>
               {{ getFloat(statisticsData.pure_profit) }}
             </div>
             <div>
-              <p>订单数量</p>
+              <p>{{ $t('ho_21') }}</p>
               {{ statisticsData.order_count }}
             </div>
             <div>
-              <p>访问量</p>
+              <p>{{ $t('ho_22') }}</p>
               {{ statisticsData.goods_click }}
             </div>
           </div>
@@ -175,9 +175,9 @@
 
     <div class="tj">
       <div class="title">
-        <div class="left">推荐商品</div>
+        <div class="left">{{ $t('ho_23') }}</div>
         <div class="more cur_p" @click="router.push('/commodity?type=1')">
-          更多<img src="../assets/home/more.png" />
+          {{ $t('ho_24') }}<img src="../assets/home/more.png" />
         </div>
       </div>
       <div class="shopList">
@@ -191,11 +191,11 @@
               : router.push('./login')
           "
         >
-          <div class="bq_">访问量 {{ x.goods.visits }}</div>
+          <div class="bq_">{{ $t('co_d_05') }} {{ x.goods.visits }}</div>
           <img :src="x.goods.cover_img" />
           <div class="ms">
             <div class="xl">
-              <p>日销量{{ x.goods.day_sales_num }}</p>
+              <p>{{ $t('co_d_07') }}&nbsp;&nbsp;{{ x.goods.day_sales_num }}</p>
               <!-- <p>周销量{{ x.goods.week_sales_num }}</p> -->
             </div>
             <div class="name">
@@ -203,7 +203,7 @@
             </div>
             <div class="price">
               ${{ x.goods.goods_price }}
-              <p>售价:${{ x.goods.goods_profit }}</p>
+              <p>{{ $t('co_d_06') }}:${{ x.goods.goods_profit }}</p>
             </div>
           </div>
         </div>
@@ -211,9 +211,9 @@
     </div>
     <div class="tj dp">
       <div class="title">
-        <div class="left">推荐店铺</div>
+        <div class="left">{{ $t('ho_25') }}</div>
         <div class="more cur_p" @click="router.push('/shop')">
-          更多<img src="../assets/home/more.png" />
+          {{ $t('ho_24') }}<img src="../assets/home/more.png" />
         </div>
       </div>
       <div class="shopList">
@@ -249,28 +249,28 @@
                   />
                   {{
                     x.score_star && x.score_star != '' && x.score_star != '0'
-                      ? x.score_star + '分'
+                      ? x.score_star + $t('ho_26')
                       : ''
                   }}
                 </div>
                 {{
                   x.star_rating == 1
-                    ? '一星商户'
+                    ? $t('ho_02')
                     : x.star_rating == 2
-                    ? '二星商户'
+                    ? $t('ho_03')
                     : x.star_rating == 3
-                    ? '三星商户'
+                    ? $t('ho_04')
                     : x.star_rating == 4
-                    ? '四星商户'
+                    ? $t('ho_05')
                     : x.star_rating == 5
-                    ? '五星商户'
+                    ? $t('ho_06')
                     : ''
                 }}
               </div>
               <div class="sp">
-                当前商品
+                {{ $t('co_d_03') }}
                 <p>{{ x.goodsNum }}</p>
-                个
+                {{ $t('co_d_04') }}
               </div>
             </div>
           </div>
@@ -302,7 +302,6 @@
   import { goods_fl, goods_tj } from '@/base/index'
   import router from '@/router'
   import { ref } from 'vue'
-  import i18n from '@/lang'
 
   const fyRuleOpen = ref<boolean>(false)
   let goodsList = ref<goods_fl[]>([])
@@ -668,12 +667,12 @@
               font-weight: 600;
               line-height: 20px;
               height: 40px;
+              font-size: 14px;
             }
             .price {
               display: flex;
               justify-content: space-between;
               color: #f40000;
-              margin-bottom: 10px;
               font-size: 22px;
               font-weight: 600;
               align-items: flex-end;

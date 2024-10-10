@@ -4,10 +4,10 @@
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/news')">
-          消息中心
+          {{ $t('ne_01') }}
         </div>
         <div class="line">></div>
-        <div style="font-weight: 600">详情</div>
+        <div style="font-weight: 600">{{ $t('ne_02') }}</div>
       </div>
       <div class="txt_Con">
         <div class="title">{{ txt.title }}</div>

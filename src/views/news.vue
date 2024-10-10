@@ -3,17 +3,17 @@
     <TopSeek />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb cur_p">消息中心</div>
-        <div class="right cur_p">全部已读</div>
+        <div class="breadcrumb cur_p">{{ $t('ne_01') }}</div>
+        <!-- <div class="right cur_p">全部已读</div> -->
       </div>
       <div class="conte">
         <div class="left_t">
           <!-- <div >全部</div> -->
           <div :class="type == 1 ? 'check' : ''" @click="changeType(1)">
-            风险警告
+            {{ $t('ne_03') }}
           </div>
           <div :class="type == 2 ? 'check' : ''" @click="changeType(2)">
-            系统公告
+            {{ $t('ne_04') }}
           </div>
         </div>
         <div class="con_right">
@@ -31,13 +31,13 @@
               class="but"
               :style="x.is_read == 1 ? { 'background-color': '#e3e4e4' } : ''"
             >
-              <div v-if="x.is_read == 1">已读</div>
-              <div v-else @click="goDet(x.id)">查看</div>
+              <div v-if="x.is_read == 1">{{ $t('ne_05') }}</div>
+              <div v-else @click="goDet(x.id)">{{ $t('ne_06') }}</div>
             </div>
           </div>
           <div class="no_data" v-if="noticeList.length < 1">
             <img style="width: 20%" src="../assets/img/no_data.png" />
-            <div>无数据</div>
+            <div>{{ $t('ne_07') }}</div>
           </div>
         </div>
       </div>
