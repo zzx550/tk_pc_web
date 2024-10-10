@@ -50,6 +50,18 @@
       {{ props.title }}
     </div>
     <div class="right">
+      <div>
+        <a-dropdown placement="bottom">
+          <img src="../assets/home/lang.png" @click.prevent />
+          <template #overlay>
+            <a-menu @click="onClick">
+              <a-menu-item v-for="x in state.countryLang" :key="x.lang">
+                {{ x.value }}
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
+      </div>
       <div class="fk_ cur_p" @click="modal_fk = true">
         <img class="kf" src="../assets/img/fk_icon.png" />
         {{ $t('to_07') }}
@@ -255,7 +267,7 @@
       font-weight: 600;
     }
     .right {
-      padding-left: 110px;
+      padding-left: 50px;
       .fk_ {
         font-size: 14px;
         display: flex;
