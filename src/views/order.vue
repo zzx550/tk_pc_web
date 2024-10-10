@@ -4,43 +4,43 @@
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
-          商铺中心
+          {{ $t('to_03') }}
         </div>
         <div class="line">></div>
-        <div style="font-weight: 600">订单管理</div>
+        <div style="font-weight: 600">{{ $t('or_01') }}</div>
         <div class="seek">
-          <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
+          <input type="text" v-model="seekValue" :placeholder="$t('or_02')" />
           <img class="icon" src="../assets/home/seek.png" />
         </div>
       </div>
       <div class="conte">
         <div class="left_t">
           <div :class="tabIndex == 0 ? 'check' : ''" @click="changeTab(0)">
-            全部
+            {{ $t('or_03') }}
           </div>
           <div :class="tabIndex == 1 ? 'check' : ''" @click="changeTab(1)">
-            待付款
+            {{ $t('or_04') }}
           </div>
           <div :class="tabIndex == 2 ? 'check' : ''" @click="changeTab(2)">
-            待发货
+            {{ $t('or_05') }}
           </div>
           <div :class="tabIndex == 3 ? 'check' : ''" @click="changeTab(3)">
-            已发货
+            {{ $t('or_06') }}
           </div>
           <div :class="tabIndex == 4 ? 'check' : ''" @click="changeTab(4)">
-            已交付
+            {{ $t('or_07') }}
           </div>
         </div>
         <div class="con_right">
           <div class="box_he">
             <div class="list_T">
-              <div>商品编号</div>
-              <div class="img_name">商品图片/名称</div>
+              <div>{{ $t('or_08') }}</div>
+              <div class="img_name">{{ $t('or_09') }}</div>
               <div class="xx">客户信息</div>
-              <div>商品售价($)</div>
-              <div>商品进价($)</div>
-              <div>状态</div>
-              <div class="gm">操作</div>
+              <div>{{ $t('or_10') }}($)</div>
+              <div>{{ $t('or_11') }}($)</div>
+              <div>{{ $t('or_12') }}</div>
+              <div class="gm">{{ $t('or_13') }}</div>
             </div>
             <div class="list list_T" v-for="x in orderList" :key="x">
               <div class="on">{{ x.order_sn }}</div>
@@ -72,26 +72,28 @@
               <div class="zt">
                 <!-- 0 待付款 1 准备发货 2 运输中 3 已到达 4 待结算 5 已结算  6 已取消 7-退货中 8-已退货 -->
                 <div class="dzf" v-if="x.order_status == 0">
-                  待付款
+                  {{ $t('or_04') }}
                   <!-- <van-count-down :time="300000" format="mm:ss" /> -->
                 </div>
-                <div v-if="x.order_status == 1">准备发货</div>
-                <div class="yfh" v-if="x.order_status == 2">已发货</div>
-                <div v-if="x.order_status == 6">已取消</div>
-                <div v-if="x.order_status == 7">退货中</div>
-                <div v-if="x.order_status == 8">已退货</div>
-                <div class="yjf" v-else>已交付</div>
+                <div v-if="x.order_status == 1">{{ $t('or_14') }}</div>
+                <div class="yfh" v-if="x.order_status == 2">
+                  {{ $t('or_06') }}
+                </div>
+                <div v-if="x.order_status == 6">{{ $t('or_15') }}</div>
+                <div v-if="x.order_status == 7">{{ $t('or_16') }}</div>
+                <div v-if="x.order_status == 8">{{ $t('or_17') }}</div>
+                <div class="yjf" v-else>{{ $t('or_07') }}</div>
               </div>
               <div
                 class="gm"
                 @click="router.push(`/order_det?id=${x.order_id}`)"
               >
-                详情
+                {{ $t('or_18') }}
               </div>
             </div>
             <div class="no_data" v-if="orderList.length < 1">
               <img style="width: 20%" src="../assets/img/no_data.png" />
-              <div>无数据</div>
+              <div>{{ $t('or_19') }}</div>
             </div>
           </div>
           <div class="bot_fy">

@@ -1,11 +1,13 @@
 <template>
   <div id="commDet" class="head_b">
-    <TopSeek :title="'商铺中心'" />
+    <TopSeek :title="$t('to_03')" />
     <div class="con_box">
       <div class="title_l">
-        <div class="breadcrumb cur_p" @click="router.push('/')">首页</div>
+        <div class="breadcrumb cur_p" @click="router.push('/')">
+          {{ $t('co_01') }}
+        </div>
         <div class="line">></div>
-        <div>商品详情</div>
+        <div>{{ $t('co_02') }}</div>
       </div>
       <div class="conte">
         <div class="js_goods">
@@ -14,21 +16,21 @@
             <div class="name">{{ goodsDet.goods_name }}</div>
             <div class="price">
               <div><span>$</span>{{ goodsDet.goods_price }}</div>
-              售价：${{ goodsDet.goods_profit }}
+              {{ $t('co_03') }}：${{ goodsDet.goods_profit }}
             </div>
             <div class="li">
-              访问量：<span>{{ goodsDet.visits }}</span>
+              {{ $t('co_04') }}：<span>{{ goodsDet.visits }}</span>
             </div>
             <div class="li">
-              日销量：<span>{{ goodsDet.day_sales_num }}</span>
+              {{ $t('co_05') }}：<span>{{ goodsDet.day_sales_num }}</span>
             </div>
             <div class="li">
-              周销量：<span>{{ goodsDet.week_sales_num }}</span>
+              {{ $t('co_06') }}：<span>{{ goodsDet.week_sales_num }}</span>
             </div>
           </div>
         </div>
         <div class="det">
-          <div class="title">商品详情</div>
+          <div class="title">{{ $t('co_07') }}</div>
           <div class="txt" v-html="goodsDet.goods_content"></div>
         </div>
       </div>

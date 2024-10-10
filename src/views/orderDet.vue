@@ -4,14 +4,14 @@
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
-          商铺中心
+          {{ $t('to_03') }}
         </div>
         <div class="line">></div>
         <div class="breadcrumb cur_p" @click="router.push('/order')">
-          订单管理
+          {{ $t('or_01') }}
         </div>
         <div class="line">></div>
-        <div style="font-weight: 600">详情</div>
+        <div style="font-weight: 600">{{ $t('or_20') }}</div>
         <!-- <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
           <img class="icon" src="../assets/home/seek.png" />
@@ -19,21 +19,21 @@
       </div>
       <div class="conte">
         <div class="on">
-          商品编号：{{
+          {{ $t('or_08') }}：{{
             order.order_sn
-          }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;下单时间：{{
+          }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $t('or_21') }}：{{
             order.create_time
-          }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;供应商：{{
+          }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $t('or_22') }}：{{
             order.supplier_name
           }}
-          <div><img src="../assets/img/kf.png" />联系买家</div>
+          <div><img src="../assets/img/kf.png" />{{ $t('or_23') }}</div>
         </div>
         <div class="zt">
           <div class="left_con">
-            <div class="title">当前商品待发货</div>
+            <div class="title">{{ $t('or_26') }}</div>
             <div class="det" v-if="order.address_info">
-              <div>收货人：{{ order.address_info.full_name }}</div>
-              <div>联系方式：{{ order.address_info.phone }}</div>
+              <div>{{ $t('or_24') }}：{{ order.address_info.full_name }}</div>
+              <div>{{ $t('or_25') }}：{{ order.address_info.phone }}</div>
               <div class="ts">
                 {{ order.address_info.address }}
               </div>
@@ -45,12 +45,12 @@
         </div>
         <div class="shop_l">
           <div class="list_T">
-            <div class="img_name">商品图片/名称</div>
-            <div>数量</div>
-            <div>商品售价($)</div>
-            <div>商品进价($)</div>
-            <div>状态</div>
-            <div class="gm">操作</div>
+            <div class="img_name">{{ $t('or_09') }}</div>
+            <div>{{ $t('or_27') }}</div>
+            <div>{{ $t('or_10') }}($)</div>
+            <div>{{ $t('or_11') }}($)</div>
+            <div>{{ $t('or_12') }}</div>
+            <div class="gm">{{ $t('or_13') }}</div>
           </div>
           <div class="list list_T" v-for="x in order.goods_info" :key="x">
             <div class="img_name">
@@ -65,15 +65,17 @@
             <div class="zt_">
               <!-- 0 待付款 1 准备发货 2 运输中 3 已到达 4 待结算 5 已结算  6 已取消 7-退货中 8-已退货 -->
               <div class="dzf" v-if="order.order_status == 0">
-                待付款
+                {{ $t('or_04') }}
                 <!-- <van-count-down :time="300000" format="mm:ss" /> -->
               </div>
-              <div v-if="order.order_status == 1">准备发货</div>
-              <div class="yfh" v-if="x.order_status == 2">已发货</div>
-              <div v-if="order.order_status == 6">已取消</div>
-              <div v-if="order.order_status == 7">退货中</div>
-              <div v-if="order.order_status == 8">已退货</div>
-              <div class="yjf" v-else>已交付</div>
+              <div v-if="order.order_status == 1">{{ $t('or_14') }}</div>
+              <div class="yfh" v-if="x.order_status == 2">
+                {{ $t('or_06') }}
+              </div>
+              <div v-if="order.order_status == 6">{{ $t('or_15') }}</div>
+              <div v-if="order.order_status == 7">{{ $t('or_16') }}</div>
+              <div v-if="order.order_status == 8">{{ $t('or_17') }}</div>
+              <div class="yjf" v-else>{{ $t('or_07') }}</div>
             </div>
             <div class="gm">
               <div
@@ -81,14 +83,14 @@
                 v-if="order.order_status === 0"
                 @click="openPay(order)"
               >
-                立即支付
+                {{ $t('or_28') }}
               </div>
               <div
                 class="but"
                 v-if="order.order_status === 3"
                 @click="openOr = true"
               >
-                退货
+                {{ $t('or_29') }}
               </div>
             </div>
           </div>
@@ -110,7 +112,7 @@
     :footer="null"
     width="471px"
   >
-    <div class="title">确认付款</div>
+    <div class="title">{{ $t('or_30') }}</div>
     <div class="dz">
       <img src="../assets/img/dz.png" />
       <div class="adds">
@@ -119,23 +121,19 @@
       </div>
     </div>
     <div class="li">
-      钱包余额
+      {{ $t('or_31') }}
       <div>${{ getFloat(balance) }}</div>
     </div>
     <div class="li">
-      支付方式
-      <div><img src="../assets/logo.png" />钱包支付</div>
+      {{ $t('or_32') }}
+      <div><img src="../assets/logo.png" />{{ $t('or_33') }}</div>
     </div>
     <div class="li">
-      <input
-        type="password"
-        v-model="payPassword"
-        :placeholder="'请输入安全密码'"
-      />
+      <input type="password" v-model="payPassword" :placeholder="$t('or_34')" />
     </div>
     <div class="hj">
       <div class="price">
-        合计：
+        {{ $t('or_35') }}：
         <p>
           ${{ price
           }}{{
@@ -145,7 +143,7 @@
           }}
         </p>
       </div>
-      <div class="but" @click="handlePay">确认支付</div>
+      <div class="but" @click="handlePay">{{ $t('or_36') }}</div>
     </div>
   </a-modal>
 
@@ -156,15 +154,16 @@
     :footer="null"
     width="338px"
   >
-    <div class="title">提示</div>
-    <p class="tip">是否确定退货</p>
+    <div class="title">{{ $t('or_37') }}</div>
+    <p class="tip">{{ $t('or_38') }}</p>
     <div class="but_">
-      <div @click="applyReturnOrder">确认</div>
-      <div @click="openOr = false">取消</div>
+      <div @click="applyReturnOrder">{{ $t('or_39') }}</div>
+      <div @click="openOr = false">{{ $t('or_40') }}</div>
     </div>
   </a-modal>
 </template>
 <script setup lang="ts">
+  import i18n from '@/lang'
   import { useStore } from 'vuex'
   const { state } = useStore()
   import {
@@ -190,12 +189,12 @@
   const openOr = ref<boolean>(false)
   const order = ref<any>([])
   const arr = ref<any>([
-    { id: 1, title: '已发货', description: '' },
-    { id: 2, title: '匹配国际货品仓库', description: '' },
-    { id: 3, title: '快递收揽中', description: '' },
-    { id: 4, title: '运输中', description: '' },
-    { id: 5, title: '配送中', description: '' },
-    { id: 6, title: '已签收', description: '' },
+    { id: 1, title: i18n.global.t('or_06'), description: '' },
+    { id: 2, title: i18n.global.t('or_41'), description: '' },
+    { id: 3, title: i18n.global.t('or_42'), description: '' },
+    { id: 4, title: i18n.global.t('or_43'), description: '' },
+    { id: 5, title: i18n.global.t('or_44'), description: '' },
+    { id: 6, title: i18n.global.t('or_45'), description: '' },
   ])
   let isShowLogi = ref<boolean>(false)
   const payPassword = ref<string>('')
@@ -218,23 +217,22 @@
   const changePassword = (change: boolean, pwd: string, repeat_pwd: string) => {
     if (change == true) {
       if (pwd == '' || pwd.length < 6) {
-        message.error('请输入安全密码')
+        message.error(i18n.global.t('or_46'))
         return
       }
       if (repeat_pwd == '' || repeat_pwd.length < 6) {
-        message.error('请再次输入安全密码')
+        message.error(i18n.global.t('or_47'))
         return
       }
       if (pwd != repeat_pwd) {
-        message.error('2次安全密码不一致')
+        message.error(i18n.global.t('or_48'))
         return
       }
-
-      message.loading('加载中...')
+      message.loading(i18n.global.t('or_49'))
       api_setPwd({ password: repeat_pwd }).then((res: any) => {
         if (res.code == 200) {
           setPasswordOpen.value = false
-          message.success('提交成功')
+          message.success(i18n.global.t('or_50'))
           getUserInfo()
         } else if (res.message) {
           message.error(res.message)
@@ -274,7 +272,7 @@
     api_applyReturnOrder({ order_id: route.query.id }).then((res: any) => {
       if (res.success) {
         openOr.value = false
-        message.success('退货成功')
+        message.success(i18n.global.t('or_51'))
         getBalance()
         getOrderDetail()
       } else if (res.message) {
@@ -328,27 +326,27 @@
 
   function handlePay() {
     if (payPassword.value == '' || payPassword.value.length < 6) {
-      message.error('请输入安全密码')
+      message.error(i18n.global.t('or_52'))
       return
     }
     api_pay({ order_id, pwd: payPassword.value }).then((res: any) => {
       if (res.success) {
         open.value = false
-        message.success('支付成功')
+        message.success(i18n.global.t('or_53'))
         setTimeout(() => {
           getOrderDetail()
           getBalance()
         }, 1500)
       } else if (res.code == 201) {
-        message.error('订单状态异常')
+        message.error(i18n.global.t('or_54'))
       } else if (res.code == 202) {
-        message.error('资产余额不足')
+        message.error(i18n.global.t('or_55'))
       } else if (res.code == 203) {
-        message.error('支付失败')
+        message.error(i18n.global.t('or_56'))
       } else if (res.code == 204) {
-        message.error('商户交易已冻结，请联系客服')
+        message.error(i18n.global.t('or_57'))
       } else if (res.code == 209) {
-        message.error('安全密码错误')
+        message.error(i18n.global.t('or_58'))
       } else if (res.message) {
         message.error(res.message)
       }

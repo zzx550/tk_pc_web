@@ -4,16 +4,16 @@
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
-          商铺中心
+          {{ $t('to_03') }}
         </div>
         <div class="line">></div>
-        <div style="font-weight: 600">产品排名</div>
+        <div style="font-weight: 600">{{ $t('ra_01') }}</div>
       </div>
       <div class="txt_Con">
         <div class="list_T">
-          <div class="title">排名</div>
-          <div class="time">商品</div>
-          <div class="txt">热度</div>
+          <div class="title">{{ $t('ra_02') }}</div>
+          <div class="time">{{ $t('ra_03') }}</div>
+          <div class="txt">{{ $t('ra_04') }}</div>
         </div>
         <div class="list list_T" v-for="(x, y) in ranking" :key="x.id">
           <div class="title">

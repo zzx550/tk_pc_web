@@ -4,15 +4,15 @@
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
-          商铺中心
+          {{ $t('to_03') }}
         </div>
         <div class="line">></div>
-        <div style="font-weight: 600">供应商详情</div>
+        <div style="font-weight: 600">{{ $t('su_01') }}</div>
       </div>
       <div class="conte">
         <div class="left_t">
           <div :class="active == '' ? 'check' : ''" @click="changeCat('')">
-            全部
+            {{ $t('su_02') }}
           </div>
           <div
             :class="active == x.cat_id ? 'check' : ''"
@@ -26,14 +26,14 @@
         <div class="con_right">
           <div class="box_he">
             <div class="list_T">
-              <div class="img_name">商品图片/名称</div>
-              <div class="price">售价($)</div>
-              <div class="gm">购买价($)</div>
-              <div class="price">利润($)</div>
+              <div class="img_name">{{ $t('su_03') }}</div>
+              <div class="price">{{ $t('su_04') }}($)</div>
+              <div class="gm">{{ $t('su_05') }}($)</div>
+              <div class="price">{{ $t('su_06') }}($)</div>
               <div class="sel">
                 <a-dropdown placement="bottom">
                   <div @click.prevent class="ant-dropdown-link">
-                    状态
+                    {{ $t('su_07') }}
                     <!-- <DownOutlined /> -->
                   </div>
                   <!-- <template #overlay>
@@ -62,14 +62,16 @@
                   v-if="x.ug_status != null && x.ug_status == 0"
                   @click="changeOpen(x)"
                 >
-                  展示中
+                  {{ $t('su_08') }}
                 </div>
-                <div v-else style="background-color: #e3e4e4">已下架</div>
+                <div v-else style="background-color: #e3e4e4">
+                  {{ $t('su_09') }}
+                </div>
               </div>
             </div>
             <div class="no_data" v-if="goodsList.length < 1">
               <img style="width: 20%" src="../assets/img/no_data.png" />
-              <div>无数据</div>
+              <div>{{ $t('su_10') }}</div>
             </div>
           </div>
 
@@ -95,15 +97,16 @@
     :footer="null"
     width="338px"
   >
-    <div class="title">提示</div>
-    <p class="tip">是否确定退货</p>
+    <div class="title">{{ $t('su_11') }}</div>
+    <p class="tip">{{ $t('su_12') }}</p>
     <div class="but_">
-      <div @click="handleRemove()">确认</div>
-      <div @click="openOr = false">取消</div>
+      <div @click="handleRemove()">{{ $t('su_13') }}</div>
+      <div @click="openOr = false">{{ $t('su_14') }}</div>
     </div>
   </a-modal>
 </template>
 <script setup lang="ts">
+  import i18n from '@/lang'
   import {
     api_goodsList,
     api_goodsCategory,
@@ -147,7 +150,7 @@
 
   function handleRemove() {
     if (isOpenRemove.value == false) {
-      message.error('禁止下架')
+      message.error(i18n.global.t('su_15'))
       openOr.value = false
       return
     }
@@ -156,7 +159,7 @@
     }
     api_removeGood({ goods_id: data.value.goods_id }).then((res: any) => {
       if (res.success) {
-        message.success('下架成功')
+        message.success(i18n.global.t('su_16'))
         getList()
         openOr.value = false
       }
@@ -188,9 +191,9 @@
     })
   }
 
-  const onClick: MenuProps['onClick'] = ({ key }) => {
-    console.log(`点击了 ${key}`)
-  }
+  // const onClick: MenuProps['onClick'] = ({ key }) => {
+  //   console.log(`点击了 ${key}`)
+  // }
 </script>
 <style lang="less" scoped>
   #supplierDet {

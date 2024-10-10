@@ -4,15 +4,15 @@
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
-          商铺中心
+          {{ $t('to_03') }}
         </div>
         <div class="line">></div>
-        <div style="font-weight: 600">我的店铺</div>
+        <div style="font-weight: 600">{{ $t('mi_01') }}</div>
         <div class="seek">
           <input
             type="text"
             v-model="seekValue"
-            placeholder="请输入好友ID"
+            :placeholder="$t('mi_02')"
             @change="changeStatus(3)"
           />
           <img class="icon" src="../assets/home/seek.png" />
@@ -21,23 +21,23 @@
       <div class="conte">
         <div class="left_t">
           <div :class="status == 3 ? 'check' : ''" @click="changeStatus(3)">
-            全部
+            {{ $t('mi_03') }}
           </div>
           <div :class="status == 0 ? 'check' : ''" @click="changeStatus(0)">
-            展示中
+            {{ $t('mi_04') }}
           </div>
           <div :class="status == 1 ? 'check' : ''" @click="changeStatus(1)">
-            已下架
+            {{ $t('mi_05') }}
           </div>
         </div>
         <div class="con_right">
           <div class="box_he">
             <div class="list_T">
-              <div class="img_name">商品图片/名称</div>
-              <div class="price">访问量</div>
-              <div class="price">日销量</div>
-              <div class="price">周销量</div>
-              <div class="gm">售价($)</div>
+              <div class="img_name">{{ $t('mi_06') }}</div>
+              <div class="price">{{ $t('mi_07') }}</div>
+              <div class="price">{{ $t('mi_08') }}</div>
+              <div class="price">{{ $t('mi_09') }}</div>
+              <div class="gm">{{ $t('mi_10') }}($)</div>
             </div>
             <div
               class="list list_T"
@@ -57,7 +57,7 @@
             </div>
             <div class="no_data" v-if="goodShowcaseList.length < 1">
               <img style="width: 20%" src="../assets/img/no_data.png" />
-              <div>无数据</div>
+              <div>{{ $t('mi_11') }}</div>
             </div>
           </div>
           <div class="bot_fy">
