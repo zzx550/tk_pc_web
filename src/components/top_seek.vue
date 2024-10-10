@@ -2,8 +2,9 @@
   <div class="top_" v-if="!props.title">
     <img class="logo" @click="router.push('/')" src="../assets/home/logo.png" />
     <div class="seek">
-      <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
-      <img class="icon" @click="sou" src="../assets/home/seek.png" />
+      <input type="text" v-model="seekValue" placeholder="供应商/店铺" />
+      <img class="icon" src="../assets/home/seek.png" />
+      <button @click="sou">搜索</button>
     </div>
     <div class="right" v-if="isLogin == true">
       <div>
@@ -34,11 +35,19 @@
         商铺中心
       </div>
     </div>
-    <div class="right" v-else @click="router.push('./login')">登录</div>
+    <div v-else class="right cur_p" style="font-size: 14px">
+      <div @click="router.push('./login')" style="padding-right: 10px">
+        登录
+      </div>
+      或
+      <div @click="router.push('./login?type=1')" style="padding-left: 10px">
+        注册
+      </div>
+    </div>
   </div>
   <div class="top_ two" v-else>
     <img class="logo" @click="router.push('/')" src="../assets/home/logo.png" />
-    <div class="seek">
+    <div class="seek" style="text-align: left">
       {{ props.title }}
     </div>
     <div class="right">
@@ -97,6 +106,11 @@
 
   function sou() {
     router.push('/shop?value=' + seekValue.value)
+    if (router.currentRoute.value.path == '/shop') {
+      setTimeout(() => {
+        router.go(0)
+      }, 500)
+    }
   }
 
   if (isLogin.value == true) {
@@ -144,25 +158,27 @@
 
 <style scoped lang="less">
   .top_ {
-    height: 60px;
+    height: 120px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 30px;
+    // margin-bottom: 30px;
     .logo {
       height: 43px;
     }
     .seek {
       margin: 0 30px;
       flex: 1;
-      height: 46px;
+      height: 48px;
       position: relative;
+      text-align: center;
       input {
-        width: 100%;
+        width: 400px;
         height: 100%;
         border-radius: 8px;
-        border: 1px solid #707070;
+        border: 1px solid #dcdfe6;
         background-color: transparent;
+        padding-left: 40px;
         font-size: 16px;
         &::placeholder {
           color: #1d1e25;
@@ -171,11 +187,23 @@
       }
       .icon {
         position: absolute;
-        right: 20px;
+        left: 28%;
         top: 50%;
         transform: translateY(-50%);
         height: 24px;
         width: 24px;
+      }
+      button {
+        position: absolute;
+        background-color: #000;
+        border-radius: 8px;
+        width: 80px;
+        height: 40px;
+        color: #fff;
+        font-size: 14px;
+        right: 27.5%;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
     .right {
@@ -183,7 +211,6 @@
       justify-content: space-between;
       align-items: center;
       font-size: 20px;
-      font-weight: 700;
       padding: 10px;
       color: #0ae2db;
       img {
@@ -216,6 +243,7 @@
     }
     .right {
       .fk_ {
+        font-size: 14px;
         margin-right: 20px;
         display: flex;
         align-items: center;

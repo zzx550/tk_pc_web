@@ -1,6 +1,6 @@
 <template>
   <div id="orderDet" class="head_b">
-    <TopSeek :title="'商铺中心'" />
+    <TopSeek />
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/user_shop')">

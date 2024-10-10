@@ -1,6 +1,6 @@
 <template>
   <div id="news" class="head_b">
-    <TopSeek :title="'消息中心'" />
+    <TopSeek />
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p">消息中心</div>

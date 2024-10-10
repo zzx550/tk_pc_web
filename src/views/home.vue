@@ -1,6 +1,6 @@
 <template>
   <div id="home" class="head_b">
-    <TopSeek @changeKey="changeKeyHome" />
+    <TopSeek />
     <div class="top">
       <!-- <div class="shopClass">
         <div class="title">商品分类</div>
@@ -15,8 +15,19 @@
           </div>
         </div>
       </div> -->
-      <img src="../assets/home/lbt.png" width="100%" height="420px" />
-      <div class="user" v-if="isLogin == true">
+      <a-carousel
+        autoplay
+        :style="isLogin ? { width: '1080px' } : { width: '1400px' }"
+      >
+        <img src="../assets/home/lbt.png" width="100%" height="420px" />
+        <img src="../assets/home/lbt.png" width="100%" height="420px" />
+        <img src="../assets/home/lbt.png" width="100%" height="420px" />
+      </a-carousel>
+      <div
+        class="user"
+        v-if="isLogin == true"
+        @click="router.push('/user_shop')"
+      >
         <div class="name">
           <img
             v-if="
@@ -386,42 +397,41 @@
       margin-bottom: 35px;
       display: flex;
       justify-content: space-between;
-      .shopClass {
-        height: 420px;
-        padding: 20px 15px 10px;
-        background-color: #fff;
-        border-radius: 12px;
-        width: 200px;
-        .title {
-          color: #1d1e25;
-          font-weight: 600;
-          margin-bottom: 10px;
-        }
-        .box {
-          height: 360px;
-          overflow: auto;
-        }
-        .list {
-          padding: 9.5px 0;
-          display: flex;
-          font-size: 14px;
-          &:hover {
-            color: #0ae1da;
-          }
-          img {
-            margin-right: 15px;
-            width: 17px;
-            height: 17px;
-          }
-        }
-      }
+      // .shopClass {
+      //   height: 420px;
+      //   padding: 20px 15px 10px;
+      //   background-color: #fff;
+      //   border-radius: 12px;
+      //   width: 200px;
+      //   .title {
+      //     color: #1d1e25;
+      //     font-weight: 600;
+      //     margin-bottom: 10px;
+      //   }
+      //   .box {
+      //     height: 360px;
+      //     overflow: auto;
+      //   }
+      //   .list {
+      //     padding: 9.5px 0;
+      //     display: flex;
+      //     font-size: 14px;
+      //     &:hover {
+      //       color: #0ae1da;
+      //     }
+      //     img {
+      //       margin-right: 15px;
+      //       width: 17px;
+      //       height: 17px;
+      //     }
+      //   }
+      // }
       .user {
         height: 420px;
         background-image: url(../assets/home/user_bac.png);
         background-size: 100% 100%;
-        width: 290px;
+        width: 300px;
         padding: 16px 10px;
-        margin-left: 30px;
         .name {
           display: flex;
           align-items: center;

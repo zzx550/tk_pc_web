@@ -1,6 +1,6 @@
 <template>
   <div id="ranking" class="head_b">
-    <TopSeek :title="'商铺中心'" />
+    <TopSeek />
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/user_shop')">
@@ -33,97 +33,97 @@
   </div>
 </template>
 <script setup lang="ts">
-import router from "@/router";
-import { ref } from "vue";
-import { api_GoodsRanking } from "@/requset/api";
+  import router from '@/router'
+  import { ref } from 'vue'
+  import { api_GoodsRanking } from '@/requset/api'
 
-interface Item {
-  id: number;
-  goods_names: string;
-  ranking_value: string;
-}
-
-let ranking = ref<Item[]>([]);
-
-api_GoodsRanking({}).then((res: any) => {
-  if (res.code == 200) {
-    ranking.value = res.data;
-    console.log("ranking :>> ", ranking.value);
+  interface Item {
+    id: number
+    goods_names: string
+    ranking_value: string
   }
-});
+
+  let ranking = ref<Item[]>([])
+
+  api_GoodsRanking({}).then((res: any) => {
+    if (res.code == 200) {
+      ranking.value = res.data
+      console.log('ranking :>> ', ranking.value)
+    }
+  })
 </script>
 <style lang="less" scoped>
-#ranking {
-  .con_box {
-    background-color: #fff;
-    border-radius: 12px;
-    .title_l {
-      border-bottom: 1px solid rgba(211, 211, 211, 0.5);
-      display: flex;
-      align-items: center;
-      div {
-        padding: 20px 18px;
-        font-size: 18px;
-      }
-      .breadcrumb {
-        color: #8d8e91;
-      }
-      .line {
-        color: #8d8e91;
-        padding: 0 4px;
-      }
-    }
-    .txt_Con {
-      padding: 15px;
-      .list_T {
+  #ranking {
+    .con_box {
+      background-color: #fff;
+      border-radius: 12px;
+      .title_l {
+        border-bottom: 1px solid rgba(211, 211, 211, 0.5);
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        text-align: center;
-        background-color: #f6f7f9;
-        padding: 8px 0;
-        border-radius: 4px;
-        .title {
-          flex: 1;
+        div {
+          padding: 20px 18px;
+          font-size: 18px;
         }
-        .time {
-          flex: 8;
+        .breadcrumb {
+          color: #8d8e91;
         }
-        .txt {
-          flex: 1;
+        .line {
+          color: #8d8e91;
+          padding: 0 4px;
         }
       }
-      .list {
-        background-color: #fff;
-        padding: 15px 0;
-        .title {
-          font-size: 20px;
-          color: #8d8e91;
-          img {
-            margin: 0 auto;
-            width: 50px;
-          }
-        }
-        .time {
-          padding: 0 20px;
+      .txt_Con {
+        padding: 15px;
+        .list_T {
           display: flex;
           align-items: center;
-          .shop_i {
-            border-radius: 8px;
-            width: 56px;
-            height: 56px;
-            margin-right: 10px;
-          }
-          div {
+          justify-content: space-between;
+          text-align: center;
+          background-color: #f6f7f9;
+          padding: 8px 0;
+          border-radius: 4px;
+          .title {
             flex: 1;
-            text-align: left;
+          }
+          .time {
+            flex: 8;
+          }
+          .txt {
+            flex: 1;
           }
         }
-        .txt {
-          font-size: 20px;
+        .list {
+          background-color: #fff;
+          padding: 15px 0;
+          .title {
+            font-size: 20px;
+            color: #8d8e91;
+            img {
+              margin: 0 auto;
+              width: 50px;
+            }
+          }
+          .time {
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            .shop_i {
+              border-radius: 8px;
+              width: 56px;
+              height: 56px;
+              margin-right: 10px;
+            }
+            div {
+              flex: 1;
+              text-align: left;
+            }
+          }
+          .txt {
+            font-size: 20px;
+          }
         }
       }
     }
   }
-}
 </style>

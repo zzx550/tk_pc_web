@@ -1,6 +1,6 @@
 <template>
   <div id="newDet" class="head_b">
-    <TopSeek :title="'消息中心'" />
+    <TopSeek />
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/news')">
@@ -21,9 +21,9 @@
   import { api_newsDetail } from '@/requset/api'
   import router from '@/router'
   import { useRoute } from 'vue-router'
+  const route = useRoute()
   import { ref } from 'vue'
 
-  const route = useRoute()
   const {
     query: { id },
   } = route

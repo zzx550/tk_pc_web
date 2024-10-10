@@ -55,7 +55,7 @@
 
   window.addEventListener('resize', function () {
     if (window.innerWidth < 800) {
-      window.location.href = 'https://www.mysshopvipb.net/app/#/'
+      window.location.href = 'https://mysshopvipb.net/app/#/'
     }
   })
 

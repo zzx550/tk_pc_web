@@ -10,13 +10,11 @@
           <p>获得您更多的优惠券</p>
           <div class="el-input">
             <!----><input
-              type="text"
-              autocomplete="off"
+              v-model="yx"
               placeholder="您的电子邮箱"
-              class="el-input__inner"
             /><!----><!----><!----><!---->
           </div>
-          <div class="sub">订阅</div>
+          <div class="sub cur_p" @click="changeDy">订阅</div>
         </div>
         <div class="footer-nav">
           <div class="footer-nav-item">
@@ -121,9 +119,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p style="text-align: center; margin-bottom: 15px">
-          MaCys-Wholesale 有限公司2023 版权所有
-        </p>
+        <p style="text-align: center">MaCys-Wholesale 有限公司2023 版权所有</p>
         <p style="text-align: center">
           Shopify is headquartered in Ottawa, 151 O'Connor Street, Ground Floor,
           Canada, and has 6 office locations.
@@ -138,6 +134,9 @@
   import { api_getOption } from '@/requset/api'
   import { message } from 'ant-design-vue'
   import router from '@/router'
+  import { ref } from 'vue'
+
+  let yx = ref<string>('')
 
   const open = (url: string) => {
     window.open(url, '_blank') // 使用'_blank'标识符在新标签页中打开URL
@@ -154,6 +153,15 @@
         }
       }
     })
+  }
+
+  function changeDy() {
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+    if (!emailRegex.test(yx.value)) {
+      message.error('请输入正确邮箱')
+      return
+    }
+    message.success('订阅成功')
   }
 </script>
 
@@ -276,5 +284,17 @@
         }
       }
     }
+    .footer-bottom {
+      font-size: 12px;
+      color: #bbb;
+      padding: 15px 0;
+      p {
+        margin-bottom: 30px;
+      }
+    }
+  }
+  input {
+    background-color: #fff;
+    color: #474747;
   }
 </style>

@@ -1,15 +1,15 @@
 <template>
   <div id="shop" class="head_b">
-    <TopSeek :title="'首页'" />
+    <TopSeek />
     <div class="con_box">
       <div class="title_l">
         <div class="breadcrumb cur_p" @click="router.push('/')">首页</div>
         <div class="line">></div>
         <div style="font-weight: 600">推荐店铺</div>
-        <div class="seek">
+        <!-- <div class="seek">
           <input type="text" v-model="seekValue" placeholder="请输入搜索店铺" />
           <img @click="get()" class="icon" src="../assets/home/seek.png" />
-        </div>
+        </div> -->
       </div>
       <div class="conte">
         <div class="shopList">
@@ -85,9 +85,8 @@
 </template>
 <script setup lang="ts">
   import { api_getShopList, api_getShopList_notLogin } from '@/requset/api'
-  import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
-  import { ref } from 'vue'
+  import { ref, watch } from 'vue'
 
   const current = ref(1)
   const seekValue = ref<string>('')
