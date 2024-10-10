@@ -74,6 +74,8 @@
     }
     .content {
       padding-top: 10px;
+      padding-bottom: 20px;
+      min-height: 50vh;
     }
   }
 </style>

@@ -1,74 +1,20 @@
 <template>
   <div data-v-76fc1f2e="" class="step-div head_b_" style="padding: 40px 0">
-    <div data-v-76fc1f2e="" class="content">
-      <h1 style="color: red; margin-bottom: 30px">送货和取货</h1>
-      <div data-v-76fc1f2e="">
-        <h2 data-v-76fc1f2e="" class="title">你在哪里送货？</h2>
-        <p data-v-76fc1f2e="">
-          要了解我们是否运送到您所在的地区，请在您要购买的商品上输入您的邮政编码。
-          产品直接从我们的供应商处发货，我们的全球仓库遍布 112 个国家/地区。
-        </p>
-      </div>
-      <div data-v-76fc1f2e="">
-        <h2 data-v-76fc1f2e="" class="title">去哪里取？</h2>
-        <p data-v-76fc1f2e="">
-          我们在 MaCys 商店、Sainsbury's 超市和全球仓库的收集点全天候 24/7
-          运营。
-        </p>
-        <p data-v-76fc1f2e="">
-          对于可用于快速通道交付的物品，请根据您所在的位置从多个时间段中进行选择。
-          订单将送货上门并存放在安全可靠的地方。
-        </p>
-        <p data-v-76fc1f2e="">
-          英格兰、苏格兰和威尔士提供大型和笨重物品（需要两人或多人搬运的物品，例如沙发和床），因此我们可以将它们安全地运送到您选择的任何地方。
-          我们友好的司机之一将在同一天与您联系，讨论送货细节。
-          如果您正在自我隔离，请告知我们，以便我们重新安排您的交货日期。
-        </p>
-        <p data-v-76fc1f2e="">
-          我们目前对大件物品的交付有很高的需求。
-          如果您的交货延迟，我们会尽快给您发送消息。
-          我们正在努力为我们的客户提供最好的服务，感谢您一直以来的耐心和支持。
-        </p>
-      </div>
-      <div data-v-76fc1f2e="">
-        <h2 data-v-76fc1f2e="" class="title">常见问题</h2>
-        <p data-v-76fc1f2e="" style="font-weight: 600">
-          如果我同时订购大件和小件商品怎么办？
-        </p>
-        <p data-v-76fc1f2e="">
-          将它们送到您手中的最快方式是单独运送。 不用担心; 您只需支付一次运费。
-          请查看您的订单确认电子邮件以获取更多信息。
-        </p>
-        <p data-v-76fc1f2e="" style="font-weight: 600">如果我不在家怎么办？</p>
-        <p data-v-76fc1f2e="">
-          小物品将留在安全可靠的地方，在看不见的地方，或应您的要求交给您的邻居。
-          大件或贵重物品需要照片或签名且不能留下，因此必须有人在家领取。
-          如果您无法赶到，请通过帮助热线联系我们，以便我们重新安排送货时间并选择最适合您的日期和时间段！
-        </p>
-        <p data-v-76fc1f2e="" style="font-weight: 600">
-          有多少人运送大件物品？
-        </p>
-        <p data-v-76fc1f2e="">
-          大件物品，如沙发、冰柜等，可以两人送货。
-          我们友好的司机将在送货当天与您联系，并将您的订单安全地送至您选择的地点。
-        </p>
-        <p data-v-76fc1f2e="" style="font-weight: 600">
-          COVID-19：对交付的影响？
-        </p>
-        <p data-v-76fc1f2e="">
-          我们仍然提供许多商品的送货服务，包括我们的游戏机预购。
-          当交货日期临近时，您将收到我们的短信提醒，并在交货前收到快递员的跟踪号码。
-        </p>
-        <p data-v-76fc1f2e="">
-          货物将在安全区域送货上门； 大件物品将被运送到安全的地方。
-          我们友好的司机之一将在同一天与您联系，讨论大件物品的运输细节。
-          如果您正在自我隔离，请告知我们，以便我们重新安排您的交货日期。
-        </p>
-      </div>
-    </div>
+    <div v-html="txt"></div>
   </div>
 </template>
 
-<script></script>
+<script setup lang="ts">
+  import { api_indexDesc } from '@/requset/api'
+  import { ref } from 'vue'
+
+  let txt = ref<string>('')
+
+  api_indexDesc({ name: 'delivery_pickup' }).then((res: any) => {
+    if (res.success) {
+      txt.value = res.data
+    }
+  })
+</script>
 
 <style lang="less" scoped></style>

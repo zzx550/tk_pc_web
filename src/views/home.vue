@@ -390,7 +390,7 @@
         }
       }
     )
-    api_getRecommendGoods_notLogin({ page: 1, pageSize: 5 }).then(
+    api_getRecommendGoods_notLogin({ page: 1, pageSize: 6 }).then(
       (res: any) => {
         if (res.success) {
           tjList.value = res.data.data

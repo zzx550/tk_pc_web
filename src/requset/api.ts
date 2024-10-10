@@ -96,6 +96,9 @@ export const api_echartStatistics = (p: any) =>
 // 获取页面描述
 export const api_optionDesc = (p: any) => axios.get("option/optionDesc", p);
 
+// 隐私政策
+export const api_indexDesc = (p: any) => axios.get("index/optionDesc", p);
+
 // 获取各订单状态数量
 export const api_getOrderTypeNum = (p: any) =>
   axios.post("order/getOrderTypeNum", p);

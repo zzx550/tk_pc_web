@@ -35,6 +35,16 @@
       </div>
     </div>
     <div v-else class="right cur_p" style="justify-content: right">
+      <a-dropdown placement="bottom" style="margin-right: 40px">
+        <img src="../assets/home/lang.png" @click.prevent />
+        <template #overlay>
+          <a-menu @click="onClick">
+            <a-menu-item v-for="x in state.countryLang" :key="x.lang">
+              {{ x.value }}
+            </a-menu-item>
+          </a-menu>
+        </template>
+      </a-dropdown>
       <div class="loginAnd">
         <div @click="router.push('./login')">{{ $t('to_04') }}</div>
         {{ $t('to_05') }}
