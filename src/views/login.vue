@@ -140,6 +140,7 @@
         loginDat.lang = String(key)
         sessionStorage.setItem('lang', String(key))
         sessionStorage.setItem('lang_w', x.value)
+        router.go(0)
       }
     })
   }
