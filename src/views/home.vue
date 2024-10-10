@@ -302,6 +302,7 @@
   import { goods_fl, goods_tj } from '@/base/index'
   import router from '@/router'
   import { ref } from 'vue'
+  import i18n from '@/lang'
 
   const fyRuleOpen = ref<boolean>(false)
   let goodsList = ref<goods_fl[]>([])

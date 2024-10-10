@@ -25,5 +25,8 @@ app.component("BotBase", BotBase);
 app.component("globalFloatingIcon", globalFloatingIcon);
 app.component("Captcha", Captcha);
 
+import i18n from "./lang";
+app.use(i18n);
+
 app.use(Antd);
 app.use(store).use(router).mount("#app");
