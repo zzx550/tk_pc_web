@@ -97,7 +97,7 @@
       }
 
       .conte {
-        min-height: 600px;
+        // min-height: 600px;
         display: flex;
         justify-content: space-between;
         .left_t {

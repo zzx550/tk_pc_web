@@ -194,7 +194,7 @@
           padding: 15px;
           flex: 1;
           .box_he {
-            min-height: 600px;
+            // min-height: 600px;
             .list_T {
               display: flex;
               align-items: center;

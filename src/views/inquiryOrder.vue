@@ -358,7 +358,7 @@
       border-radius: 12px;
       padding: 20px;
       .shop_l {
-        min-height: 600px;
+        // min-height: 600px;
         .list_T {
           display: flex;
           align-items: center;

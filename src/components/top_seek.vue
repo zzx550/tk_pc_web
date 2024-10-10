@@ -15,10 +15,9 @@
       <img
         @click="router.push('./inquiry')"
         class="kf"
-        style="margin: 0 25px"
         src="../assets/home/kf_icon.png"
       />
-      <div style="margin-right: 25px">
+      <div>
         <a-dropdown placement="bottom">
           <img src="../assets/home/lang.png" @click.prevent />
           <template #overlay>
@@ -35,13 +34,13 @@
         商铺中心
       </div>
     </div>
-    <div v-else class="right cur_p" style="font-size: 14px">
-      <div @click="router.push('./login')" style="padding-right: 10px">
-        登录
-      </div>
-      或
-      <div @click="router.push('./login?type=1')" style="padding-left: 10px">
-        注册
+    <div v-else class="right cur_p" style="justify-content: right">
+      <div class="loginAnd">
+        <div @click="router.push('./login')">登录</div>
+        或
+        <div @click="router.push('./login?type=1')" style="padding-left: 10px">
+          注册
+        </div>
       </div>
     </div>
   </div>
@@ -167,7 +166,7 @@
       height: 43px;
     }
     .seek {
-      margin: 0 30px;
+      margin: 0 20px;
       flex: 1;
       height: 48px;
       position: relative;
@@ -213,6 +212,19 @@
       font-size: 20px;
       padding: 10px;
       color: #0ae2db;
+      width: 330px;
+      .loginAnd {
+        display: flex;
+        font-size: 14px;
+        align-items: center;
+        div {
+          padding: 0 8px;
+        }
+      }
+      .ts {
+        position: relative;
+        top: 1.5px;
+      }
       img {
         width: 32px;
         height: 32px;
@@ -242,15 +254,15 @@
       font-weight: 600;
     }
     .right {
+      padding-left: 110px;
       .fk_ {
         font-size: 14px;
-        margin-right: 20px;
         display: flex;
         align-items: center;
         img {
+          margin-right: 10px;
           width: 20px;
           height: 20px;
-          margin-right: 10px;
         }
       }
     }

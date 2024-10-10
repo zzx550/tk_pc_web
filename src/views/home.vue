@@ -15,14 +15,23 @@
           </div>
         </div>
       </div> -->
-      <a-carousel
-        autoplay
-        :style="isLogin ? { width: '1080px' } : { width: '1400px' }"
-      >
-        <img src="../assets/home/lbt.png" width="100%" height="420px" />
-        <img src="../assets/home/lbt.png" width="100%" height="420px" />
-        <img src="../assets/home/lbt.png" width="100%" height="420px" />
+      <a-carousel autoplay style="width: 1080px">
+        <img src="../assets/bal.png" width="100%" height="420px" />
+        <img src="../assets/bal2.png" width="100%" height="420px" />
+        <img src="../assets/bal3.png" width="100%" height="420px" />
       </a-carousel>
+      <div class="bor_1" v-if="isLogin == false">
+        <a-carousel autoplay style="width: 300px">
+          <img src="../assets/x1.jpeg" width="100%" height="205px" />
+          <img src="../assets/x2.jpeg" width="100%" height="205px" />
+        </a-carousel>
+        <a-carousel autoplay style="width: 300px">
+          <img src="../assets/x3.jpeg" width="100%" height="205px" />
+          <img src="../assets/x4.jpeg" width="100%" height="205px" />
+          <img src="../assets/x5.jpeg" width="100%" height="205px" />
+        </a-carousel>
+      </div>
+
       <div
         class="user"
         v-if="isLogin == true"
@@ -163,6 +172,7 @@
         </div>
       </div>
     </div>
+
     <div class="tj">
       <div class="title">
         <div class="left">推荐商品</div>
@@ -184,16 +194,16 @@
           <div class="bq_">访问量 {{ x.goods.visits }}</div>
           <img :src="x.goods.cover_img" />
           <div class="ms">
+            <div class="xl">
+              <p>日销量{{ x.goods.day_sales_num }}</p>
+              <!-- <p>周销量{{ x.goods.week_sales_num }}</p> -->
+            </div>
             <div class="name">
               {{ x.goods.goods_name }}
             </div>
             <div class="price">
               ${{ x.goods.goods_price }}
               <p>售价:${{ x.goods.goods_profit }}</p>
-            </div>
-            <div class="xl">
-              日销量&nbsp;&nbsp;{{ x.goods.day_sales_num }}&nbsp;
-              &nbsp;&nbsp;周销量&nbsp;&nbsp;{{ x.goods.week_sales_num }}
             </div>
           </div>
         </div>
@@ -268,7 +278,6 @@
       </div>
     </div>
   </div>
-  <BotBase />
 
   <OpenTip
     :openFyRule="fyRuleOpen"
@@ -360,7 +369,7 @@
       }
     })
 
-    api_getRecommendGoods({ page: 1, pageSize: 5 }).then((res: any) => {
+    api_getRecommendGoods({ page: 1, pageSize: 6 }).then((res: any) => {
       if (res.success) {
         tjList.value = res.data.data
       }
@@ -426,6 +435,11 @@
       //     }
       //   }
       // }
+      .bor_1 {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
       .user {
         height: 420px;
         background-image: url(../assets/home/user_bac.png);
@@ -454,6 +468,8 @@
             }
             .dj {
               display: flex;
+              align-items: center;
+              justify-content: space-between;
               font-size: 12px;
               .fen {
                 display: flex;
@@ -597,8 +613,11 @@
         .more {
           display: flex;
           align-items: center;
+          font-size: 14px;
           img {
-            height: 18px;
+            position: relative;
+            top: -1.5px;
+            height: 12px;
             margin-left: 8px;
           }
         }
@@ -612,13 +631,16 @@
         justify-content: space-between;
         min-height: 400px;
         .boxList {
-          width: 254px;
+          width: 206px;
           position: relative;
+          border: 1px solid #f0f0f0;
+          border-radius: 8px;
+          padding: 6px;
           // overflow-x: hidden;
           .bq_ {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 6px;
+            right: 6px;
             background-color: rgba(0, 0, 0, 0.4);
             color: #fff;
             padding: 6px 10px;
@@ -626,9 +648,10 @@
             font-size: 12px;
           }
           img {
-            width: 254px;
-            height: 254px;
+            width: 194px;
+            height: 194px;
             border-radius: 8px;
+            margin-bottom: 8px;
           }
           .ms {
             padding-top: 10px;
@@ -647,6 +670,7 @@
             }
             .price {
               display: flex;
+              justify-content: space-between;
               color: #f40000;
               margin-bottom: 10px;
               font-size: 22px;
@@ -655,17 +679,23 @@
               p {
                 font-size: 14px;
                 font-weight: 400;
-                margin-left: 10px;
                 color: #1d1e25;
                 margin-bottom: 0;
                 opacity: 0.8;
               }
             }
             .xl {
-              font-size: 14px;
-              color: #1d1e25;
-              opacity: 0.5;
+              p {
+                opacity: 0.5 !important;
+                color: #1d1e25 !important;
+                font-size: 12px !important;
+                margin-bottom: 5px !important;
+              }
             }
+          }
+          &:hover {
+            transform: scale(1.1);
+            border: 1px solid #696969;
           }
         }
       }
@@ -711,8 +741,9 @@
               flex-direction: column;
               .dpm {
                 font-weight: 600;
-                font-size: 18px;
-                margin-bottom: 10px;
+                font-size: 15px;
+                margin-bottom: 5px;
+                height: 18px;
               }
               .id {
                 font-size: 14px;
@@ -733,6 +764,7 @@
                     width: 12px;
                     height: 12px;
                     margin-right: 5px;
+                    margin-bottom: 0;
                   }
                 }
               }

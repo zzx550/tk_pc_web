@@ -56,7 +56,7 @@
         }
       }
       .txt_Con {
-        min-height: 600px;
+        // min-height: 600px;
         text-align: center;
         padding: 20px 120px 50px;
         .title {

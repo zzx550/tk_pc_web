@@ -222,8 +222,9 @@
                 flex-direction: column;
                 .dpm {
                   font-weight: 600;
-                  font-size: 18px;
+                  font-size: 15px;
                   margin-bottom: 5px;
+                  height: 18px;
                 }
                 .id {
                   font-size: 14px;
@@ -244,6 +245,7 @@
                       width: 12px;
                       height: 12px;
                       margin-right: 5px;
+                      margin-bottom: 0;
                     }
                   }
                 }

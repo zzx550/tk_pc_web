@@ -18,6 +18,7 @@
       src="./assets/home/bac_top_h.png"
     />
     <router-view class="content" />
+    <BotBase v-if="login" />
   </div>
   <globalFloatingIcon v-if="login" />
 </template>
