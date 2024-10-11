@@ -401,4 +401,9 @@ export default {
   _tx_44:
     "Merchant transaction has been frozen, please contact customer service",
   _tx_45: "Withdrawal application is abnormal",
+
+  _ho_01:'100% authentic',
+_ho_02:'7-day return',
+_ho_03:'Shipping discount',
+_ho_04:'Secure payment',
 };

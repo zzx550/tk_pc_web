@@ -405,4 +405,9 @@ export default {
   _tx_44:
     "Giao dịch của người bán đã bị đóng băng, vui lòng liên hệ bộ phận chăm sóc khách hàng",
   _tx_45: "Ứng dụng rút tiền bất thường",
+
+  _ho_01:'xác thực 100%',
+ _ho_02:'7 ngày trở lại',
+ _ho_03:'Giảm giá vận chuyển',
+ _ho_04:'Thanh toán an toàn',
 };

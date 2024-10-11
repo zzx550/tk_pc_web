@@ -407,4 +407,9 @@ export default {
   _tx_44:
     "Les transactions commerçants ont été gelées, merci de contacter le service client",
   _tx_45: "Demande de retrait anormale",
+
+  _ho_01:'100% authentique',
+ _ho_02:'7 jours retour',
+ _ho_03:'Remise sur les frais d"expédition"',
+ _ho_04:'Paiement sécurisé',
 };

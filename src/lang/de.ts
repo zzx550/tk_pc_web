@@ -408,4 +408,9 @@ export default {
   _tx_44:
     "Händlertransaktionen wurden eingefroren, bitte wenden Sie sich an den Kundendienst",
   _tx_45: "Anormaler Auszahlungsantrag",
+
+  _ho_01:'100 % authentisch',
+ _ho_02:'7 Tage Rückgabe',
+ _ho_03:'Versandrabatt',
+ _ho_04:'Sichere Zahlung',
 };

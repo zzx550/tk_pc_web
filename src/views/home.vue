@@ -277,6 +277,24 @@
         </div>
       </div>
     </div>
+    <div class="botmm">
+      <div>
+        <img src="../assets/1.png" alt="" />
+        {{ $t('_ho_01') }}
+      </div>
+      <div>
+        <img src="../assets/2.png" alt="" />
+        {{ $t('_ho_02') }}
+      </div>
+      <div>
+        <img src="../assets/3.png" alt="" />
+        {{ $t('_ho_03') }}
+      </div>
+      <div>
+        <img src="../assets/4.png" alt="" />
+        {{ $t('_ho_04') }}
+      </div>
+    </div>
   </div>
 
   <OpenTip
@@ -781,6 +799,20 @@
               }
             }
           }
+        }
+      }
+    }
+    .botmm {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 100px;
+      div {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        img {
+          margin-bottom: 10px;
         }
       }
     }

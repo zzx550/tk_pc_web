@@ -407,4 +407,9 @@ export default {
   _tx_44:
     "Le transazioni del commerciante sono state congelate, contatta il servizio clienti",
   _tx_45: "Richiesta di prelievo anomala",
+
+  _ho_01:'100% autentico',
+ _ho_02:'Reso entro 7 giorni',
+ _ho_03:'Sconto sulla spedizione',
+ _ho_04:'Pagamento sicuro',
 };

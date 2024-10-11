@@ -404,4 +404,9 @@ export default {
   _tx_44:
     "Transaksi pedagang telah dibekukan, silakan hubungi layanan pelanggan",
   _tx_45: "Aplikasi penarikan tidak normal",
+
+  _ho_01:'100% asli',
+ _ho_02:'7 hari pulang',
+ _ho_03:'Diskon pengiriman',
+ _ho_04:'Pembayaran aman',
 };

@@ -406,4 +406,9 @@ export default {
   _tx_44:
     "Transakcje handlowe zostały zamrożone, prosimy o kontakt z obsługą klienta",
   _tx_45: "Nieprawidłowy wniosek o wypłatę",
+
+  _ho_01:'100% autentyczny',
+ _ho_02:'7 dni na zwrot',
+ _ho_03:'Zniżka na wysyłkę',
+ _ho_04:'Bezpieczna płatność',
 };
