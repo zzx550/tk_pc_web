@@ -1,7 +1,7 @@
 <template>
   <div id="login">
     <div class="box">
-      <div class="content" v-if="show && route.query.type != 1">
+      <div class="content" v-if="show">
         <div class="lang_reg">
           <a-dropdown placement="bottom">
             <div @click.prevent class="ant-dropdown-link">
@@ -132,6 +132,10 @@
   loginDat.lang = String(
     sessionStorage.getItem('lang') ? sessionStorage.getItem('lang') : 'en'
   )
+
+  if (route.query.type) {
+    show.value = false
+  }
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
     state.countryLang.forEach((x: any, y: number) => {
