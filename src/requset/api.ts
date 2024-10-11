@@ -272,3 +272,7 @@ export const api_getNotUsedAuthCode = (p: any) =>
 // 商家入驻申请
 export const api_createJoinInApply = (p: any) =>
   axios.post("user/createJoinInApply", p);
+
+// 获取配置(未登录)
+export const api_getOption_notLogin = (p: any) =>
+  axios.post("index/optionValue", p);
