@@ -158,7 +158,6 @@
     <div class="sp_fl" id="fl">
       <div class="title">
         <div class="left">{{ $t('_ho_28') }}</div>
-        88
       </div>
       <swiper
         :autoplay="{ delay: 4000, disableOnInteraction: false }"
@@ -894,6 +893,7 @@
         flex-direction: column;
         justify-content: center;
         img {
+          width: 90px;
           margin-bottom: 10px;
         }
       }

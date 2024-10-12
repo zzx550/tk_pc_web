@@ -1,7 +1,11 @@
 <template>
-  <div class="content head_b_" style="padding: 40px 0">
+  <img class="bac_wz_" src="../assets/wz_bac.jpg" />
+  <div class="content_wz head_b_" style="padding: 40px 0">
     <div v-html="txt"></div>
   </div>
+  <a href="#/">
+    <img class="home_bq_" src="../assets/home.png" />
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -16,15 +20,8 @@
     }
   })
 </script>
-
 <style lang="less" scoped>
-  tbody {
-    border: 1px solid #ccc;
-    text-align: center;
-    td {
-      padding: 8px 0;
-      border: 1px solid #ccc;
-      font-size: 14px;
-    }
+  .content_wz {
+    top: 595px;
   }
 </style>

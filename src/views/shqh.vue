@@ -1,7 +1,11 @@
 <template>
-  <div data-v-76fc1f2e="" class="step-div head_b_" style="padding: 40px 0">
+  <img class="bac_wz_" src="../assets/wz_bac.jpg" />
+  <div class="step-div head_b_ content_wz" style="padding: 40px 0">
     <div v-html="txt"></div>
   </div>
+  <a href="#/">
+    <img class="home_bq_" src="../assets/home.png" />
+  </a>
 </template>
 
 <script setup lang="ts">
@@ -16,5 +20,3 @@
     }
   })
 </script>
-
-<style lang="less" scoped></style>

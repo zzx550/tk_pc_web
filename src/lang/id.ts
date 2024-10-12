@@ -431,5 +431,6 @@ export default {
   _ho_24:'Menjadi pedagang',
   _ho_25:'Komisi bersama',
   _ho_26:'tertinggi',
-  _ho_27:'Gabung sekarang',
+  _ho_27: 'Gabung sekarang',
+  _ho_28:'Klasifikasi produk',
 };

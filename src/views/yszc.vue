@@ -1,7 +1,11 @@
 <template>
-  <div class="merchantSettled" style="padding: 40px 0">
-    <div v-html="txt"></div>
+  <img class="bac_wz_" src="../assets/wz_bac.jpg" />
+  <div style="padding: 40px 0">
+    <div class="content_wz" v-html="txt"></div>
   </div>
+  <a href="#/">
+    <img class="home_bq_" src="../assets/home.png" />
+  </a>
 </template>
 <script setup lang="ts">
   import { api_indexDesc } from '@/requset/api'
@@ -17,10 +21,10 @@
 </script>
 
 <style lang="less" scoped>
-  // .merchantSettled {
-  //   background-color: #fff;
-  //   position: relative;
-  //   z-index: 5;
-  //   padding: 20px 0;
-  // }
+  .content_wz {
+    top: 540px;
+    ::v-deep h1 {
+      padding: 10px 0;
+    }
+  }
 </style>

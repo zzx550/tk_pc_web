@@ -82,25 +82,6 @@
                 "
               />
               <div class="ms">
-                <div class="xl">
-                  <p>
-                    {{ $t('co_d_07') }}&nbsp;&nbsp;{{
-                      route.query.id || route.query.cat_id
-                        ? x.day_sales_num
-                        : x.goods.day_sales_num
-                    }}
-                  </p>
-                  <!-- <p>周销量{{
-                     route.query.id || route.query.cat_id ? x.week_sales_num : x.goods.week_sales_num
-                  }}</p> -->
-                </div>
-                <div class="name">
-                  {{
-                    route.query.id || route.query.cat_id
-                      ? x.goods_name
-                      : x.goods.goods_name
-                  }}
-                </div>
                 <div class="price">
                   ${{
                     route.query.id || route.query.cat_id
@@ -114,6 +95,22 @@
                         : x.goods.goods_profit
                     }}
                   </p>
+                </div>
+                <div class="xl">
+                  <p>
+                    {{ $t('co_d_07') }}&nbsp;&nbsp;{{
+                      route.query.id || route.query.cat_id
+                        ? x.day_sales_num
+                        : x.goods.day_sales_num
+                    }}
+                  </p>
+                </div>
+                <div class="name">
+                  {{
+                    route.query.id || route.query.cat_id
+                      ? x.goods_name
+                      : x.goods.goods_name
+                  }}
                 </div>
               </div>
             </div>
@@ -439,7 +436,6 @@
                   overflow: hidden;
                   text-overflow: ellipsis;
                   text-align: justify;
-                  margin-bottom: 10px;
                   color: #1d1e25;
                   font-weight: 600;
                   line-height: 20px;
@@ -447,10 +443,11 @@
                   font-size: 14px;
                 }
                 .price {
+                  margin-bottom: 5px;
                   display: flex;
                   justify-content: space-between;
                   color: #f40000;
-                  font-size: 22px;
+                  font-size: 20px;
                   font-weight: 600;
                   align-items: flex-end;
                   p {

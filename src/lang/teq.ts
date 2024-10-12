@@ -422,5 +422,6 @@ export default {
   _ho_24:'Tüccar ol',
   _ho_25:'Paylaşılan komisyon',
   _ho_26:'en yüksek',
-  _ho_27:'Şimdi katıl',
+  _ho_27: 'Şimdi katıl',
+  _ho_28:'Ürün sınıflandırması',
 };

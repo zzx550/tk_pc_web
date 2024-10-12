@@ -434,5 +434,6 @@ export default {
  _ho_24:'Devenez commerçant',
  _ho_25:'Commission partagée',
  _ho_26:'le plus élevé',
- _ho_27:'Inscrivez-vous maintenant',
+  _ho_27: 'Inscrivez-vous maintenant',
+  _ho_28:'Classification des produits',
 };

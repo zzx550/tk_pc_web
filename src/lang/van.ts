@@ -432,5 +432,6 @@ export default {
   _ho_24:'Trở thành thương gia',
   _ho_25:'Chia sẻ hoa hồng',
   _ho_26:'cao nhất',
-  _ho_27:'Tham gia ngay',
+  _ho_27: 'Tham gia ngay',
+  _ho_28:'Phân loại sản phẩm',
 };
