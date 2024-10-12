@@ -8,18 +8,17 @@
         </div>
         <div class="line">></div>
         <div style="font-weight: 600">
-          {{ route.query.id ? $t('co_d_01') : $t('co_d_02') }}
+          {{
+            route.query.id
+              ? $t('co_d_01')
+              : route.query.cat_id
+              ? $t('_ho_05')
+              : $t('co_d_02')
+          }}
         </div>
-        <!-- <div class="seek">
-          <input type="text" v-model="seekValue" placeholder="请输入搜索内容" />
-          <img class="icon" src="../assets/home/seek.png" />
-        </div> -->
       </div>
       <div class="conte">
-        <!-- <div class="left_t" v-if="!route.query.type">
-          <div :class="active == '' ? 'check' : ''" @click="changeCat('')">
-            全部
-          </div>
+        <div class="left_t" v-if="route.query.cat_id">
           <div
             :class="active == x.cat_id ? 'check' : ''"
             @click="changeCat(x.cat_id)"
@@ -28,7 +27,7 @@
           >
             {{ x.cat_name }}
           </div>
-        </div> -->
+        </div>
         <div class="con_right">
           <div class="box_t" v-if="route.query.id">
             <img class="logo" src="../assets/logo.png" />
@@ -69,28 +68,50 @@
             >
               <div class="bq_">
                 {{ $t('co_d_05') }}
-                {{ route.query.id ? x.visits : x.goods.visits }}
+                {{
+                  route.query.id || route.query.cat_id
+                    ? x.visits
+                    : x.goods.visits
+                }}
               </div>
-              <img :src="route.query.id ? x.cover_img : x.goods.cover_img" />
+              <img
+                :src="
+                  route.query.id || route.query.cat_id
+                    ? x.cover_img
+                    : x.goods.cover_img
+                "
+              />
               <div class="ms">
                 <div class="xl">
                   <p>
                     {{ $t('co_d_07') }}&nbsp;&nbsp;{{
-                      route.query.id ? x.day_sales_num : x.goods.day_sales_num
+                      route.query.id || route.query.cat_id
+                        ? x.day_sales_num
+                        : x.goods.day_sales_num
                     }}
                   </p>
                   <!-- <p>周销量{{
-                    route.query.id ? x.week_sales_num : x.goods.week_sales_num
+                     route.query.id || route.query.cat_id ? x.week_sales_num : x.goods.week_sales_num
                   }}</p> -->
                 </div>
                 <div class="name">
-                  {{ route.query.id ? x.goods_name : x.goods.goods_name }}
+                  {{
+                    route.query.id || route.query.cat_id
+                      ? x.goods_name
+                      : x.goods.goods_name
+                  }}
                 </div>
                 <div class="price">
-                  ${{ route.query.id ? x.goods_price : x.goods.goods_price }}
+                  ${{
+                    route.query.id || route.query.cat_id
+                      ? x.goods_price
+                      : x.goods.goods_price
+                  }}
                   <p>
                     {{ $t('co_d_06') }}:${{
-                      route.query.id ? x.goods_profit : x.goods.goods_profit
+                      route.query.id || route.query.cat_id
+                        ? x.goods_profit
+                        : x.goods.goods_profit
                     }}
                   </p>
                 </div>
@@ -124,7 +145,8 @@
     api_getRecommendGoods_notLogin,
     api_getShopGoodsList,
     api_getShopGoodsList_notLogin,
-    api_goodsCategory,
+    api_getCat,
+    api_getGoodsList,
   } from '@/requset/api'
   import { useRoute } from 'vue-router'
   import router from '@/router'
@@ -138,14 +160,14 @@
   const goodsList = ref<any[]>([])
   const data = ref<any>({})
   // const seekValue = ref<string>('')
-  // let goodCat = ref<any[]>([])
+  let goodCat = ref<any[]>([])
   const active = ref<string | number>('')
 
-  // api_goodsCategory({}).then((res: any) => {
-  //   if (res.success) {
-  //     goodCat.value = res.data
-  //   }
-  // })
+  api_getCat({}).then((res: any) => {
+    if (res.success) {
+      goodCat.value = res.data
+    }
+  })
 
   let isLogin = ref<boolean>(false)
   isLogin.value =
@@ -153,16 +175,31 @@
     sessionStorage.getItem('token') != '' &&
     sessionStorage.getItem('token') != undefined
 
-  // function changeCat(id: string | number) {
-  //   active.value = id;
-  //   current.value = 1;
-  //   get();
-  // }
+  function changeCat(id: string | number) {
+    active.value = id
+    current.value = 1
+    getGoods()
+  }
+
+  function getGoods() {
+    api_getGoodsList({
+      cat_id: active.value,
+      page: current.value,
+      pageSize: pageSize.value,
+    }).then((res: any) => {
+      if (res.success) {
+        total.value = res.data.total
+        goodsList.value = res.data.data
+      }
+    })
+  }
 
   const changeList = (page: number, pageSize: number) => {
     current.value = page
     if (route.query.id) {
       getDp()
+    } else if (route.query.cat_id) {
+      getGoods()
     } else {
       get()
     }
@@ -223,6 +260,7 @@
     active.value = route.query.cat_id
     pageSize.value = 15
     box.value = 5 - (total.value % 5)
+    getGoods()
   }
 </script>
 <style lang="less" scoped>

@@ -174,6 +174,8 @@
 
 <style lang="less" scoped>
   .footer {
+    position: relative;
+    z-index: 10;
     background-color: #000;
     color: #fff;
     .footer-wrapper {

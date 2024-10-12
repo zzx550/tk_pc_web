@@ -11,7 +11,16 @@
       </div>
       <div class="conte">
         <div class="js_goods">
-          <img class="yt" :src="goodsDet.cover_img" />
+          <div class="list">
+            <img
+              v-for="(x, y) in goodsDet.banner_list"
+              @click="changeIndex(y)"
+              :class="indx == y ? 'bor' : ''"
+              :key="x"
+              :src="x"
+            />
+          </div>
+          <img class="yt" :src="imgURL" />
           <div class="right_con">
             <div class="name">{{ goodsDet.goods_name }}</div>
             <div class="price">
@@ -39,15 +48,21 @@
 </template>
 <script setup lang="ts">
   import { api_goodsDetails } from '@/requset/api'
-  import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
   import { ref } from 'vue'
 
+  let indx = ref<number>(0)
+  let imgURL = ref<string>('')
   const goodsDet = ref<any>({})
+
+  function changeIndex(y: number) {
+    indx.value = y
+    imgURL.value = goodsDet.value.banner_list[y]
+  }
 
   api_goodsDetails({ goods_id: router.currentRoute.value.query.id }).then(
     (res: any) => {
-      console.log('res :>> ', res)
+      imgURL.value = res.data.banner_list[0]
       goodsDet.value = res.data
     }
   )
@@ -107,6 +122,20 @@
         .js_goods {
           display: flex;
           margin-bottom: 50px;
+          .list {
+            margin-right: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            img {
+              width: 60px;
+              height: 60px;
+              border: 1px solid transparent;
+            }
+            .bor {
+              border-color: #8d8e91;
+            }
+          }
           .yt {
             width: 600px;
             margin-right: 20px;

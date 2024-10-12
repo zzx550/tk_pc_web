@@ -5725,6 +5725,11 @@
     "picocolors" "^1.0.0"
     "stable" "^0.1.8"
 
+"swiper@^11.1.14", "swiper@^7.0.0  || ^8.0.0":
+  "integrity" "sha512-VbQLQXC04io6AoAjIUWuZwW4MSYozkcP9KjLdrsG/00Q/yiwvhz9RQyt0nHXV10hi9NVnDNy1/wv7Dzq1lkOCQ=="
+  "resolved" "https://registry.npmmirror.com/swiper/-/swiper-11.1.14.tgz"
+  "version" "11.1.14"
+
 "tapable@^1.0.0":
   "integrity" "sha512-4WK/bYZmj8xLr+HUCODHGF1ZFzsYffasLUgEiMBY4fgtltdO6B4WJtlSbPaDTLpYTcGVwM2qLnFTICEcNxs3kA=="
   "resolved" "https://registry.npmmirror.com/tapable/-/tapable-1.1.3.tgz"
@@ -5972,6 +5977,11 @@
   "resolved" "https://registry.npmmirror.com/vary/-/vary-1.1.2.tgz"
   "version" "1.1.2"
 
+"vue-awesome-swiper@^5.0.1":
+  "integrity" "sha512-mWjFJzUqA4lG+DmsmibvMpoiBnl+IH2SSeiiQ3i5M0t1y9FknTxnGT0DsMb2YdJLgjYMEK3sYOWzqgLnZMH8Lg=="
+  "resolved" "https://registry.npmmirror.com/vue-awesome-swiper/-/vue-awesome-swiper-5.0.1.tgz"
+  "version" "5.0.1"
+
 "vue-class-component@^8.0.0-0":
   "integrity" "sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ=="
   "resolved" "https://registry.npmmirror.com/vue-class-component/-/vue-class-component-8.0.0-rc.1.tgz"
@@ -6034,7 +6044,7 @@
   dependencies:
     "is-plain-object" "3.0.1"
 
-"vue@*", "vue@^2 || ^3.2.13", "vue@^3.0.0", "vue@^3.2.0", "vue@^3.2.13", "vue@>=3.0.3", "vue@>=3.2.0", "vue@3.5.9":
+"vue@*", "vue@^2 || ^3.2.13", "vue@^3.0.0", "vue@^3.2.0", "vue@^3.2.13", "vue@>=3.0.3", "vue@>=3.2.0", "vue@3.5.9", "vue@3.x":
   "integrity" "sha512-nHzQhZ5cjFKynAY2beAm7XtJ5C13VKAFTLTgRYXy+Id1KEKBeiK6hO2RcW1hUjdbHMadz1YzxyHgQigOC54wug=="
   "resolved" "https://registry.npmmirror.com/vue/-/vue-3.5.9.tgz"
   "version" "3.5.9"

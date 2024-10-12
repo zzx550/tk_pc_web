@@ -25,6 +25,11 @@ app.component("BotBase", BotBase);
 app.component("globalFloatingIcon", globalFloatingIcon);
 app.component("Captcha", Captcha);
 
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/css';
+import 'swiper/css/bundle';
+app.use(VueAwesomeSwiper);
+
 import i18n from "./lang";
 app.use(i18n);
 

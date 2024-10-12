@@ -276,3 +276,15 @@ export const api_createJoinInApply = (p: any) =>
 // 获取配置(未登录)
 export const api_getOption_notLogin = (p: any) =>
   axios.post("index/optionValue", p);
+
+// 全部商品列表(未登录时)
+export const api_getGoodsList = (p: any) =>
+  axios.post("store/getGoodsList", p);
+
+// 热销商品(未登录时)
+export const api_getHotGoodsList = (p: any) =>
+  axios.post("store/getHotGoodsList", p);
+
+// 全部商品分类(未登录时)
+export const api_getCat = (p: any) =>
+  axios.post("store/goodsCategory", p);
