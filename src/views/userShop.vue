@@ -700,7 +700,18 @@ watch(goodIndex, (newValue, oldValue) => {
 
 const changeStatisticsTab = (index: number) => {
   statisticsTab.value = index;
-  api_mainStatistics({ type: index }).then((res: any) => {
+  // today week month year
+  let type =
+    index == 0
+      ? "today"
+      : index == 1
+      ? "week"
+      : index == 2
+      ? "month"
+      : index == 3
+      ? "year"
+      : "";
+  api_mainStatistics({ type }).then((res: any) => {
     if (res.success) {
       statisticsData.value = res.data;
     }
