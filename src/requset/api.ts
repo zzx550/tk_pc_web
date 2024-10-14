@@ -288,3 +288,7 @@ export const api_getHotGoodsList = (p: any) =>
 // 全部商品分类(未登录时)
 export const api_getCat = (p: any) =>
   axios.post("store/goodsCategory", p);
+
+// 邮件订阅
+export const api_emailSubscription = (p: any) =>
+  axios.post("store/emailSubscription", p);

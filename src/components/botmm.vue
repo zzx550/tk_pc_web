@@ -138,7 +138,7 @@
 
 <script setup lang="ts">
   import i18n from '@/lang'
-  import { api_getOption } from '@/requset/api'
+  import { api_getOption, api_emailSubscription } from '@/requset/api'
   import { message } from 'ant-design-vue'
   import router from '@/router'
   import { ref } from 'vue'
@@ -168,7 +168,16 @@
       message.error(i18n.global.t('bo_19'))
       return
     }
-    message.success(i18n.global.t('bo_20'))
+    api_emailSubscription({ email: yx.value, telephone: yx.value }).then(
+      (res: any) => {
+        if (res.success) {
+          yx.value = ''
+          message.success(i18n.global.t('bo_20'))
+        } else {
+          message.error(res.message)
+        }
+      }
+    )
   }
 </script>
 
