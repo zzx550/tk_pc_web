@@ -117,7 +117,11 @@
             page: current.value,
             pageSize: 15,
           })
-        : api_getShopList_notLogin({ page: current.value, pageSize: 15 })
+        : api_getShopList_notLogin({
+            keywords: seekValue.value,
+            page: current.value,
+            pageSize: 15,
+          })
     promise.then((res: any) => {
       if (res.success) {
         total.value = res.data.total
