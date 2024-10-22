@@ -436,5 +436,9 @@ export default {
   _ho_25:'Geteilte Provision',
   _ho_26:'höchste',
   _ho_27:'Jetzt beitreten',
-  _ho_28:'Produktklassifizierung',
+  _ho_28: 'Produktklassifizierung',
+  
+  _or_02:"Zu signieren",
+ _or_03:"Unterschrieben für",
+ _or_04:"Erledigt",
 };

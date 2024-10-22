@@ -429,5 +429,9 @@ export default {
   _ho_25:'Share the commission',
   _ho_26:'Highest',
   _ho_27: 'Join now',
-  _ho_28:'Product categories',
+  _ho_28: 'Product categories',
+  
+  _or_02: "Waiting for receipt",
+_or_03: "Signed for",
+_or_04: "Settled",
 };

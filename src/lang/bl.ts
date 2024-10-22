@@ -434,5 +434,9 @@ export default {
   _ho_25:'Wspólna prowizja',
   _ho_26:'najwyższy',
   _ho_27: 'Dołącz teraz',
-  _ho_28:'Klasyfikacja produktu',
+  _ho_28: 'Klasyfikacja produktu',
+  
+  _or_02:"Do podpisania",
+ _or_03:"Podpisano",
+ _or_04:"Rozliczone",
 };

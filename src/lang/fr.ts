@@ -435,5 +435,9 @@ export default {
  _ho_25:'Commission partagée',
  _ho_26:'le plus élevé',
   _ho_27: 'Inscrivez-vous maintenant',
-  _ho_28:'Classification des produits',
+  _ho_28: 'Classification des produits',
+  
+  _or_02:"A signer",
+ _or_03:"Signé pour",
+ _ou_04:"Installé",
 };

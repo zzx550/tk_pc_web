@@ -72,6 +72,15 @@
               <div class="yfh" v-else-if="x.order_status == 2">
                 {{ $t('or_06') }}
               </div>
+              <div class="yfh" v-else-if="x.order_status == 4">
+                {{ $t('_or_02') }}
+              </div>
+              <div class="yfh" v-else-if="x.order_status == 3">
+                {{ $t('_or_03') }}
+              </div>
+              <div class="yfh" v-else-if="x.order_status == 5">
+                {{ $t('_or_04') }}
+              </div>
               <div v-else-if="order.order_status == 6">{{ $t('or_15') }}</div>
               <div v-else-if="order.order_status == 7">{{ $t('or_16') }}</div>
               <div v-else-if="order.order_status == 8">{{ $t('or_17') }}</div>

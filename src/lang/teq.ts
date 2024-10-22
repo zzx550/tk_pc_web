@@ -423,5 +423,9 @@ export default {
   _ho_25:'Paylaşılan komisyon',
   _ho_26:'en yüksek',
   _ho_27: 'Şimdi katıl',
-  _ho_28:'Ürün sınıflandırması',
+  _ho_28: 'Ürün sınıflandırması',
+  
+  _or_02:"İmzalanacak",
+ _or_03:"İmzalandı",
+ _or_04:"Yerleşti",
 };

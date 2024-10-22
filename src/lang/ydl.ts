@@ -435,5 +435,9 @@ export default {
   _ho_25:'Commissione condivisa',
   _ho_26:'più alto',
   _ho_27: 'Iscriviti ora',
-  _ho_28:'Classificazione del prodotto',
+  _ho_28: 'Classificazione del prodotto',
+  
+  _or_02:"Da firmare",
+ _or_03:"Firmato per",
+ _or_04:"Regolato",
 };

@@ -27,8 +27,14 @@
           <div :class="tabIndex == 3 ? 'check' : ''" @click="changeTab(3)">
             {{ $t('or_06') }}
           </div>
+          <div :class="tabIndex == 5 ? 'check' : ''" @click="changeTab(5)">
+            {{ $t('_or_02') }}
+          </div>
           <div :class="tabIndex == 4 ? 'check' : ''" @click="changeTab(4)">
             {{ $t('or_07') }}
+          </div>
+          <div :class="tabIndex == 6 ? 'check' : ''" @click="changeTab(6)">
+            {{ $t('_or_04') }}
           </div>
         </div>
         <div class="con_right">
@@ -36,7 +42,7 @@
             <div class="list_T">
               <div>{{ $t('or_08') }}</div>
               <div class="img_name">{{ $t('or_09') }}</div>
-              <div class="xx">客户信息</div>
+              <div class="xx">{{ $t('in_03') }}</div>
               <div>{{ $t('or_10') }}($)</div>
               <div>{{ $t('or_11') }}($)</div>
               <div>{{ $t('or_12') }}</div>
@@ -78,6 +84,15 @@
                 <div v-else-if="x.order_status == 1">{{ $t('or_14') }}</div>
                 <div class="yfh" v-else-if="x.order_status == 2">
                   {{ $t('or_06') }}
+                </div>
+                <div class="yfh" v-else-if="x.order_status == 4">
+                  {{ $t('_or_02') }}
+                </div>
+                <div class="yfh" v-else-if="x.order_status == 3">
+                  {{ $t('_or_03') }}
+                </div>
+                <div class="yfh" v-else-if="x.order_status == 5">
+                  {{ $t('_or_04') }}
                 </div>
                 <div v-else-if="x.order_status == 6">{{ $t('or_15') }}</div>
                 <div v-else-if="x.order_status == 7">{{ $t('or_16') }}</div>

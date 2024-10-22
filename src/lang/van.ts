@@ -433,5 +433,9 @@ export default {
   _ho_25:'Chia sẻ hoa hồng',
   _ho_26:'cao nhất',
   _ho_27: 'Tham gia ngay',
-  _ho_28:'Phân loại sản phẩm',
+  _ho_28: 'Phân loại sản phẩm',
+  
+  _or_02:"Sẽ được ký",
+ _or_03:"Đã ký",
+ _or_04:"Đã giải quyết",
 };

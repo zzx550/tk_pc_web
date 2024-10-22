@@ -432,5 +432,9 @@ export default {
   _ho_25:'Komisi bersama',
   _ho_26:'tertinggi',
   _ho_27: 'Gabung sekarang',
-  _ho_28:'Klasifikasi produk',
+  _ho_28: 'Klasifikasi produk',
+  
+  _or_02:"Untuk ditandatangani",
+ _or_03:"Ditandatangani untuk",
+ _atau_04:"Selesai",
 };
