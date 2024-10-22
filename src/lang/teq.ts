@@ -21,7 +21,7 @@ export default {
  bo_15: "Hakkımızda",
  bo_16: "Ödeme yöntemi",
  bo_17:
- "MaCys-Wholesale küresel istasyonunun kullanıcıları dünya çapında 112 ülkeden geliyor ve ödeme için USDT/ETH/BTC kullanıyor. USDT/ETH/BTC, dünya çapında beklemeden anında düşük maliyetli işlemler gerçekleştirebilen sınırsız bir işlem yöntemidir. , uluslararası ücret yok",
+ "TikTok-Wholesale küresel istasyonunun kullanıcıları dünya çapında 112 ülkeden geliyor ve ödeme için USDT/ETH/BTC kullanıyor. USDT/ETH/BTC, dünya çapında beklemeden anında düşük maliyetli işlemler gerçekleştirebilen sınırsız bir işlem yöntemidir. , uluslararası ücret yok",
  bo_18: "Müşteri hizmetleri bağlantısı yapılandırılmadı~",
  bo_19: "Lütfen doğru e-posta adresini girin",
  bo_20: "Abonelik başarılı",

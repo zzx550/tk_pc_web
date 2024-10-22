@@ -21,7 +21,7 @@ export default {
   bo_15: "Giới thiệu về chúng tôi",
   bo_16: "Phương thức thanh toán",
   bo_17:
-    "Người dùng của trạm toàn cầu Bán buôn MaCys đến từ 112 quốc gia trên thế giới và sử dụng USDT/ETH/BTC để thanh toán. USDT/ETH/BTC là phương thức giao dịch không biên giới có thể đạt được các giao dịch chi phí thấp ngay lập tức trên toàn thế giới mà không phải chờ đợi. , không có phí quốc tế",
+    "Người dùng của trạm toàn cầu Bán buôn TikTok đến từ 112 quốc gia trên thế giới và sử dụng USDT/ETH/BTC để thanh toán. USDT/ETH/BTC là phương thức giao dịch không biên giới có thể đạt được các giao dịch chi phí thấp ngay lập tức trên toàn thế giới mà không phải chờ đợi. , không có phí quốc tế",
   bo_18: "Liên kết dịch vụ khách hàng chưa được định cấu hình~",
   bo_19: "Vui lòng nhập đúng địa chỉ email",
   bo_20: "Đăng ký thành công",

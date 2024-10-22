@@ -21,7 +21,7 @@ export default {
   bo_15: "Über uns",
   bo_16: "Zahlungsmethode",
   bo_17:
-    "Benutzer der globalen Station MaCys-Wholesale kommen aus 112 Ländern auf der ganzen Welt und nutzen USDT/ETH/BTC für die Abwicklung. USDT/ETH/BTC ist eine grenzenlose Transaktionsmethode, mit der sofortige, kostengünstige Transaktionen auf der ganzen Welt ohne Wartezeit durchgeführt werden können. , keine internationalen Gebühren",
+    "Benutzer der globalen Station TikTok-Wholesale kommen aus 112 Ländern auf der ganzen Welt und nutzen USDT/ETH/BTC für die Abwicklung. USDT/ETH/BTC ist eine grenzenlose Transaktionsmethode, mit der sofortige, kostengünstige Transaktionen auf der ganzen Welt ohne Wartezeit durchgeführt werden können. , keine internationalen Gebühren",
   bo_18: "Kundendienst-Link ist nicht konfiguriert~",
   bo_19: "Bitte geben Sie die korrekte E-Mail-Adresse ein",
   bo_20: "Abonnement erfolgreich",

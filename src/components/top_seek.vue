@@ -209,7 +209,7 @@
       }
       .icon {
         position: absolute;
-        left: 28%;
+        left: 25%;
         top: 50%;
         transform: translateY(-50%);
         height: 24px;
@@ -223,7 +223,7 @@
         height: 40px;
         color: #fff;
         font-size: 14px;
-        right: 27.5%;
+        right: 25%;
         top: 50%;
         transform: translateY(-50%);
       }

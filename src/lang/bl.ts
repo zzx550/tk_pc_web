@@ -21,7 +21,7 @@ export default {
   bo_15: "O nas",
   bo_16: "Metoda płatności",
   bo_17:
-    "Użytkownicy globalnej stacji MaCys-Wholesale pochodzą ze 112 krajów na całym świecie i do rozliczeń używają USDT/ETH/BTC. USDT/ETH/BTC to metoda transakcyjna bez granic, która pozwala na natychmiastowe i tanie transakcje na całym świecie bez czekania. , brak opłat międzynarodowych",
+    "Użytkownicy globalnej stacji TikTok-Wholesale pochodzą ze 112 krajów na całym świecie i do rozliczeń używają USDT/ETH/BTC. USDT/ETH/BTC to metoda transakcyjna bez granic, która pozwala na natychmiastowe i tanie transakcje na całym świecie bez czekania. , brak opłat międzynarodowych",
   bo_18: "Łącze obsługi klienta nie jest skonfigurowane~",
   bo_19: "Proszę podać poprawny adres e-mail",
   bo_20: "Subskrypcja powiodła się",

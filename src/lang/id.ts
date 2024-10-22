@@ -21,7 +21,7 @@ export default {
   bo_15: "Tentang Kami",
   bo_16: "Metode pembayaran",
   bo_17:
-    "Pengguna stasiun global MaCys-Wholesale berasal dari 112 negara di seluruh dunia dan menggunakan USDT/ETH/BTC untuk penyelesaian. USDT/ETH/BTC adalah metode transaksi tanpa batas yang dapat mencapai transaksi instan berbiaya rendah di seluruh dunia tanpa menunggu. , tidak ada biaya internasional",
+    "Pengguna stasiun global TikTok-Wholesale berasal dari 112 negara di seluruh dunia dan menggunakan USDT/ETH/BTC untuk penyelesaian. USDT/ETH/BTC adalah metode transaksi tanpa batas yang dapat mencapai transaksi instan berbiaya rendah di seluruh dunia tanpa menunggu. , tidak ada biaya internasional",
   bo_18: "Tautan layanan pelanggan tidak dikonfigurasi~",
   bo_19: "Silakan masukkan alamat email yang benar",
   bo_20: "Langganan berhasil",

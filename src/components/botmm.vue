@@ -5,7 +5,7 @@
         <div class="footer-title">
           <div class="logo">
             <img src="../assets/logo.png" />
-            MaCys Shop
+            TikTok Mall
           </div>
           <p>{{ $t('bo_01') }}</p>
           <div class="el-input">
@@ -118,14 +118,14 @@
           </div>
         </div>
         <div class="argos">
-          <div class="title">MaCys-Wholesale</div>
+          <div class="title">TikTok-Wholesale</div>
           <div class="dec">
             {{ $t('bo_17') }}
           </div>
         </div>
       </div>
       <div class="footer-bottom">
-        <p style="text-align: center">MaCys-Wholesale 有限公司2023 版权所有</p>
+        <p style="text-align: center">TikTok-Wholesale 有限公司2023 版权所有</p>
         <p style="text-align: center">
           Shopify is headquartered in Ottawa, 151 O'Connor Street, Ground Floor,
           Canada, and has 6 office locations.
@@ -212,7 +212,7 @@
           img {
             margin-right: 10px;
             width: 50px;
-            border-radius: 6px;
+            border-radius: 16px;
           }
         }
         p {

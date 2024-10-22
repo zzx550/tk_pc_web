@@ -21,7 +21,7 @@ export default {
   bo_15: "About Us",
   bo_16: "Payment Method",
   bo_17:
-    "Users of MaCys-Wholesale Global Station come from 112 countries around the world and use USDT/ETH/BTC for settlement. USDT/ETH/BTC is a borderless trading method that can achieve instant low-cost transactions around the world without waiting and international fees",
+    "Users of TikTok-Wholesale Global Station come from 112 countries around the world and use USDT/ETH/BTC for settlement. USDT/ETH/BTC is a borderless trading method that can achieve instant low-cost transactions around the world without waiting and international fees",
   bo_18: "Customer service link is not configured~",
   bo_19: "Please enter the correct email",
   bo_20: "Subscription successful",

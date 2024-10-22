@@ -21,7 +21,7 @@ export default {
   bo_15: "À propos de nous",
   bo_16: "Mode de paiement",
   bo_17:
-    "Les utilisateurs de la station mondiale MaCys-Wholesale viennent de 112 pays à travers le monde et utilisent USDT/ETH/BTC pour le règlement. USDT/ETH/BTC est une méthode de transaction sans frontières qui peut réaliser des transactions instantanées à faible coût dans le monde entier sans attendre. , pas de frais internationaux",
+    "Les utilisateurs de la station mondiale TikTok-Wholesale viennent de 112 pays à travers le monde et utilisent USDT/ETH/BTC pour le règlement. USDT/ETH/BTC est une méthode de transaction sans frontières qui peut réaliser des transactions instantanées à faible coût dans le monde entier sans attendre. , pas de frais internationaux",
   bo_18: "Le lien du service client n'est pas configuré~",
   bo_19: "Veuillez saisir la bonne adresse e-mail",
   bo_20: "Inscription réussie",
