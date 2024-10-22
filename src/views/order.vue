@@ -75,17 +75,17 @@
                   {{ $t('or_04') }}
                   <!-- <van-count-down :time="300000" format="mm:ss" /> -->
                 </div>
-                <div v-if="x.order_status == 1">{{ $t('or_14') }}</div>
-                <div class="yfh" v-if="x.order_status == 2">
+                <div v-else-if="x.order_status == 1">{{ $t('or_14') }}</div>
+                <div class="yfh" v-else-if="x.order_status == 2">
                   {{ $t('or_06') }}
                 </div>
-                <div v-if="x.order_status == 6">{{ $t('or_15') }}</div>
-                <div v-if="x.order_status == 7">{{ $t('or_16') }}</div>
-                <div v-if="x.order_status == 8">{{ $t('or_17') }}</div>
+                <div v-else-if="x.order_status == 6">{{ $t('or_15') }}</div>
+                <div v-else-if="x.order_status == 7">{{ $t('or_16') }}</div>
+                <div v-else-if="x.order_status == 8">{{ $t('or_17') }}</div>
                 <div class="yjf" v-else>{{ $t('or_07') }}</div>
               </div>
               <div
-                class="gm"
+                class="gm cur_p"
                 @click="router.push(`/order_det?id=${x.order_id}`)"
               >
                 {{ $t('or_18') }}
