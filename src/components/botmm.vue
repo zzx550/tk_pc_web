@@ -154,7 +154,7 @@
       if (res.success) {
         let serviceUrl = res.data.recharge_service_link
         if (serviceUrl != '' && serviceUrl != null) {
-          window.open(serviceUrl)
+          // window.open(serviceUrl)
         } else {
           message.error(i18n.global.t('bo_18'))
         }

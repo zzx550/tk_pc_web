@@ -1167,9 +1167,9 @@
         czOpen.value = false
         let serviceUrl = res.data.recharge_service_link
         if (serviceUrl != '' && serviceUrl != null) {
-          setTimeout(() => {
-            window.open(serviceUrl)
-          }, 1000)
+          // setTimeout(() => {
+          //   window.open(serviceUrl)
+          // }, 1000)
         } else {
           message.error(i18n.global.t('_us_82'))
         }

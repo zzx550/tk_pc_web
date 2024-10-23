@@ -20,7 +20,7 @@
     <router-view class="content" />
     <BotBase v-if="login" />
   </div>
-  <globalFloatingIcon />
+  <!-- <globalFloatingIcon /> -->
 </template>
 <script setup lang="ts">
   import { ref, watch, getCurrentInstance } from 'vue'
