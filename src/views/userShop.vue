@@ -1,6 +1,6 @@
 <template>
   <div id="userShop" class="head_b">
-    <TopSeek :title="'商铺中心'" />
+    <TopSeek :title="$t('to_03')" />
     <div class="box_con">
       <div class="con_left">
         <div class="data_hx">
