@@ -125,7 +125,9 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p style="text-align: center">MaCys-Wholesale 有限公司2023 版权所有</p>
+        <p style="text-align: center">
+          MaCys-Wholesale @2024 all rights reserved
+        </p>
         <p style="text-align: center">
           Shopify is headquartered in Ottawa, 151 O'Connor Street, Ground Floor,
           Canada, and has 6 office locations.
