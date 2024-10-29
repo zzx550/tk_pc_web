@@ -426,6 +426,7 @@
                 width: 185px;
                 height: 185px;
                 border-radius: 8px;
+                object-fit: cover;
               }
               .ms {
                 padding-top: 10px;

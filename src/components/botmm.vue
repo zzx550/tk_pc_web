@@ -50,10 +50,10 @@
               <li class="el-tooltip" @click="router.push('/login?type=1')">
                 {{ $t('bo_12') }}
               </li>
-              <li class="el-tooltip" @click="router.push('/order')">
+              <li class="el-tooltip" @click="goOrder">
                 {{ $t('bo_13') }}
               </li>
-              <li class="el-tooltip" @click="router.push('/user_shop')">
+              <li class="el-tooltip" @click="goShop">
                 {{ $t('bo_14') }}
               </li>
             </ul>
@@ -140,15 +140,41 @@
 
 <script setup lang="ts">
   import i18n from '@/lang'
-  import { api_getOption, api_emailSubscription } from '@/requset/api'
+  import {
+    api_getOption,
+    api_emailSubscription,
+    api_getInfo,
+  } from '@/requset/api'
   import { message } from 'ant-design-vue'
   import router from '@/router'
-  import { ref } from 'vue'
+  import { ref, defineEmits } from 'vue'
+
+  const emit = defineEmits(['shopTrue'])
 
   let yx = ref<string>('')
+  const isSeller = ref<boolean>(false)
 
   const open = (url: string) => {
     window.open(url, '_blank') // 使用'_blank'标识符在新标签页中打开URL
+  }
+
+  api_getInfo({}).then((res: any) => {
+    isSeller.value = res.data.utype == 1
+  })
+
+  function goOrder() {
+    // if (!isSeller.value) {
+    //   emit('shopTrue', 'ture')
+    //   return
+    // }
+    router.push('/order')
+  }
+  function goShop() {
+    // if (!isSeller.value) {
+    //   emit('shopTrue', 'ture')
+    //   return
+    // }
+    router.push('/user_shop')
   }
 
   const changeCz = () => {

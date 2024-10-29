@@ -29,7 +29,7 @@
           </template>
         </a-dropdown>
       </div>
-      <div class="shop cur_p" @click="router.push('/user_shop')">
+      <div class="shop cur_p" @click="goMineShop">
         <img src="../assets/home/sp.png" />
         {{ $t('to_03') }}
       </div>
@@ -105,7 +105,7 @@
   import { ref, defineProps, watch, defineEmits } from 'vue'
   import { message, type MenuProps } from 'ant-design-vue'
 
-  const emit = defineEmits(['changeKey'])
+  const emit = defineEmits(['changeKey', 'shopTrue'])
 
   // 基本写法
   const props = defineProps({
@@ -116,6 +116,7 @@
   })
 
   const seekValue = ref<string>('')
+  const isSeller = ref<boolean>(false)
   const modal_fk = ref<boolean>(false)
   const feebackContent = ref<string>('')
   let isLogin = ref<boolean>(false)
@@ -137,10 +138,19 @@
 
   if (isLogin.value == true) {
     api_getInfo({}).then((res: any) => {
+      isSeller.value = res.data.utype == 1
       notReadMsgNum.value = res.data.notReadMsgNum
         ? Number(res.data.notReadMsgNum)
         : 0
     })
+  }
+
+  function goMineShop() {
+    // if (!isSeller.value) {
+    //   emit('shopTrue', 'ture')
+    //   return
+    // }
+    router.push('/user_shop')
   }
 
   const onClick: MenuProps['onClick'] = ({ key }) => {
