@@ -8,6 +8,6 @@ const request: Request = new Request({
   headers: {
     Accept: "application/json",
   },
-  timeout: 8000,
+  timeout: 10000,
 });
 export default request;
