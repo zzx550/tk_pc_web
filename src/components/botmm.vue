@@ -158,9 +158,9 @@
     window.open(url, '_blank') // 使用'_blank'标识符在新标签页中打开URL
   }
 
-  api_getInfo({}).then((res: any) => {
-    isSeller.value = res.data.utype == 1
-  })
+  // api_getInfo({}).then((res: any) => {
+  //   isSeller.value = res.data.utype == 1
+  // })
 
   function goOrder() {
     // if (!isSeller.value) {

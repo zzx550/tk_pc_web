@@ -426,6 +426,7 @@
 
   if (isLogin.value == true) {
     api_rebateInfo({}).then((res: any) => {
+      console.log('res :>> ', res)
       rebateInfo.value = res.data
     })
 
@@ -465,6 +466,7 @@
     })
     changeStatisticsTab(0)
   } else {
+    console.log('111 :>> ', 111)
     api_getCat({}).then((res: any) => {
       if (res.success) {
         goodsList.value = res.data
