@@ -576,7 +576,7 @@
 </template>
 <script setup lang="ts">
   import router from '@/router'
-  import { reactive, ref, watch } from 'vue'
+  import { reactive, ref, watch, onUnmounted } from 'vue'
   import {
     api_getGiftPack,
     api_optionDesc,
@@ -753,6 +753,17 @@
     })
   }
   getWalletInfo()
+
+  let msgDetailInterval = <any>null
+  msgDetailInterval = setInterval(() => {
+    getWalletInfo()
+  }, 5000)
+
+  onUnmounted(() => {
+    if (msgDetailInterval != null) {
+      clearInterval(msgDetailInterval)
+    }
+  })
 
   function getSupplierList() {
     api_mySupplier({}).then((res: any) => {
