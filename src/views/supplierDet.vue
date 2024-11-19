@@ -55,7 +55,7 @@
               <div class="price">{{ x.goods_profit }}</div>
               <div class="price">{{ x.goods_price }}</div>
               <div class="gm">
-                {{ getFloat(x.goods_profit - x.goods_price) }}
+                {{ jsAll(x.goods_profit, x.goods_price) }}
               </div>
               <div class="sel">
                 <div
@@ -141,6 +141,12 @@
       getList()
     }
   })
+
+  function jsAll(x: any, y: any) {
+    let c = x.replace(',', '')
+    console.log('x :>> ', x)
+    return getFloat(Number(c) - Number(y))
+  }
 
   let data = ref<any>({})
   function changeOpen(x: any) {

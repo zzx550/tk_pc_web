@@ -57,7 +57,7 @@ export default {
   op_24: "Silakan masuk lagi",
 
   to_01: "Pemasok/Toko",
-  to: "Cari",
+  to_02: "Cari",
   to_03: "Pusat Toko",
   to_04: "Masuk",
   to_05: "atau",
@@ -436,5 +436,6 @@ export default {
   
   _or_02:"Untuk ditandatangani",
  _or_03:"Ditandatangani untuk",
- _atau_04:"Selesai",
+  _or_04: "Selesai",
+  _or_05:"Pembayaran sekali klik",
 };

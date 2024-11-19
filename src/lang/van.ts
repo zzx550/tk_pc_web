@@ -437,5 +437,6 @@ export default {
   
   _or_02:"Sẽ được ký",
  _or_03:"Đã ký",
- _or_04:"Đã giải quyết",
+  _or_04: "Đã giải quyết",
+  _or_05:"Thanh toán bằng một cú nhấp chuột",
 };

@@ -438,5 +438,6 @@ export default {
   
   _or_02:"Do podpisania",
  _or_03:"Podpisano",
- _or_04:"Rozliczone",
+  _or_04: "Rozliczone",
+  _or_05:"Płatność jednym kliknięciem",
 };

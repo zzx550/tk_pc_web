@@ -5,8 +5,9 @@ import store from "./store";
 const app = createApp(App);
 
 import "vant/lib/index.css";
-import { CountDown, Uploader, List } from "vant";
+import { CountDown, Uploader, List,Button } from "vant";
 app.use(CountDown);
+app.use(Button);
 app.use(Uploader);
 app.use(List);
 

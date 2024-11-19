@@ -8,6 +8,13 @@
         </div>
         <div class="line">></div>
         <div style="font-weight: 600">{{ $t('or_01') }}</div>
+        <a-button
+          class="payAll"
+          @click="open = true"
+          type="primary"
+          v-if="price > 0"
+          >{{ $t('or_05') }}</a-button
+        >
         <div class="seek">
           <input type="text" v-model="seekValue" :placeholder="$t('or_02')" />
           <img class="icon" src="../assets/home/seek.png" />
@@ -40,7 +47,7 @@
         <div class="con_right">
           <div class="box_he">
             <div class="list_T">
-              <div>{{ $t('or_08') }}</div>
+              <div style="flex: 2">{{ $t('or_08') }}</div>
               <div class="img_name">{{ $t('or_09') }}</div>
               <div class="xx">{{ $t('in_03') }}</div>
               <div>{{ $t('or_10') }}($)</div>
@@ -49,7 +56,7 @@
               <div class="gm">{{ $t('or_13') }}</div>
             </div>
             <div class="list list_T" v-for="x in orderList" :key="x">
-              <div class="on">{{ x.order_sn }}</div>
+              <div class="on" style="flex: 2">{{ x.order_sn }}</div>
               <div class="img_name">
                 <div
                   class="goods_info"
@@ -125,15 +132,55 @@
       </div>
     </div>
   </div>
+
+  <a-modal
+    class="modal_wit"
+    v-model:open="open"
+    centered
+    :footer="null"
+    width="471px"
+  >
+    <div class="title">{{ $t('or_30') }}</div>
+    <!-- <div class="dz">
+      <img src="../assets/img/dz.png" />
+      <div class="adds">
+        {{ order.address_info.address }}
+        <div>{{ order.address_info.phone }} {{ order.address_info.phone }}</div>
+      </div>
+    </div>
+    <div class="li">
+      {{ $t('or_31') }}
+      <div>${{ getFloat(balance) }}</div>
+    </div>
+    <div class="li">
+      {{ $t('or_32') }}
+      <div><img src="../assets/logo.png" />{{ $t('or_33') }}</div>
+    </div> -->
+    <div class="li">
+      <input type="password" v-model="payPassword" :placeholder="$t('or_34')" />
+    </div>
+    <div class="hj">
+      <div class="price">
+        {{ $t('or_35') }}：
+        <p>${{ getFloat(price) }}</p>
+      </div>
+      <div class="but" @click="handlePay">{{ $t('or_36') }}</div>
+    </div>
+  </a-modal>
 </template>
 <script setup lang="ts">
-  import { api_orderList } from '@/requset/api'
+  import i18n from '@/lang'
+  import { api_orderList, api_payAll } from '@/requset/api'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
   import { ref } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
   import { getFloat } from '@/utils'
+  import { message } from 'ant-design-vue'
 
+  const open = ref<boolean>(false)
+  const price = ref<number>(0)
+  const payPassword = ref<string>('')
   const route = useRoute()
   const current = ref(1)
   const seekValue = ref<string>('')
@@ -152,6 +199,34 @@
     get()
   }
 
+  function handlePay() {
+    if (payPassword.value == '' || payPassword.value.length < 6) {
+      message.error(i18n.global.t('or_52'))
+      return
+    }
+    api_payAll({ pwd: payPassword.value }).then((res: any) => {
+      if (res.success) {
+        open.value = false
+        message.success(i18n.global.t('or_53'))
+        setTimeout(() => {
+          get()
+        }, 1500)
+      } else if (res.code == 201) {
+        message.error(i18n.global.t('or_54'))
+      } else if (res.code == 202) {
+        message.error(i18n.global.t('or_55'))
+      } else if (res.code == 203) {
+        message.error(i18n.global.t('or_56'))
+      } else if (res.code == 204) {
+        message.error(i18n.global.t('or_57'))
+      } else if (res.code == 209) {
+        message.error(i18n.global.t('or_58'))
+      } else if (res.message) {
+        message.error(res.message)
+      }
+    })
+  }
+
   function get() {
     api_orderList({
       order_status: tabIndex.value == 0 ? '' : tabIndex.value - 1,
@@ -161,6 +236,11 @@
       if (res.success) {
         total.value = res.data.total
         orderList.value = res.data.data
+        orderList.value.forEach((x: any) => {
+          if (x.order_status == 5) {
+            price.value = Number(x.total_price) + Number(price.value)
+          }
+        })
       }
     })
   }
@@ -193,6 +273,12 @@
         .line {
           color: #8d8e91;
           padding: 0 4px;
+        }
+        .payAll {
+          position: absolute;
+          right: 25%;
+          top: 50%;
+          transform: translateY(-50%);
         }
         .seek {
           position: absolute;
@@ -289,20 +375,26 @@
               margin-left: 15px;
               padding: 15px 0;
               border-bottom: solid 1px rgba(211, 211, 211, 0.5);
+              .on {
+                font-size: 14px;
+              }
               .img_name {
                 position: relative;
                 margin-left: 0;
                 display: flex;
                 align-items: center;
-                padding-top: 28px;
-                // .on {
-                //   top: 0px;
-                //   position: absolute;
-                //   left: 0;
-                // }
+                padding-left: 12px;
+                // padding-top: 28px;
                 .goods_info {
                   display: flex;
                   align-items: center;
+                  justify-content: space-evenly;
+                  .txt_3 {
+                    flex: 1;
+                  }
+                  div {
+                    flex: none;
+                  }
                 }
                 .shop_i {
                   border-radius: 8px;
@@ -361,6 +453,62 @@
             margin-bottom: 50px;
           }
         }
+      }
+    }
+  }
+  .modal_wit {
+    .title {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    .li {
+      display: flex;
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      div {
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        color: #1d1e25;
+        img {
+          width: 20px;
+          margin-right: 5px;
+        }
+      }
+      input {
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid rgba(29, 30, 37, 0.08);
+        padding: 10px 20px;
+      }
+    }
+    .hj {
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+      .price {
+        display: flex;
+        align-items: center;
+        font-size: 20px;
+        font-weight: 600;
+        p {
+          margin-bottom: 0;
+          font-size: 26px;
+          color: red;
+        }
+      }
+      .but {
+        background-color: #0ae2db;
+        color: #fff;
+        padding: 8px 16px;
+        font-size: 14px;
+        border-radius: 4px;
       }
     }
   }

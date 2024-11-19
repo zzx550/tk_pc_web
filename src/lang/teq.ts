@@ -427,5 +427,6 @@ export default {
   
   _or_02:"İmzalanacak",
  _or_03:"İmzalandı",
- _or_04:"Yerleşti",
+  _or_04: "Yerleşti",
+  _or_05:"Tek tıkla ödeme",
 };

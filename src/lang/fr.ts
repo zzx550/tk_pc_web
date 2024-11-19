@@ -439,5 +439,6 @@ export default {
   
   _or_02:"A signer",
  _or_03:"Signé pour",
- _ou_04:"Installé",
+  _ou_04: "Installé",
+  _or_05:"Paiement en un clic",
 };

@@ -440,5 +440,6 @@ export default {
   
   _or_02:"Zu signieren",
  _or_03:"Unterschrieben für",
- _or_04:"Erledigt",
+  _or_04: "Erledigt",
+  _or_05:"One-Click-Zahlung",
 };
