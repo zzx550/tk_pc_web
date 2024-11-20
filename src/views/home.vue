@@ -252,7 +252,7 @@
             <div class="con">
               <div class="name">{{ x.shop_name }}</div>
               <div>{{ $t('_ho_22') }}：{{ x.goodsNum }}</div>
-              <div>{{ $t('_ho_21') }}：{{ x.goodsNum }}</div>
+              <div>{{ $t('_ho_21') }}：{{ x.order_num }}</div>
               <div>{{ $t('_ho_20') }}：{{ x.star_rating }}</div>
             </div>
             <button @click="changeLoc(x)">{{ $t('_ho_19') }} ></button>

@@ -13,7 +13,7 @@
           @click="open = true"
           type="primary"
           v-if="price > 0"
-          >{{ $t('or_05') }}</a-button
+          >{{ $t('_or_05') }}</a-button
         >
         <div class="seek">
           <input type="text" v-model="seekValue" :placeholder="$t('or_02')" />
@@ -147,7 +147,7 @@
         {{ order.address_info.address }}
         <div>{{ order.address_info.phone }} {{ order.address_info.phone }}</div>
       </div>
-    </div>
+    </div> -->
     <div class="li">
       {{ $t('or_31') }}
       <div>${{ getFloat(balance) }}</div>
@@ -155,14 +155,21 @@
     <div class="li">
       {{ $t('or_32') }}
       <div><img src="../assets/logo.png" />{{ $t('or_33') }}</div>
-    </div> -->
+    </div>
     <div class="li">
       <input type="password" v-model="payPassword" :placeholder="$t('or_34')" />
     </div>
     <div class="hj">
       <div class="price">
         {{ $t('or_35') }}：
-        <p>${{ getFloat(price) }}</p>
+        <p>
+          ${{ getFloat(price)
+          }}{{
+            unitData != null && unitRate != 0
+              ? ` ≈  ${getFloat(price * unitRate)}${unitData}`
+              : ''
+          }}
+        </p>
       </div>
       <div class="but" @click="handlePay">{{ $t('or_36') }}</div>
     </div>
@@ -170,14 +177,22 @@
 </template>
 <script setup lang="ts">
   import i18n from '@/lang'
-  import { api_orderList, api_payAll } from '@/requset/api'
+  import {
+    api_orderList,
+    api_payAll,
+    api_wallet,
+    api_optionDesc,
+  } from '@/requset/api'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
   import { ref } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
   import { getFloat } from '@/utils'
   import { message } from 'ant-design-vue'
+  import { useStore } from 'vuex'
+  const { state } = useStore()
 
+  const balance = ref<number>(0)
   const open = ref<boolean>(false)
   const price = ref<number>(0)
   const payPassword = ref<string>('')
@@ -187,12 +202,39 @@
   const tabIndex = ref<number>(0)
   const orderList = ref<any>([])
   const total = ref(0)
+  const unitData = ref<string>('')
+  const unitRate = ref<number>(0)
 
   const changeTab = (index: number) => {
     console.log('index = ', index)
     tabIndex.value = index
     get()
   }
+
+  function getBalance() {
+    api_wallet({}).then((res: any) => {
+      if (res.success) {
+        balance.value = res.data.cloud_balance
+          ? Number(res.data.cloud_balance)
+          : 0
+      }
+    })
+
+    api_optionDesc({ name: 'exchange_rate' }).then((res: any) => {
+      if (res.success) {
+        unitRate.value = res.data
+        Array.from(state.currencyUnit).forEach((item: any) => {
+          if (
+            item['lang'] != 'en' &&
+            item['lang'] == sessionStorage.getItem('lang')
+          ) {
+            unitData.value = item['unit']
+          }
+        })
+      }
+    })
+  }
+  getBalance()
 
   const changeList = (page: number, pageSize: number) => {
     current.value = page
@@ -210,6 +252,7 @@
         message.success(i18n.global.t('or_53'))
         setTimeout(() => {
           get()
+          getBalance()
         }, 1500)
       } else if (res.code == 201) {
         message.error(i18n.global.t('or_54'))
@@ -237,8 +280,9 @@
         total.value = res.data.total
         orderList.value = res.data.data
         orderList.value.forEach((x: any) => {
-          if (x.order_status == 5) {
-            price.value = Number(x.total_price) + Number(price.value)
+          if (x.pay_status == 0) {
+            console.log('x.total_price :>> ', x.total_price)
+            price.value += Number(x.order_price)
           }
         })
       }
