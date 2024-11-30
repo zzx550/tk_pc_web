@@ -434,5 +434,7 @@ export default {
   _or_02: "Waiting for receipt",
 _or_03: "Signed for",
   _or_04: "Settled",
-  _or_05:"One-click payment",
+  _or_05: "One-click payment",
+  
+  _tx_99:'The merchant status is abnormal, withdrawal is prohibited',
 };

@@ -94,6 +94,10 @@
         <div>{{ $t('op_17') }}</div>
       </div>
       <div class="content_" v-html="props.llbRule"></div>
+      <div class="no_data" v-if="!props.llbRule">
+        <img style="width: 20%" src="../assets/img/no_data.png" />
+        <div>{{ $t('or_19') }}</div>
+      </div>
     </div>
   </a-modal>
 
@@ -107,6 +111,10 @@
   >
     <div class="title">{{ $t('op_18') }}</div>
     <div class="txt" v-html="props.fyRule"></div>
+    <div class="no_data" v-if="!props.fyRule">
+      <img style="width: 20%" src="../assets/img/no_data.png" />
+      <div>{{ $t('or_19') }}</div>
+    </div>
   </a-modal>
 
   <a-modal

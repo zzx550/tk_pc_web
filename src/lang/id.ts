@@ -437,5 +437,7 @@ export default {
   _or_02:"Untuk ditandatangani",
  _or_03:"Ditandatangani untuk",
   _or_04: "Selesai",
-  _or_05:"Pembayaran sekali klik",
+  _or_05: "Pembayaran sekali klik",
+  
+  _tx_99:'Status pedagang tidak normal dan penarikan dilarang',
 };

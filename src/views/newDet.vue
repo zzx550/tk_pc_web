@@ -12,7 +12,7 @@
       <div class="txt_Con">
         <div class="title">{{ txt.title }}</div>
         <div class="time">{{ txt.update_time }}</div>
-        <div class="txt" v-html="txt.html"></div>
+        <div class="txt" v-html="txt.content"></div>
       </div>
     </div>
   </div>

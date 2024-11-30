@@ -440,5 +440,7 @@ export default {
   _or_02:"Da firmare",
  _or_03:"Firmato per",
   _or_04: "Regolato",
-  _or_05:"Pagamento con un clic",
+  _or_05: "Pagamento con un clic",
+  
+  _tx_99:'Lo stato del commerciante è anomalo e il ritiro è vietato',
 };

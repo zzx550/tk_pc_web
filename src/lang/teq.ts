@@ -429,4 +429,6 @@ export default {
  _or_03:"İmzalandı",
   _or_04: "Yerleşti",
   _or_05:"Tek tıkla ödeme",
+
+  _tx_99:'Satıcı durumu anormal ve para çekme işlemi yasaktır',
 };

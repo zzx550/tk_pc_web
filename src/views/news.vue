@@ -127,6 +127,7 @@
 
         .con_right {
           flex: 1;
+          min-height: 40vh;
           .list {
             padding: 20px 0px 20px 20px;
             display: flex;

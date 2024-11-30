@@ -232,6 +232,7 @@
         <div class="top_user">
           <div class="name">
             <a-upload
+              action="https://tkg-api.zale.mobi/api/upload/uploadImg"
               :beforeUpload="beforeUpload"
               list-type="picture-card"
               class="avatar-uploader"
