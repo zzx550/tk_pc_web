@@ -232,14 +232,14 @@
         <div class="top_user">
           <div class="name">
             <a-upload
-              action="https://tkg-api.zale.mobi/api/upload/uploadImg"
+              action="https://tkg.toiotko.com/api/upload/uploadImg"
               :beforeUpload="beforeUpload"
               list-type="picture-card"
               class="avatar-uploader"
               :show-upload-list="false"
               @change="handleChangeUp"
             >
-              <!-- action="https://tkg-api.zale.mobi/api/upload/uploadImg" -->
+              <!-- action="https://tkg.toiotko.com/api/upload/uploadImg" -->
               <img
                 v-if="
                   userInfo.shop_cover_image != null &&
