@@ -185,7 +185,7 @@
           list-type="picture-card"
           class="avatar-uploader"
           :show-upload-list="false"
-          action="https://tkg.toiotko.com/api/upload/uploadImg"
+          action=" https://g-tok.icu/api/upload/uploadImg"
           @change="handleChangeUp"
         >
           <img v-if="imageUrl" :src="imageUrl" />

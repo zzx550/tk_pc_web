@@ -174,6 +174,11 @@
       <div class="but" @click="handlePay">{{ $t('or_36') }}</div>
     </div>
   </a-modal>
+  <OpenTip
+    :openSetPassword="setPasswordOpen"
+    @changePassword="changePassword"
+    :isWithdraw="false"
+  />
 </template>
 <script setup lang="ts">
   import i18n from '@/lang'
@@ -182,6 +187,8 @@
     api_payAll,
     api_wallet,
     api_optionDesc,
+    api_getInfo,
+    api_setPwd,
   } from '@/requset/api'
   import { DownOutlined } from '@ant-design/icons-vue'
   import router from '@/router'
@@ -236,12 +243,57 @@
   }
   getBalance()
 
+  const changePassword = (change: boolean, pwd: string, repeat_pwd: string) => {
+    if (change == true) {
+      if (pwd == '' || pwd.length < 6) {
+        message.error(i18n.global.t('or_46'))
+        return
+      }
+      if (repeat_pwd == '' || repeat_pwd.length < 6) {
+        message.error(i18n.global.t('or_47'))
+        return
+      }
+      if (pwd != repeat_pwd) {
+        message.error(i18n.global.t('or_48'))
+        return
+      }
+      message.loading(i18n.global.t('or_49'))
+      api_setPwd({ password: repeat_pwd }).then((res: any) => {
+        if (res.code == 200) {
+          setPasswordOpen.value = false
+          message.success(i18n.global.t('or_50'))
+          getUserInfo()
+        } else if (res.message) {
+          message.error(res.message)
+        }
+      })
+    } else {
+      setPasswordOpen.value = false
+    }
+  }
+
   const changeList = (page: number, pageSize: number) => {
     current.value = page
     get()
   }
 
+  const userInfo = ref<any>({})
+  const setPasswordOpen = ref<boolean>(false)
+  const getUserInfo = () => {
+    api_getInfo({}).then((res: any) => {
+      if (res.success) {
+        userInfo.value = { ...userInfo.value, ...res.data }
+      }
+    })
+  }
+  getUserInfo()
+
   function handlePay() {
+    // 是否设置了安全密码
+    if (userInfo.value.payword == null || userInfo.value.payword == '') {
+      setPasswordOpen.value = true
+      return
+    }
     if (payPassword.value == '' || payPassword.value.length < 6) {
       message.error(i18n.global.t('or_52'))
       return
