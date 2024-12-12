@@ -232,7 +232,7 @@
         <div class="top_user">
           <div class="name">
             <a-upload
-              action="https://g-tok.icu/api/upload/uploadImg"
+              action="https://g-to.icu/api/upload/uploadImg"
               :beforeUpload="beforeUpload"
               list-type="picture-card"
               class="avatar-uploader"
