@@ -442,5 +442,6 @@ export default {
   _ou_04: "Installé",
   _or_05: "Paiement en un clic",
   
-  _tx_99:'Le statut commerçant est anormal et le retrait est interdit',
+  _tx_99: 'Le statut commerçant est anormal et le retrait est interdit',
+  np_01: "Avertissement de risque",
 };

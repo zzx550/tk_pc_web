@@ -136,6 +136,24 @@
     </div>
     <!---->
   </div>
+  <van-popup
+    v-model:show="risk_pop"
+    position="center"
+    :close-on-click-overlay="false"
+    :overlay="true"
+  >
+    <NoticePop
+      :pop_title="$t('np_01')"
+      :pop_title_color="'#f40000'"
+      :pop_title_icon="'warn-o'"
+      :content_title="risk_pop_data.content_title"
+      :content_des="risk_pop_data.content_des"
+      :button_text="$t('op_11')"
+      :is_mandatory="risk_pop_data.is_mandatory"
+      @funCloseIcon="risk_pop = false"
+      @funButton="noticePopButton"
+    />
+  </van-popup>
 </template>
 
 <script setup lang="ts">
@@ -144,6 +162,8 @@
     api_getOption,
     api_emailSubscription,
     api_getInfo,
+    api_riskNewsInfo,
+    api_updateNewsStatus,
   } from '@/requset/api'
   import { message } from 'ant-design-vue'
   import router from '@/router'
@@ -153,6 +173,56 @@
 
   let yx = ref<string>('')
   const isSeller = ref<boolean>(false)
+
+  let risk_pop = ref(false)
+  let risk_pop_data = ref({
+    id: 0,
+    content_title: '',
+    content_des: '',
+    is_mandatory: false,
+  })
+
+  getRickData()
+  function getRickData() {
+    api_riskNewsInfo({ type: 1 }).then((res: any) => {
+      if (res.success) {
+        if (res.data.id) {
+          let isShow =
+            res.data.show_type == 2 ||
+            res.data.show_type == 4 ||
+            res.data.is_read == 0
+          risk_pop.value = isShow
+          risk_pop_data.value.id = res.data.id
+          risk_pop_data.value.content_title = res.data.title
+          risk_pop_data.value.content_des = res.data.content
+          risk_pop_data.value.is_mandatory =
+            res.data.show_type == 2 || res.data.show_type == 4
+          if (res.data.is_read == 0) {
+            api_updateNewsStatus({ id: res.data.id }).then((res) => {
+              console.log(`res = ${res}`)
+            })
+          }
+        }
+      }
+    })
+  }
+
+  function noticePopButton() {
+    if (risk_pop_data.value.is_mandatory == false) {
+      risk_pop.value = false
+    }
+    // 联系客服
+    api_getOption({}).then((res: any) => {
+      if (res.code == 200) {
+        let serviceUrl = res.data.recharge_service_link
+        if (serviceUrl != '' && serviceUrl != null) {
+          window.open(serviceUrl)
+        } else {
+          message.error(i18n.global.t('bo_18'))
+        }
+      }
+    })
+  }
 
   const open = (url: string) => {
     window.open(url, '_blank') // 使用'_blank'标识符在新标签页中打开URL

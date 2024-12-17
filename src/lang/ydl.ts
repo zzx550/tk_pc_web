@@ -443,4 +443,5 @@ export default {
   _or_05: "Pagamento con un clic",
   
   _tx_99:'Lo stato del commerciante è anomalo e il ritiro è vietato',
+  np_01: "Avviso di rischio",
 };

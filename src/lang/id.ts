@@ -439,5 +439,6 @@ export default {
   _or_04: "Selesai",
   _or_05: "Pembayaran sekali klik",
   
-  _tx_99:'Status pedagang tidak normal dan penarikan dilarang',
+  _tx_99: 'Status pedagang tidak normal dan penarikan dilarang',
+  np_01: "Peringatan Resiko",
 };

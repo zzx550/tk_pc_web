@@ -441,5 +441,6 @@ export default {
   _or_04: "Rozliczone",
   _or_05:"Płatność jednym kliknięciem",
 
-  _tx_99:'Stan sprzedawcy jest nieprawidłowy i wypłata jest zabroniona',
+  _tx_99: 'Stan sprzedawcy jest nieprawidłowy i wypłata jest zabroniona',
+  np_01: "Ostrzeżenie o ryzyku",
 };

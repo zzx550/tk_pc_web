@@ -441,4 +441,5 @@ export default {
   _or_05: "Thanh toán bằng một cú nhấp chuột",
   
   _tx_99:'Trạng thái người bán không bình thường và việc rút tiền bị cấm',
+  np_01: "Cảnh báo rủi ro",
 };
