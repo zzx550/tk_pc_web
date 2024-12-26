@@ -53,7 +53,7 @@
 
 <style lang="less">
   .notice {
-    width: 80vw;
+    width: 20vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -99,8 +99,8 @@
         line-height: 45px;
         color: #666666;
         padding: 3%;
-        max-height: 50vh;
-        min-height: 30vh;
+        max-height: 25vh;
+        min-height: 25vh;
         overflow-y: scroll;
       }
     }
@@ -113,8 +113,7 @@
       padding: 20px;
 
       .van-button--primary {
-        color: var(--secondary-color);
-        background: var(--btn-background-color);
+        background: #499feb;
         border: none;
         border-radius: 50px;
       }

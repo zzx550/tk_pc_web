@@ -5,11 +5,12 @@ import store from "./store";
 const app = createApp(App);
 
 import "vant/lib/index.css";
-import { CountDown, Uploader, List,Button } from "vant";
+import { CountDown, Uploader, List,Button,Popup } from "vant";
 app.use(CountDown);
 app.use(Button);
 app.use(Uploader);
 app.use(List);
+app.use(Popup);
 
 import "./assets/style.css";
 import "ant-design-vue/dist/reset.css";

@@ -298,6 +298,7 @@
       message.error(i18n.global.t('or_52'))
       return
     }
+    // 全部支付
     api_payAll({ pwd: payPassword.value }).then((res: any) => {
       if (res.success) {
         open.value = false
@@ -308,14 +309,14 @@
         }, 1500)
       } else if (res.code == 201) {
         message.error(i18n.global.t('or_54'))
-      } else if (res.code == 202) {
+      } else if (res.code == 205) {
         message.error(i18n.global.t('or_55'))
       } else if (res.code == 203) {
         message.error(i18n.global.t('or_56'))
       } else if (res.code == 204) {
-        message.error(i18n.global.t('or_57'))
-      } else if (res.code == 209) {
         message.error(i18n.global.t('or_58'))
+      } else if (res.code == 209) {
+        message.error(i18n.global.t('or_57'))
       } else if (res.message) {
         message.error(res.message)
       }

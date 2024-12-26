@@ -139,7 +139,9 @@
   <van-popup
     v-model:show="risk_pop"
     position="center"
+    :style="{ height: '50%', width: '20%' }"
     :close-on-click-overlay="false"
+    round
     :overlay="true"
   >
     <NoticePop
@@ -182,7 +184,9 @@
     is_mandatory: false,
   })
 
-  getRickData()
+  if (sessionStorage.getItem('token')) {
+    getRickData()
+  }
   function getRickData() {
     api_riskNewsInfo({ type: 1 }).then((res: any) => {
       if (res.success) {
