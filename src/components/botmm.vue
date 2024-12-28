@@ -190,18 +190,16 @@
   function getRickData() {
     api_riskNewsInfo({ type: 1 }).then((res: any) => {
       if (res.success) {
+        // || res.data.is_read == 0
         if (res.data.id) {
-          let isShow =
-            res.data.show_type == 2 ||
-            res.data.show_type == 4 ||
-            res.data.is_read == 0
+          let isShow = res.data.show_type == 2 || res.data.show_type == 4
           risk_pop.value = isShow
           risk_pop_data.value.id = res.data.id
           risk_pop_data.value.content_title = res.data.title
           risk_pop_data.value.content_des = res.data.content
           risk_pop_data.value.is_mandatory =
             res.data.show_type == 2 || res.data.show_type == 4
-          if (res.data.is_read == 0) {
+          if (!isShow) {
             api_updateNewsStatus({ id: res.data.id }).then((res) => {
               console.log(`res = ${res}`)
             })
