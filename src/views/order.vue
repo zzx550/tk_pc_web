@@ -163,10 +163,10 @@
       <div class="price">
         {{ $t("or_35") }}：
         <p>
-          ${{ getFloat(total)
+          ${{ getFloat(price)
           }}{{
             unitData != null && unitRate != 0
-              ? ` ≈  ${getFloat(total * unitRate)}${unitData}`
+              ? ` ≈  ${getFloat(price * unitRate)}${unitData}`
               : ""
           }}
         </p>
@@ -327,7 +327,8 @@ function handlePay() {
 function get() {
   api_getAllNotPayOrder({}).then((res: any) => {
     if (res.success) {
-      total.value = res.data.total_price;
+      price.value = res.data.total_price;
+      // total.value = res.data.total_price;
       // orderList.value = res.data.total_price
       // orderList.value.forEach((x: any) => {
       //   if (x.pay_status == 0) {
