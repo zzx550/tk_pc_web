@@ -328,14 +328,6 @@
     api_getAllNotPayOrder({}).then((res: any) => {
       if (res.success) {
         price.value = res.data.total_price
-        // total.value = res.data.total_price;
-        // orderList.value = res.data.total_price
-        // orderList.value.forEach((x: any) => {
-        //   if (x.pay_status == 0) {
-        //     console.log('x.total_price :>> ', x.total_price)
-        //     price.value += Number(x.order_price)
-        //   }
-        // })
       }
     })
     api_orderList({
@@ -346,12 +338,6 @@
       if (res.success) {
         total.value = res.data.total
         orderList.value = res.data.data
-        // orderList.value.forEach((x: any) => {
-        //   if (x.pay_status == 0) {
-        //     console.log('x.total_price :>> ', x.total_price)
-        //     price.value += Number(x.order_price)
-        //   }
-        // })
       }
     })
   }
