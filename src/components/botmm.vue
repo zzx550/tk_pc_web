@@ -7,20 +7,20 @@
             <img src="../assets/logo.png" />
             MaCys Shop
           </div>
-          <p>{{ $t("bo_01") }}</p>
+          <p>{{ $t('bo_01') }}</p>
           <div class="el-input">
             <!----><input
               v-model="yx"
               :placeholder="$t('bo_02')"
             /><!----><!----><!----><!---->
           </div>
-          <div class="sub cur_p" @click="changeDy">{{ $t("bo_03") }}</div>
+          <div class="sub cur_p" @click="changeDy">{{ $t('bo_03') }}</div>
         </div>
         <div class="footer-nav">
           <div class="footer-nav-item">
-            <span>{{ $t("bo_04") }}</span>
+            <span>{{ $t('bo_04') }}</span>
             <ul>
-              <li class="el-tooltip" @click="changeCz">{{ $t("bo_05") }}</li>
+              <li class="el-tooltip" @click="changeCz">{{ $t('bo_05') }}</li>
               <!-- <li class="el-tooltip">联系我们</li> -->
               <li class="el-tooltip"></li>
               <li class="el-tooltip"></li>
@@ -28,44 +28,44 @@
             </ul>
           </div>
           <div class="footer-nav-item">
-            <span>{{ $t("bo_06") }}</span>
+            <span>{{ $t('bo_06') }}</span>
             <ul>
               <li class="el-tooltip" @click="router.push('/yszc')">
-                {{ $t("bo_07") }}
+                {{ $t('bo_07') }}
               </li>
               <li class="el-tooltip" @click="router.push('/thxy')">
-                {{ $t("bo_08") }}
+                {{ $t('bo_08') }}
               </li>
               <li class="el-tooltip" @click="router.push('/shqh')">
-                {{ $t("bo_09") }}
+                {{ $t('bo_09') }}
               </li>
               <li class="el-tooltip" @click="router.push('/mjzc')">
-                {{ $t("bo_10") }}
+                {{ $t('bo_10') }}
               </li>
             </ul>
           </div>
           <div class="footer-nav-item">
-            <span>{{ $t("bo_11") }}</span>
+            <span>{{ $t('bo_11') }}</span>
             <ul>
               <li class="el-tooltip" @click="router.push('/login?type=1')">
-                {{ $t("bo_12") }}
+                {{ $t('bo_12') }}
               </li>
               <li class="el-tooltip" @click="goOrder">
-                {{ $t("bo_13") }}
+                {{ $t('bo_13') }}
               </li>
               <li class="el-tooltip" @click="goShop">
-                {{ $t("bo_14") }}
+                {{ $t('bo_14') }}
               </li>
             </ul>
           </div>
           <div class="footer-nav-item">
-            <span>{{ $t("bo_15") }}</span>
+            <span>{{ $t('bo_15') }}</span>
             <ul>
               <li
                 class="el-tooltip"
                 @click="open('https://www.shopify.com/ph')"
               >
-                {{ $t("bo_15") }}
+                {{ $t('bo_15') }}
               </li>
             </ul>
           </div>
@@ -73,7 +73,7 @@
       </div>
       <div class="footer-wrapper">
         <div class="payment">
-          <div class="title-f">{{ $t("bo_16") }}</div>
+          <div class="title-f">{{ $t('bo_16') }}</div>
           <div class="payment-methods">
             <div class="pay" @click="open('https://www.binance.com/')">
               <img
@@ -120,7 +120,7 @@
         <div class="argos">
           <div class="title">MaCys-Wholesale</div>
           <div class="dec">
-            {{ $t("bo_17") }}
+            {{ $t('bo_17') }}
           </div>
         </div>
       </div>
@@ -179,290 +179,290 @@
 </template>
 
 <script setup lang="ts">
-import i18n from "@/lang";
-import {
-  api_getOption,
-  api_emailSubscription,
-  api_getInfo,
-  api_riskNewsInfo,
-  api_updateNewsStatus,
-} from "@/requset/api";
-import { message } from "ant-design-vue";
-import router from "@/router";
-import { ref, defineEmits } from "vue";
+  import i18n from '@/lang'
+  import {
+    api_getOption,
+    api_emailSubscription,
+    api_getInfo,
+    api_riskNewsInfo,
+    api_updateNewsStatus,
+  } from '@/requset/api'
+  import { message } from 'ant-design-vue'
+  import router from '@/router'
+  import { ref, defineEmits } from 'vue'
 
-const emit = defineEmits(["shopTrue"]);
+  const emit = defineEmits(['shopTrue'])
 
-let yx = ref<string>("");
-const isSeller = ref<boolean>(false);
+  let yx = ref<string>('')
+  const isSeller = ref<boolean>(false)
 
-let notice_pop = ref(false);
-let notice_pop_data = ref({
-  id: 0,
-  content_title: "",
-  content_des: "",
-});
+  let notice_pop = ref(false)
+  let notice_pop_data = ref({
+    id: 0,
+    content_title: '',
+    content_des: '',
+  })
 
-let risk_pop = ref(false);
-let risk_pop_data = ref({
-  id: 0,
-  content_title: "",
-  content_des: "",
-  is_mandatory: false,
-});
+  let risk_pop = ref(false)
+  let risk_pop_data = ref({
+    id: 0,
+    content_title: '',
+    content_des: '',
+    is_mandatory: false,
+  })
 
-if (sessionStorage.getItem("token")) {
-  getNoticeData();
-  getRickData();
-}
-
-function getNoticeData() {
-  api_riskNewsInfo({ type: 2 }).then((res: any) => {
-    if (res.success) {
-      if (res.data.id) {
-        notice_pop.value = res.data.is_read == 0;
-        notice_pop_data.value.id = res.data.id;
-        notice_pop_data.value.content_title = res.data.title;
-        notice_pop_data.value.content_des = res.data.content;
-        if (res.data.is_read == 0) {
-          api_updateNewsStatus({ id: res.data.id }).then((res) => {
-            console.log(`res = ${res}`);
-          });
-        }
-      }
-    }
-  });
-}
-
-function getRickData() {
-  api_riskNewsInfo({ type: 1 }).then((res: any) => {
-    if (res.success) {
-      // || res.data.is_read == 0
-      if (res.data.id) {
-        let isShow =
-          res.data.is_read == 0 ||
-          res.data.show_type == 2 ||
-          res.data.show_type == 4;
-        risk_pop.value = isShow;
-        risk_pop_data.value.id = res.data.id;
-        risk_pop_data.value.content_title = res.data.title;
-        risk_pop_data.value.content_des = res.data.content;
-        risk_pop_data.value.is_mandatory =
-          res.data.show_type == 2 || res.data.show_type == 4;
-        if (!isShow) {
-          api_updateNewsStatus({ id: res.data.id }).then((res) => {
-            console.log(`res = ${res}`);
-          });
-        }
-      }
-    }
-  });
-}
-
-function noticePopButton() {
-  if (risk_pop_data.value.is_mandatory == false) {
-    risk_pop.value = false;
+  if (sessionStorage.getItem('token')) {
+    getNoticeData()
+    getRickData()
   }
-  // 联系客服
-  api_getOption({}).then((res: any) => {
-    if (res.code == 200) {
-      let serviceUrl = res.data.recharge_service_link;
-      if (serviceUrl != "" && serviceUrl != null) {
-        window.open(serviceUrl);
-      } else {
-        message.error(i18n.global.t("bo_18"));
-      }
-    }
-  });
-}
 
-const open = (url: string) => {
-  window.open(url, "_blank"); // 使用'_blank'标识符在新标签页中打开URL
-};
-
-// api_getInfo({}).then((res: any) => {
-//   isSeller.value = res.data.utype == 1
-// })
-
-function goOrder() {
-  // if (!isSeller.value) {
-  //   emit('shopTrue', 'ture')
-  //   return
-  // }
-  router.push("/order");
-}
-function goShop() {
-  // if (!isSeller.value) {
-  //   emit('shopTrue', 'ture')
-  //   return
-  // }
-  router.push("/user_shop");
-}
-
-const changeCz = () => {
-  api_getOption({}).then((res: any) => {
-    if (res.success) {
-      let serviceUrl = res.data.recharge_service_link;
-      if (serviceUrl != "" && serviceUrl != null) {
-        window.open(serviceUrl);
-      } else {
-        message.error(i18n.global.t("bo_18"));
-      }
-    }
-  });
-};
-
-function changeDy() {
-  var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-  if (!emailRegex.test(yx.value)) {
-    message.error(i18n.global.t("bo_19"));
-    return;
-  }
-  api_emailSubscription({ email: yx.value, telephone: yx.value }).then(
-    (res: any) => {
+  function getNoticeData() {
+    api_riskNewsInfo({ type: 2 }).then((res: any) => {
       if (res.success) {
-        yx.value = "";
-        message.success(i18n.global.t("bo_20"));
-      } else {
-        message.error(res.message);
+        if (res.data.id) {
+          notice_pop.value = res.data.is_read == 0
+          notice_pop_data.value.id = res.data.id
+          notice_pop_data.value.content_title = res.data.title
+          notice_pop_data.value.content_des = res.data.content
+          if (res.data.is_read == 0) {
+            api_updateNewsStatus({ id: res.data.id }).then((res) => {
+              console.log(`res = ${res}`)
+            })
+          }
+        }
       }
+    })
+  }
+
+  function getRickData() {
+    api_riskNewsInfo({ type: 1 }).then((res: any) => {
+      if (res.success) {
+        // || res.data.is_read == 0
+        if (res.data.id || res.data.is_read == 0) {
+          let isShow =
+            res.data.is_read == 0 ||
+            res.data.show_type == 2 ||
+            res.data.show_type == 4
+          risk_pop.value = isShow
+          risk_pop_data.value.id = res.data.id
+          risk_pop_data.value.content_title = res.data.title
+          risk_pop_data.value.content_des = res.data.content
+          risk_pop_data.value.is_mandatory =
+            res.data.show_type == 2 || res.data.show_type == 4
+          if (!isShow) {
+            api_updateNewsStatus({ id: res.data.id }).then((res) => {
+              console.log(`res = ${res}`)
+            })
+          }
+        }
+      }
+    })
+  }
+
+  function noticePopButton() {
+    if (risk_pop_data.value.is_mandatory == false) {
+      risk_pop.value = false
     }
-  );
-}
+    // 联系客服
+    api_getOption({}).then((res: any) => {
+      if (res.code == 200) {
+        let serviceUrl = res.data.recharge_service_link
+        if (serviceUrl != '' && serviceUrl != null) {
+          window.open(serviceUrl)
+        } else {
+          message.error(i18n.global.t('bo_18'))
+        }
+      }
+    })
+  }
+
+  const open = (url: string) => {
+    window.open(url, '_blank') // 使用'_blank'标识符在新标签页中打开URL
+  }
+
+  // api_getInfo({}).then((res: any) => {
+  //   isSeller.value = res.data.utype == 1
+  // })
+
+  function goOrder() {
+    // if (!isSeller.value) {
+    //   emit('shopTrue', 'ture')
+    //   return
+    // }
+    router.push('/order')
+  }
+  function goShop() {
+    // if (!isSeller.value) {
+    //   emit('shopTrue', 'ture')
+    //   return
+    // }
+    router.push('/user_shop')
+  }
+
+  const changeCz = () => {
+    api_getOption({}).then((res: any) => {
+      if (res.success) {
+        let serviceUrl = res.data.recharge_service_link
+        if (serviceUrl != '' && serviceUrl != null) {
+          window.open(serviceUrl)
+        } else {
+          message.error(i18n.global.t('bo_18'))
+        }
+      }
+    })
+  }
+
+  function changeDy() {
+    var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
+    if (!emailRegex.test(yx.value)) {
+      message.error(i18n.global.t('bo_19'))
+      return
+    }
+    api_emailSubscription({ email: yx.value, telephone: yx.value }).then(
+      (res: any) => {
+        if (res.success) {
+          yx.value = ''
+          message.success(i18n.global.t('bo_20'))
+        } else {
+          message.error(res.message)
+        }
+      }
+    )
+  }
 </script>
 
 <style lang="less" scoped>
-.footer {
-  position: relative;
-  z-index: 10;
-  background-color: #000;
-  color: #fff;
-  .footer-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 0;
-    border-top: 0.2px solid #3f3f3f;
-    border-bottom: 0.2px solid #3f3f3f;
-    margin-bottom: 30px;
-    &:nth-child(1) {
-      padding-top: 30px;
-      border: none;
-      align-items: flex-start;
-      margin-bottom: 0;
-    }
-    .footer-title {
-      margin-right: 150px;
-      .logo {
-        display: flex;
-        align-items: center;
-        font-weight: 600;
-        font-size: 30px;
-        margin-bottom: 50px;
-        img {
-          margin-right: 10px;
-          width: 50px;
-          border-radius: 6px;
-        }
-      }
-      p {
-        color: #eb174f;
-      }
-      .el-input {
-        margin-bottom: 26px;
-        input {
-          width: 320px;
-          height: 44px;
-          border-radius: 8px;
-          font-size: 15px;
-        }
-      }
-      .sub {
-        border: 1px solid #eb174f;
-        padding: 15px 0;
-        width: 160px;
-        text-align: center;
-        color: #eb174f;
-        font-size: 14px;
-      }
-    }
-    .footer-nav {
+  .footer {
+    position: relative;
+    z-index: 10;
+    background-color: #000;
+    color: #fff;
+    .footer-wrapper {
       display: flex;
-      align-items: flex-start;
-      justify-content: space-evenly;
-      flex: 1;
-      .footer-nav-item {
-        // width: 25%;
-        span {
-          color: #eb174f;
-          font-size: 18px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      border-top: 0.2px solid #3f3f3f;
+      border-bottom: 0.2px solid #3f3f3f;
+      margin-bottom: 30px;
+      &:nth-child(1) {
+        padding-top: 30px;
+        border: none;
+        align-items: flex-start;
+        margin-bottom: 0;
+      }
+      .footer-title {
+        margin-right: 150px;
+        .logo {
+          display: flex;
+          align-items: center;
+          font-weight: 600;
+          font-size: 30px;
+          margin-bottom: 50px;
+          img {
+            margin-right: 10px;
+            width: 50px;
+            border-radius: 6px;
+          }
         }
-        ul {
-          padding-top: 20px;
-          li {
-            line-height: 50px;
-            font-size: 13px;
-            cursor: pointer;
-            &:hover {
-              color: #eb174f;
+        p {
+          color: #eb174f;
+        }
+        .el-input {
+          margin-bottom: 26px;
+          input {
+            width: 320px;
+            height: 44px;
+            border-radius: 8px;
+            font-size: 15px;
+          }
+        }
+        .sub {
+          border: 1px solid #eb174f;
+          padding: 15px 0;
+          width: 160px;
+          text-align: center;
+          color: #eb174f;
+          font-size: 14px;
+        }
+      }
+      .footer-nav {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-evenly;
+        flex: 1;
+        .footer-nav-item {
+          // width: 25%;
+          span {
+            color: #eb174f;
+            font-size: 18px;
+          }
+          ul {
+            padding-top: 20px;
+            li {
+              line-height: 50px;
+              font-size: 13px;
+              cursor: pointer;
+              &:hover {
+                color: #eb174f;
+              }
             }
           }
         }
       }
-    }
-    .payment {
-      width: 40%;
-      .title-f {
-        padding-left: 20px;
-        margin-bottom: 20px;
-      }
-      .payment-methods {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        .pay {
+      .payment {
+        width: 40%;
+        .title-f {
+          padding-left: 20px;
           margin-bottom: 20px;
-          width: 25%;
-          text-align: center;
-          &:hover {
-            color: #eb174f;
-          }
-          img {
-            margin: 0 auto;
-            width: 35px;
-            height: 35px;
-            margin-bottom: 8px;
-          }
-          span {
-            font-size: 12px;
+        }
+        .payment-methods {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-wrap: wrap;
+          .pay {
+            margin-bottom: 20px;
+            width: 25%;
+            text-align: center;
+            &:hover {
+              color: #eb174f;
+            }
+            img {
+              margin: 0 auto;
+              width: 35px;
+              height: 35px;
+              margin-bottom: 8px;
+            }
+            span {
+              font-size: 12px;
+            }
           }
         }
       }
-    }
-    .argos {
-      padding: 0 140px 0 60px;
-      .title {
-        font-size: 20px;
-        font-weight: 600;
-        margin-bottom: 15px;
+      .argos {
+        padding: 0 140px 0 60px;
+        .title {
+          font-size: 20px;
+          font-weight: 600;
+          margin-bottom: 15px;
+        }
+        .dec {
+          font-size: 14px;
+        }
       }
-      .dec {
-        font-size: 14px;
+    }
+    .footer-bottom {
+      font-size: 12px;
+      color: #bbb;
+      padding: 15px 0;
+      p {
+        margin-bottom: 30px;
       }
     }
   }
-  .footer-bottom {
-    font-size: 12px;
-    color: #bbb;
-    padding: 15px 0;
-    p {
-      margin-bottom: 30px;
-    }
+  input {
+    background-color: #fff;
+    color: #474747;
   }
-}
-input {
-  background-color: #fff;
-  color: #474747;
-}
 </style>

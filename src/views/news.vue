@@ -23,7 +23,7 @@
             <div class="txt">
               <div class="t_top">
                 <div>{{ x.title }}</div>
-                <div class="time">{{ x.create_time }}</div>
+                <div class="time">{{ x.release_time }}</div>
               </div>
               <div class="txt_p txt_3" v-html="x.content"></div>
             </div>
