@@ -4,10 +4,11 @@
       <div class="footer-wrapper">
         <div class="footer-title">
           <div class="logo">
-            <img src="../assets/logo.png" />
+            <!-- <img src="../assets/logo.png" /> -->
             <!-- MaCys Shop -->
-            Tiktok Shop
+            <img src="../assets/home/logo.png" />
           </div>
+
           <p>{{ $t("bo_01") }}</p>
           <div class="el-input">
             <!----><input
@@ -364,13 +365,18 @@ function changeDy() {
       .logo {
         display: flex;
         align-items: center;
-        font-weight: 600;
-        font-size: 30px;
+        border-radius: 8px;
+        background-color: white;
+        padding: 3% 5%;
+        // font-weight: 600;
+        // font-size: 30px;
+        // height: 43px;
         margin-bottom: 50px;
         img {
-          margin-right: 10px;
-          width: 50px;
-          border-radius: 6px;
+          //   margin-right: 10px;
+          //   width: 50px;
+          //   border-radius: 6px;
+          height: 43px;
         }
       }
       p {
