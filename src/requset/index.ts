@@ -3,7 +3,7 @@ import Request from "./http";
 const request: Request = new Request({
   // 公共前缀
   // G站
-  baseURL: " https://www.mysshopvip.shop/api/",
+  baseURL: "https://gshope.qpon/api/",
   // 请求头
   headers: {
     Accept: "application/json",
