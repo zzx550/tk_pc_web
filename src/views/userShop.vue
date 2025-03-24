@@ -1,6 +1,5 @@
 <template>
-  <div id="userShop"
-       class="head_b">
+  <div id="userShop" class="head_b">
     <TopSeek :title="$t('to_03')" />
     <div class="box_con">
       <div class="con_left">
@@ -8,20 +7,28 @@
           <div class="title">
             <div class="left">{{ $t("_us_01") }}</div>
             <div class="right_check">
-              <div :class="statisticsTab == 0 ? 'check' : ''"
-                   @click="changeStatisticsTab(0)">
+              <div
+                :class="statisticsTab == 0 ? 'check' : ''"
+                @click="changeStatisticsTab(0)"
+              >
                 {{ $t("_us_02") }}
               </div>
-              <div :class="statisticsTab == 1 ? 'check' : ''"
-                   @click="changeStatisticsTab(1)">
+              <div
+                :class="statisticsTab == 1 ? 'check' : ''"
+                @click="changeStatisticsTab(1)"
+              >
                 {{ $t("_us_03") }}
               </div>
-              <div :class="statisticsTab == 2 ? 'check' : ''"
-                   @click="changeStatisticsTab(2)">
+              <div
+                :class="statisticsTab == 2 ? 'check' : ''"
+                @click="changeStatisticsTab(2)"
+              >
                 {{ $t("_us_04") }}
               </div>
-              <div :class="statisticsTab == 3 ? 'check' : ''"
-                   @click="changeStatisticsTab(3)">
+              <div
+                :class="statisticsTab == 3 ? 'check' : ''"
+                @click="changeStatisticsTab(3)"
+              >
                 {{ $t("_us_05") }}
               </div>
             </div>
@@ -48,29 +55,27 @@
         <div class="order">
           <div class="title_">
             {{ $t("_us_10") }}
-            <div style="color: #0ae1da"
-                 @click="router.push('/order?tabIndex=0')">
+            <div
+              style="color: #0ae1da"
+              @click="router.push('/order?tabIndex=0')"
+            >
               {{ $t("_us_11") }}
             </div>
           </div>
           <div class="type">
-            <div class="li"
-                 @click="router.push('./order?tabIndex=1')">
+            <div class="li" @click="router.push('./order?tabIndex=1')">
               {{ ordersNumber.orderStatus_0 }}
               <div>{{ $t("_us_12") }}</div>
             </div>
-            <div class="li"
-                 @click="router.push('./order?tabIndex=2')">
+            <div class="li" @click="router.push('./order?tabIndex=2')">
               {{ ordersNumber.orderStatus_1 }}
               <div>{{ $t("_us_13") }}</div>
             </div>
-            <div class="li"
-                 @click="router.push('./order?tabIndex=3')">
+            <div class="li" @click="router.push('./order?tabIndex=3')">
               {{ ordersNumber.orderStatus_2 }}
               <div>{{ $t("_us_14") }}</div>
             </div>
-            <div class="li"
-                 @click="router.push('./order?tabIndex=4')">
+            <div class="li" @click="router.push('./order?tabIndex=4')">
               {{ ordersNumber.orderStatus_3 }}
               <div>{{ $t("_us_15") }}</div>
             </div>
@@ -85,46 +90,60 @@
                 <div @click.stop="supplierOpen = true">{{ $t("_us_17") }}</div>
               </div>
               <div class="box">
-                <img class="but"
-                     src="../assets/home/z_icon.png"
-                     @click.stop="
+                <img
+                  class="but"
+                  src="../assets/home/z_icon.png"
+                  @click.stop="
                     currentSupplierItemIndex = currentSupplierItemIndex - 1
-                  " />
-                <div class="list"
-                     v-if="supplierItem && supplierItem.goods_supplier">
-                  <img class="pr_con"
-                       :src="supplierItem.goods_supplier.logo"
-                       @click="goSupplierDet(supplierItem.supplier_id)" />
-                  <div class="ti"
-                       @click="goSupplierDet(supplierItem.supplier_id)">
+                  "
+                />
+                <div
+                  class="list"
+                  v-if="supplierItem && supplierItem.goods_supplier"
+                >
+                  <img
+                    class="pr_con"
+                    :src="supplierItem.goods_supplier.logo"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  />
+                  <div
+                    class="ti"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  >
                     {{ $t("_us_18") }}：{{
                       supplierItem.goods_supplier.supplier_sn
                     }}
                   </div>
-                  <div class="on"
-                       @click="goSupplierDet(supplierItem.supplier_id)">
+                  <div
+                    class="on"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  >
                     {{ supplierItem.goods_supplier.full_name }}
                   </div>
-                  <div class="txt"
-                       @click="goSupplierDet(supplierItem.supplier_id)">
+                  <div
+                    class="txt"
+                    @click="goSupplierDet(supplierItem.supplier_id)"
+                  >
                     {{ supplierItem.goods_supplier.tags }}
                   </div>
-                  <div class="go pr_con"
-                       @click="handleAddAll(supplierItem.supplier_id)">
+                  <div
+                    class="go pr_con"
+                    @click="handleAddAll(supplierItem.supplier_id)"
+                  >
                     {{ $t("_us_19") }}
                   </div>
                 </div>
-                <div class="no_data"
-                     v-else>
-                  <img style="width: 50%"
-                       src="../assets/img/no_data.png" />
+                <div class="no_data" v-else>
+                  <img style="width: 50%" src="../assets/img/no_data.png" />
                   <div style="font-size: 13px">{{ $t("co_d_08") }}</div>
                 </div>
-                <img class="but"
-                     src="../assets/home/y_icon.png"
-                     @click.stop="
+                <img
+                  class="but"
+                  src="../assets/home/y_icon.png"
+                  @click.stop="
                     currentSupplierItemIndex = currentSupplierItemIndex + 1
-                  " />
+                  "
+                />
               </div>
             </div>
             <div class="mine_shop">
@@ -133,11 +152,12 @@
                 <div @click="router.push('/mine_shop')">{{ $t("_us_21") }}</div>
               </div>
               <div class="qhGods">
-                <img class="but"
-                     src="../assets/home/z_icon.png"
-                     @click="goodIndex = goodIndex - 1" />
-                <div class="list"
-                     v-if="goodObj && goodObj.goods">
+                <img
+                  class="but"
+                  src="../assets/home/z_icon.png"
+                  @click="goodIndex = goodIndex - 1"
+                />
+                <div class="list" v-if="goodObj && goodObj.goods">
                   <div class="shop_t">
                     <img :src="goodObj.goods.cover_img" />
                     <div class="txt_3">
@@ -166,15 +186,15 @@
                     {{ $t("_us_26") }}：{{ goodObj.goods.visits }}
                   </div>
                 </div>
-                <div class="no_data"
-                     v-if="!goodObj">
-                  <img style="width: 50%"
-                       src="../assets/img/no_data.png" />
+                <div class="no_data" v-if="!goodObj">
+                  <img style="width: 50%" src="../assets/img/no_data.png" />
                   <div style="font-size: 13px">{{ $t("co_d_08") }}</div>
                 </div>
-                <img class="but"
-                     src="../assets/home/y_icon.png"
-                     @click="goodIndex = goodIndex + 1" />
+                <img
+                  class="but"
+                  src="../assets/home/y_icon.png"
+                  @click="goodIndex = goodIndex + 1"
+                />
               </div>
             </div>
           </div>
@@ -182,8 +202,7 @@
             <div class="bot_ri_content">
               <div class="title_">
                 {{ $t("_us_27") }}
-                <div style="color: #0ae1da"
-                     @click="router.push('/ranking')">
+                <div style="color: #0ae1da" @click="router.push('/ranking')">
                   {{ $t("_us_21") }}
                 </div>
               </div>
@@ -192,21 +211,15 @@
                 <div class="time">{{ $t("_us_29") }}</div>
                 <div class="txt">{{ $t("_us_30") }}</div>
               </div>
-              <div class="list list_T"
-                   v-for="(x, y) in ranking"
-                   :key="x.id">
+              <div class="list list_T" v-for="(x, y) in ranking" :key="x.id">
                 <div class="title">
-                  <img v-if="y == 0"
-                       src="../assets/img/1.png" />
-                  <img v-else-if="y == 1"
-                       src="../assets/img/2.png" />
-                  <img v-else-if="y == 2"
-                       src="../assets/img/3.png" />
+                  <img v-if="y == 0" src="../assets/img/1.png" />
+                  <img v-else-if="y == 1" src="../assets/img/2.png" />
+                  <img v-else-if="y == 2" src="../assets/img/3.png" />
                   <div v-else>{{ y + 1 }}</div>
                 </div>
                 <div class="time">
-                  <img class="shop_i"
-                       src="../assets/logo.png" />
+                  <img class="shop_i" src="../assets/logo.png" />
                   <div>{{ x.goods_names }}</div>
                 </div>
                 <div class="txt">{{ x.ranking_value }}</div>
@@ -218,21 +231,23 @@
       <div class="right_user">
         <div class="top_user">
           <div class="name">
-            <a-upload action="https://gshope.qpon/api/upload/uploadImg"
-                      :beforeUpload="beforeUpload"
-                      list-type="picture-card"
-                      class="avatar-uploader"
-                      :show-upload-list="false"
-                      @change="handleChangeUp">
-              <img v-if="
+            <a-upload
+              action="https://www.mysshopvip.shop/api/upload/uploadImg"
+              :beforeUpload="beforeUpload"
+              list-type="picture-card"
+              class="avatar-uploader"
+              :show-upload-list="false"
+              @change="handleChangeUp"
+            >
+              <img
+                v-if="
                   userInfo.shop_cover_image != null &&
                   userInfo.shop_cover_image != ''
                 "
-                   class="us_img"
-                   :src="userInfo.shop_cover_image" />
-              <img v-else
-                   class="us_img"
-                   src="../assets/home/user_img.png" />
+                class="us_img"
+                :src="userInfo.shop_cover_image"
+              />
+              <img v-else class="us_img" src="../assets/home/user_img.png" />
             </a-upload>
             <!-- <van-uploader
               v-model="avatarFileList"
@@ -242,18 +257,22 @@
              
             </van-uploader> -->
             <div class="u_right">
-              <div v-if="userInfo.shop_name != null && userInfo.shop_name != ''"
-                   class="shop_name"
-                   @click="shopNameOpen = userInfo.change_shop_name == 1">
+              <div
+                v-if="userInfo.shop_name != null && userInfo.shop_name != ''"
+                class="shop_name"
+                @click="shopNameOpen = userInfo.change_shop_name == 1"
+              >
                 {{ $t("_us_31") }}：{{ userInfo.shop_name }}
               </div>
               <div class="id">ID：{{ userInfo.tiktok_id }}</div>
               <div class="dj">
                 <div class="fen">
-                  <img v-if="userInfo.star_rating"
-                       v-for="x in userInfo.star_rating"
-                       :key="x"
-                       src="../assets/home/xin.png" />
+                  <img
+                    v-if="userInfo.star_rating"
+                    v-for="x in userInfo.star_rating"
+                    :key="x"
+                    src="../assets/home/xin.png"
+                  />
                   {{
                     userInfo.score_star &&
                     userInfo.score_star != "" &&
@@ -279,8 +298,7 @@
             </div>
           </div>
           <div class="bal">
-            <div class="ls cur_p"
-                 @click="openAssets = true">
+            <div class="ls cur_p" @click="openAssets = true">
               {{ $t("_us_37") }}
             </div>
             <div class="z_bal">
@@ -299,8 +317,7 @@
             </div>
             <div class="but">
               <div @click="czOpen = true">{{ $t("_us_41") }}</div>
-              <div class="tx"
-                   @click="router.push('./withdraw')">
+              <div class="tx" @click="router.push('./withdraw')">
                 {{ $t("_tx_26") }}
               </div>
             </div>
@@ -308,13 +325,14 @@
         </div>
         <div class="xji">
           <div class="title_fy">
-            <div class="left"
-                 @click.stop="fyRuleOpen = true">
+            <div class="left" @click.stop="fyRuleOpen = true">
               {{ $t("_us_43") }}<img src="../assets/home/wh.png" />
             </div>
-            <div class="cur_p"
-                 style="color: #0ae1da"
-                 @click.stop="openFy = true">
+            <div
+              class="cur_p"
+              style="color: #0ae1da"
+              @click.stop="openFy = true"
+            >
               {{ $t("_us_44") }}
             </div>
           </div>
@@ -333,8 +351,7 @@
             </div>
           </div>
         </div>
-        <div class="tg"
-             @click="llbOpen = true">
+        <div class="tg" @click="llbOpen = true">
           <img src="../assets/home/img.png" />
           <div class="por_l">
             <p style="color: #ff8811">{{ $t("_us_48") }}</p>
@@ -348,82 +365,97 @@
         </div>
         <div class="bx_">
           <div>{{ $t("_us_52") }}</div>
-          <div class="but"
-               @click="hyOpen = true">{{ $t("_us_53") }}</div>
+          <div class="but" @click="hyOpen = true">{{ $t("_us_53") }}</div>
           <img src="../assets/img/bx_icon.png" />
         </div>
       </div>
     </div>
   </div>
 
-  <OpenTip :openAdd="supplierOpen"
-           @changeAdd="addSupplier" />
-  <OpenTip :openCz="czOpen"
-           @changeCz="changeCz" />
-  <OpenTip :openLlb="llbOpen"
-           @changeLlb="changeLlb"
-           :llbRule="llbRule"
-           :llbHasGet="llbHasGet" />
-  <OpenTip :openShopName="shopNameOpen"
-           @changeShopName="changeShopName"
-           :isUpdateShopName="userInfo.shop_name != null && userInfo.shop_name != ''" />
-  <OpenTip :openFyRule="fyRuleOpen"
-           @changeFyRule="fyRuleOpen = false"
-           :fyRule="rebateInfo.rules_desc" />
+  <OpenTip :openAdd="supplierOpen" @changeAdd="addSupplier" />
+  <OpenTip :openCz="czOpen" @changeCz="changeCz" />
+  <OpenTip
+    :openLlb="llbOpen"
+    @changeLlb="changeLlb"
+    :llbRule="llbRule"
+    :llbHasGet="llbHasGet"
+  />
+  <OpenTip
+    :openShopName="shopNameOpen"
+    @changeShopName="changeShopName"
+    :isUpdateShopName="userInfo.shop_name != null && userInfo.shop_name != ''"
+  />
+  <OpenTip
+    :openFyRule="fyRuleOpen"
+    @changeFyRule="fyRuleOpen = false"
+    :fyRule="rebateInfo.rules_desc"
+  />
 
-  <a-modal class="modal_wit"
-           v-model:open="hyOpen"
-           centered
-           :footer="null"
-           width="561px"
-           @cancel="hyOpen = false">
+  <a-modal
+    class="modal_wit"
+    v-model:open="hyOpen"
+    centered
+    :footer="null"
+    width="561px"
+    @cancel="hyOpen = false"
+  >
     <div class="title">{{ $t("_us_53") }}</div>
-    <img class="pr_con"
-         src="../assets/img/hyzl.png" />
+    <img class="pr_con" src="../assets/img/hyzl.png" />
     <div class="pr_con yqm">
       {{ $t("_us_54") }}
       <div class="img">
         {{ userInfo.invite_code }}
-        <img src="../assets/img/copy.png"
-             @click="copyValue(userInfo.invite_code)" />
+        <img
+          src="../assets/img/copy.png"
+          @click="copyValue(userInfo.invite_code)"
+        />
       </div>
     </div>
-    <input type="text"
-           v-model="inputInviteCode"
-           class="pr_con"
-           :placeholder="$t('_us_55')" />
-    <div class="but pr_con"
-         @click="bindInviteCode">{{ $t("_us_42") }}</div>
+    <input
+      type="text"
+      v-model="inputInviteCode"
+      class="pr_con"
+      :placeholder="$t('_us_55')"
+    />
+    <div class="but pr_con" @click="bindInviteCode">{{ $t("_us_42") }}</div>
 
     <div class="box_rec">
       <div class="title">
-        <div :class="inviteCheckTab == 1 ? 'check' : ''"
-             @click="changeInviteTab(1)">
+        <div
+          :class="inviteCheckTab == 1 ? 'check' : ''"
+          @click="changeInviteTab(1)"
+        >
           {{ $t("_us_56") }}
         </div>
-        <div :class="inviteCheckTab == 2 ? 'check' : ''"
-             @click="changeInviteTab(2)">
+        <div
+          :class="inviteCheckTab == 2 ? 'check' : ''"
+          @click="changeInviteTab(2)"
+        >
           {{ $t("_us_57") }}
         </div>
-        <div :class="inviteCheckTab == 3 ? 'check' : ''"
-             @click="changeInviteTab(3)">
+        <div
+          :class="inviteCheckTab == 3 ? 'check' : ''"
+          @click="changeInviteTab(3)"
+        >
           {{ $t("_us_58") }}
         </div>
-        <div :class="inviteCheckTab == 4 ? 'check' : ''"
-             @click="changeInviteTab(4)">
+        <div
+          :class="inviteCheckTab == 4 ? 'check' : ''"
+          @click="changeInviteTab(4)"
+        >
           {{ $t("_us_59") }}
         </div>
       </div>
       <div class="content_">
         <template v-if="inviteCheckTab != 4">
-          <van-list v-model="inviteLoading"
-                    :finished-text="$t('_no_more_txt')"
-                    :immediate-check="false"
-                    :loading-text="$t('_load_txt')"
-                    @load="onInviteLoad">
-            <div class="list"
-                 v-for="(item, index) in inviteList"
-                 :key="index">
+          <van-list
+            v-model="inviteLoading"
+            :finished-text="$t('_no_more_txt')"
+            :immediate-check="false"
+            :loading-text="$t('_load_txt')"
+            @load="onInviteLoad"
+          >
+            <div class="list" v-for="(item, index) in inviteList" :key="index">
               <div class="left">
                 <div>{{ item.username }}</div>
                 <div>ID: {{ item.tiktok_id }}</div>
@@ -439,31 +471,34 @@
     </div>
   </a-modal>
 
-  <a-drawer v-model:open="openAssets"
-            class="custom-class"
-            :closable="false"
-            placement="right">
+  <a-drawer
+    v-model:open="openAssets"
+    class="custom-class"
+    :closable="false"
+    placement="right"
+  >
     <div class="check">
       <!-- <div class="check_t">收支明细</div>
       <div>收入</div>
       <div>支出</div> -->
-      <img class="close"
-           @click="openAssets = false"
-           src="../assets/img/close.png" />
+      <img
+        class="close"
+        @click="openAssets = false"
+        src="../assets/img/close.png"
+      />
     </div>
-    <van-list v-model="assetsLoading"
-              :finished="assetsFinished"
-              :finished-text="$t('_no_more_txt')"
-              :immediate-check="false"
-              :loading-text="$t('_load_txt')"
-              @load="onAssetsLoad">
-      <div class="list"
-           v-for="x in assetsList"
-           :key="x.id">
+    <van-list
+      v-model="assetsLoading"
+      :finished="assetsFinished"
+      :finished-text="$t('_no_more_txt')"
+      :immediate-check="false"
+      :loading-text="$t('_load_txt')"
+      @load="onAssetsLoad"
+    >
+      <div class="list" v-for="x in assetsList" :key="x.id">
         <div>
           <div class="price">{{ getAssetsTypeTxt(x.type) }}</div>
-          <div class="kh"
-               v-if="x.json">
+          <div class="kh" v-if="x.json">
             {{ $t("_us_18") }}：{{
               x.json.order_sn
                 ? x.json.order_sn
@@ -474,8 +509,7 @@
           </div>
           <div class="kh">{{ x.create_time }}</div>
         </div>
-        <div class="red_"
-             :style="x.trade_type == 0 ? { color: 'red' } : ''">
+        <div class="red_" :style="x.trade_type == 0 ? { color: 'red' } : ''">
           {{ x.trade_type == 0 ? "+" : "-" }}
           ${{
             x.amount.substr(0, 1) !== "-"
@@ -486,36 +520,46 @@
       </div>
     </van-list>
   </a-drawer>
-  <a-drawer v-model:open="openFy"
-            class="custom-class"
-            :closable="false"
-            placement="right">
+  <a-drawer
+    v-model:open="openFy"
+    class="custom-class"
+    :closable="false"
+    placement="right"
+  >
     <div class="check">
-      <div :class="rebateType == 1 ? 'check_t' : ''"
-           @click="changeRebateTab(1)">
+      <div
+        :class="rebateType == 1 ? 'check_t' : ''"
+        @click="changeRebateTab(1)"
+      >
         {{ $t("_us_60") }}
       </div>
-      <div :class="rebateType == 2 ? 'check_t' : ''"
-           @click="changeRebateTab(2)">
+      <div
+        :class="rebateType == 2 ? 'check_t' : ''"
+        @click="changeRebateTab(2)"
+      >
         {{ $t("_us_61") }}
       </div>
-      <div :class="rebateType == 3 ? 'check_t' : ''"
-           @click="changeRebateTab(3)">
+      <div
+        :class="rebateType == 3 ? 'check_t' : ''"
+        @click="changeRebateTab(3)"
+      >
         {{ $t("_us_62") }}
       </div>
-      <img class="close"
-           @click="openFy = false"
-           src="../assets/img/close.png" />
+      <img
+        class="close"
+        @click="openFy = false"
+        src="../assets/img/close.png"
+      />
     </div>
-    <van-list v-model="rebateLoading"
-              :finished="rebateFinished"
-              :finished-text="$t('_no_more_txt')"
-              :immediate-check="false"
-              :loading-text="$t('_load_txt')"
-              @load="onRebateLoad">
-      <div class="list"
-           v-for="x in rebateList"
-           :key="x">
+    <van-list
+      v-model="rebateLoading"
+      :finished="rebateFinished"
+      :finished-text="$t('_no_more_txt')"
+      :immediate-check="false"
+      :loading-text="$t('_load_txt')"
+      @load="onRebateLoad"
+    >
+      <div class="list" v-for="x in rebateList" :key="x">
         <div>
           <div class="price">ID：{{ x.tiktok_id }}</div>
           <div class="kh">
@@ -523,8 +567,7 @@
           </div>
           <div class="kh">{{ x.create_time }}</div>
         </div>
-        <div class="red_"
-             :style="{ color: 'red' }">
+        <div class="red_" :style="{ color: 'red' }">
           + ${{ getFloat(x.commission_amount) }}
         </div>
       </div>
@@ -670,12 +713,12 @@ const changeStatisticsTab = (index: number) => {
     index == 0
       ? "today"
       : index == 1
-        ? "week"
-        : index == 2
-          ? "month"
-          : index == 3
-            ? "year"
-            : "";
+      ? "week"
+      : index == 2
+      ? "month"
+      : index == 3
+      ? "year"
+      : "";
   api_mainStatistics({ type }).then((res: any) => {
     if (res.success) {
       statisticsData.value = res.data;
@@ -1044,9 +1087,9 @@ const bindInviteCode = () => {
   let currentTime = `${now.getFullYear()}-${(now.getMonth() + 1)
     .toString()
     .padStart(2, "0")}-${now
-      .getDate()
-      .toString()
-      .padStart(2, "0")} ${hours}:${minutes}:${seconds}`;
+    .getDate()
+    .toString()
+    .padStart(2, "0")} ${hours}:${minutes}:${seconds}`;
 
   message.loading(i18n.global.t("_load_txt"));
   api_bind_invite_code({
@@ -1077,14 +1120,14 @@ const getInviteList = () => {
   let param =
     inviteCheckTab.value == 3
       ? {
-        page: invitePage.value,
-        pageSize: 20,
-      }
+          page: invitePage.value,
+          pageSize: 20,
+        }
       : {
-        page: invitePage.value,
-        pageSize: 20,
-        type: inviteCheckTab.value,
-      };
+          page: invitePage.value,
+          pageSize: 20,
+          type: inviteCheckTab.value,
+        };
   let promise =
     inviteCheckTab.value == 3 ? api_team_list(param) : api_helpLog(param);
   promise.then((res: any) => {
@@ -1209,22 +1252,22 @@ const copyValue = (value: any) => {
             justify-content: space-evenly;
             color: #616065;
             &:nth-child(1) {
-              background-image: url('../assets/home/ji_1.png');
+              background-image: url("../assets/home/ji_1.png");
               background-color: #e8faf3;
               background-size: 100% 100%;
             }
             &:nth-child(2) {
-              background-image: url('../assets/home/ji_2.png');
+              background-image: url("../assets/home/ji_2.png");
               background-color: #e4f6fd;
               background-size: 100% 100%;
             }
             &:nth-child(3) {
-              background-image: url('../assets/home/ji_3.png');
+              background-image: url("../assets/home/ji_3.png");
               background-color: #fff7f9;
               background-size: 100% 100%;
             }
             &:nth-child(4) {
-              background-image: url('../assets/home/ji_4.png');
+              background-image: url("../assets/home/ji_4.png");
               background-color: #eef3ff;
               background-size: 100% 100%;
             }
@@ -1708,7 +1751,7 @@ const copyValue = (value: any) => {
         position: absolute;
         left: 50%;
         bottom: -4px;
-        content: '';
+        content: "";
         transform: translateX(-50%);
         background-color: #1d1e25;
         height: 2px;
@@ -1823,7 +1866,7 @@ const copyValue = (value: any) => {
         font-weight: 600;
         position: relative;
         &:after {
-          content: ' ';
+          content: " ";
           position: absolute;
           height: 2px;
           width: 50%;
